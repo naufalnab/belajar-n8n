@@ -11,17 +11,20 @@
       <nav class="sidebar">
         <div class="sidebar-content">
           <h3>Materi Belajar n8n</h3>
+
+          <div class="theme-switcher">
+            <button id="theme-toggle">Ganti Mode</button>
+          </div>
+
           <ul>
             <li><a href="#" class="active">Materi 1: Editor UI</a></li>
-            </ul>
-        </div>
-        <div class="theme-switcher">
-          <button id="theme-toggle">Ganti Mode</button>
+          </ul>
         </div>
       </nav>
+      
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
 
       <main class="content">
-        <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
         <article>
           <h1>Materi 1: Menjelajahi Editor UI</h1>
           <p class="intro">
@@ -165,10 +168,13 @@
 
           <ul>
             <li>
-                <strong>Project/Folder:</strong> (Contoh: "Personal") Menunjukkan di proyek mana workflow ini disimpan.
+              <strong>Project/Folder:</strong> (Contoh: "Personal") Menunjukkan
+              di proyek mana workflow ini disimpan.
             </li>
             <li>
-              <strong>Nama Workflow:</strong> (Contoh: "Workflow Belajar") Secara default, n8n menamai workflow baru sebagai "My workflow", tetapi Kita dapat mengedit namanya kapan saja.
+              <strong>Nama Workflow:</strong> (Contoh: "Workflow Belajar")
+              Secara default, n8n menamai workflow baru sebagai "My workflow",
+              tetapi Kita dapat mengedit namanya kapan saja.
             </li>
             <li>
               <strong>+ Add Tag:</strong> Tag membantu Kita mengatur workflow
@@ -185,23 +191,45 @@
               dengan orang lain pada workflow.
             </li>
             <li>
-                <strong>Save / Saved:</strong> Tombol untuk menyimpan workflow. Akan berubah menjadi "Saved" ketika perubahan terakhir sudah tersimpan.
+              <strong>Save / Saved:</strong> Tombol untuk menyimpan workflow.
+              Akan berubah menjadi "Saved" ketika perubahan terakhir sudah
+              tersimpan.
             </li>
             <li>
-              <strong>History (Ikon Jam):</strong> Setelah Kita menyimpan workflow, Kita
-              dapat melihat versi sebelumnya di sini.
+              <strong>History (Ikon Jam):</strong> Setelah Kita menyimpan
+              workflow, Kita dapat melihat versi sebelumnya di sini.
             </li>
             <li>
-                <strong>Menu Elipsis (...):</strong> Tombol ini membuka menu dropdown dengan lebih banyak opsi, seperti yang terlihat pada screenshot:
-                <ul class="sub-list">
-                    <li><strong>Duplicate:</strong> Membuat duplikat dari workflow ini.</li>
-                    <li><strong>Download:</strong> Mengunduh workflow sebagai file JSON.</li>
-                    <li><strong>Rename:</strong> Mengganti nama workflow.</li>
-                    <li><strong>Import from URL...:</strong> Mengimpor workflow dari sebuah URL.</li>
-                    <li><strong>Import from File...:</strong> Mengimpor workflow dari file JSON.</li>
-                    <li><strong>Settings:</strong> Membuka pengaturan spesifik untuk workflow ini (misalnya, timezone, error handling).</li>
-                    <li><strong>Archive:</strong> Mengarsipkan workflow (menyembunyikannya dari daftar utama).</li>
-                </ul>
+              <strong>Menu Elipsis (...):</strong> Tombol ini membuka menu
+              dropdown dengan lebih banyak opsi, seperti yang terlihat pada
+              screenshot:
+              <ul class="sub-list">
+                <li>
+                  <strong>Duplicate:</strong> Membuat duplikat dari workflow
+                  ini.
+                </li>
+                <li>
+                  <strong>Download:</strong> Mengunduh workflow sebagai file
+                  JSON.
+                </li>
+                <li><strong>Rename:</strong> Mengganti nama workflow.</li>
+                <li>
+                  <strong>Import from URL...:</strong> Mengimpor workflow dari
+                  sebuah URL.
+                </li>
+                <li>
+                  <strong>Import from File...:</strong> Mengimpor workflow dari
+                  file JSON.
+                </li>
+                <li>
+                  <strong>Settings:</strong> Membuka pengaturan spesifik untuk
+                  workflow ini (misalnya, timezone, error handling).
+                </li>
+                <li>
+                  <strong>Archive:</strong> Mengarsipkan workflow
+                  (menyembunyikannya dari daftar utama).
+                </li>
+              </ul>
             </li>
           </ul>
           <h3>Kanvas (Canvas)</h3>

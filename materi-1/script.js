@@ -7,22 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("theme-toggle");
   const body = document.body;
 
-  // 1. Cek preferensi tema yang tersimpan di localStorage
+  // Cek preferensi tema yang tersimpan di localStorage
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     body.classList.add("dark-mode");
     themeToggle.textContent = "Mode Terang";
   } else {
-    // Default ke light mode jika tidak ada setting
     body.classList.remove("dark-mode");
     themeToggle.textContent = "Mode Gelap";
   }
 
-  // 2. Tambahkan event listener ke tombol
+  // Tambahkan event listener ke tombol
   themeToggle.addEventListener("click", () => {
     body.classList.toggle("dark-mode");
-
-    // 3. Simpan preferensi baru ke localStorage
     if (body.classList.contains("dark-mode")) {
       localStorage.setItem("theme", "dark");
       themeToggle.textContent = "Mode Terang";
@@ -41,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
   sidebarToggle.addEventListener("click", () => {
     container.classList.toggle("sidebar-collapsed");
 
-    // Ubah ikon tombol dan title-nya
     if (container.classList.contains("sidebar-collapsed")) {
       sidebarToggle.innerHTML = "&raquo;";
       sidebarToggle.title = "Buka Sidebar";
