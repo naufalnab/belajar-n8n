@@ -358,4 +358,122 @@ blockquote {
   #sidebar-toggle {
     display: none;
   }
+  /* ======================================================= */
+  /* ======================================================= */
+  /* STYLE UNTUK HOMEPAGE (index.html)            */
+  /* ======================================================= */
+  /* ======================================================= */
+
+  .homepage-body {
+    /* Pastikan dark mode berfungsi di body homepage */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .homepage-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+  }
+
+  .homepage-container header {
+    text-align: center;
+    border-bottom: 2px solid var(--note-border);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+
+  .homepage-container h1 {
+    font-size: 2.8em;
+    color: var(--header-color);
+    margin-bottom: 10px;
+  }
+
+  .homepage-container header p {
+    font-size: 1.2em;
+    color: var(--text-color-light);
+    line-height: 1.6;
+  }
+
+  .theme-switcher-homepage {
+    margin-top: 20px;
+  }
+
+  /* Tombol dark mode di homepage */
+  .theme-switcher-homepage #theme-toggle {
+    padding: 10px 20px;
+    border: 1px solid var(--border-color);
+    background-color: var(--container-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .theme-switcher-homepage #theme-toggle:hover {
+    background-color: var(--link-hover-bg);
+    color: var(--link-hover-text);
+  }
+
+  /* Daftar Card */
+  .card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .card {
+    display: block;
+    text-decoration: none;
+    background-color: var(--container-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease,
+      border-color 0.2s ease;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--note-border);
+  }
+
+  .card.coming-soon {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .card.coming-soon:hover {
+    transform: none;
+    box-shadow: 0 4px 8px var(--shadow-color);
+  }
+
+  .card-content {
+    padding: 20px 25px;
+  }
+
+  .card-number {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--note-border);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-size: 1.4em;
+    color: var(--header-color);
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+
+  .card-description {
+    font-size: 1em;
+    color: var(--text-color-light);
+    line-height: 1.5;
+  }
 }
