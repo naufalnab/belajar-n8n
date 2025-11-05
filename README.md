@@ -15,9 +15,17 @@ Tujuan dari repositori ini adalah:
 
 Berikut adalah materi yang telah didokumentasikan:
 
+
+## Daftar Materi
+
+Berikut adalah materi yang telah didokumentasikan:
+
+0.  **[Materi 0: Persiapan Self-Hosting (Memilih VPS)](./materi-0/index.html)**
+    * Kenapa self-host, kenapa VPS, dan perbandingan paket KVM Hostinger.
 1.  **[Materi 1: Menjelajahi Editor UI](./materi-1/index.html)**
     * Mengenal kanvas, panel sisi kiri, bilah atas, dan konsep Node.
 2.  *(Materi selanjutnya akan ditambahkan di sini)*
+...
 
 ## Referensi
 * [Dokumentasi Resmi n8n](https://docs.n8n.io/)

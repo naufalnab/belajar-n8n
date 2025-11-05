@@ -4,24 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Materi 1: Menjelajahi Editor UI n8n</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../assets/style.css" />
   </head>
   <body>
     <div class="container">
       <nav class="sidebar">
         <div class="sidebar-content">
           <h3>Materi Belajar n8n</h3>
-
           <div class="theme-switcher">
             <button id="theme-toggle">Ganti Mode</button>
           </div>
-
           <ul>
-            <li><a href="#" class="active">Materi 1: Editor UI</a></li>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../materi-0/index.html">Materi 0: Persiapan VPS</a></li>
+            <li><a href="index.html" class="active">Materi 1: Editor UI</a></li>
           </ul>
         </div>
       </nav>
-      
+
       <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
 
       <main class="content">
@@ -42,7 +42,7 @@
           </div>
           <div class="image-wrapper">
             <img
-              src="assets/images/n8n-version.png"
+              src="../assets/images/n8n-version.png"
               alt="Screenshot n8n versi 1.116.2"
             />
             <p class="image-caption">
@@ -66,13 +66,13 @@
             sekarang saya pakai Docker walaupun berbayar, saya membelinya di
             Hostinger (tidak disponsori sama sekali, hanya untuk belajar).
             <br /><br />
-            Untuk detail lebih lanjut tentang berbagai cara menyiapkan n8n,
-            lihat dokumentasi platform Saya.
+            Untuk detail lebih lanjut tentang berbagai cara menyiapkan n8n, cek
+            di materi sebelumnya.
           </div>
 
           <div class="image-wrapper">
             <img
-              src="assets/images/create-workflow.png"
+              src="../assets/images/create-workflow.png"
               alt="Gambaran Umum Editor UI n8n"
             />
             <p class="image-caption">
@@ -88,7 +88,7 @@
           <p>Tampilannya akan terlihat seperti ini:</p>
           <div class="image-wrapper">
             <img
-              src="assets/images/first-workflow.png"
+              src="../assets/images/first-workflow.png"
               alt="Gambaran Umum Editor UI n8n"
             />
             <p class="image-caption">
@@ -111,7 +111,7 @@
           </p>
           <div class="image-wrapper">
             <img
-              src="assets/images/left-panel.png"
+              src="../assets/images/left-panel.png"
               alt="Gambaran Umum Editor UI n8n"
             />
             <p class="image-caption">
@@ -158,7 +158,7 @@
 
           <div class="image-wrapper">
             <img
-              src="assets/images/top-panel.png"
+              src="../assets/images/top-panel.png"
               alt="Bilah Atas Editor UI n8n"
             />
             <p class="image-caption">
@@ -239,7 +239,7 @@
           </p>
           <div class="image-wrapper">
             <img
-              src="assets/images/canvas-overview.png"
+              src="../assets/images/canvas-overview.png"
               alt="Kanvas Workflow n8n"
             />
             <p class="image-caption">Area kanvas tempat workflow dibangun.</p>
@@ -265,11 +265,6 @@
               ke ikon + di kanan atas).
             </li>
             <li>
-              Tombol berlabel <strong>Ask Assistant</strong> muncul di sisi
-              kanan kanvas. Kita dapat meminta bantuan AI Assistant untuk
-              membangun workflow.
-            </li>
-            <li>
               Kotak putus-putus dengan teks "Add first step." Di sinilah Kita
               menambahkan node pertama Kita.
             </li>
@@ -291,7 +286,7 @@
           </div>
           <p>
             Jangan khawatir tentang eksekusi dan aktivasi workflow untuk saat
-            ini; Saya akan menjelaskan konsep-konsep ini nanti dalam kursus.
+            ini; Kita akan mempelajari konsep-konsep ini nanti insyaallah.
           </p>
 
           <h2>Node</h2>
@@ -301,11 +296,8 @@
             berfungsi: workflow otomatis.
           </p>
           <div class="image-wrapper">
-            <img
-              src="assets/images/a-node.png"
-              alt="Contoh Sebuah Node di n8n"
-            />
-            <p class="image-caption">Representasi sebuah node individual.</p>
+            <img src="../assets/images/node.png" alt="Contoh Sebuah Node di n8n" />
+            <p class="image-caption">Representasi nodes</p>
           </div>
           <blockquote>
             <strong>Node</strong> adalah langkah individual dalam workflow Kita:
@@ -352,7 +344,7 @@
             <li>Tekan tombol <strong>Tab</strong> di keyboard Kita.</li>
           </ul>
           <div class="image-wrapper">
-            <img src="assets/images/nodes-panel.png" alt="Panel Node n8n" />
+            <img src="../assets/images/nodes-panel.png" alt="Panel Node n8n" />
             <p class="image-caption">
               Panel di sisi kanan untuk mencari dan menambahkan node.
             </p>
@@ -410,6 +402,6 @@
       </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="../assets/script.js"></script>
   </body>
 </html>
