@@ -1,170 +1,361 @@
-/* Pengaturan Dasar */
+/* ======================================================= */
+/* Variabel Tema (Light & Dark Mode) */
+/* ======================================================= */
+:root {
+  --sidebar-width: 260px;
+  /* ... (Semua variabel warna Anda tetap sama) ... */
+  --bg-color: #f4f7f6;
+  --text-color: #333;
+  --text-color-light: #555;
+  --header-color: #1a1a1a;
+  --container-bg: #ffffff;
+  --sidebar-bg: #f9f9f9;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --link-hover-bg: #e6f7f5;
+  --link-hover-text: #007a66;
+  --link-active-bg: #00a98f;
+  --link-active-text: #ffffff;
+  --note-bg: #e6f7f5;
+  --note-border: #00a98f;
+  --note-alt-bg: #fffaf0;
+  --note-alt-border: #ff9900;
+  --blockquote-bg: #f9f9f9;
+  --blockquote-border: #ccc;
+  --image-border: #e0e0e0;
+  --image-caption-text: #777;
+}
+
+body.dark-mode {
+  /* ... (Semua variabel dark mode Anda tetap sama) ... */
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --text-color-light: #aaa;
+  --header-color: #ffffff;
+  --container-bg: #2c2c2c;
+  --sidebar-bg: #252525;
+  --border-color: #444;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --link-hover-bg: #30403e;
+  --link-hover-text: #00a98f;
+  --link-active-bg: #00a98f;
+  --link-active-text: #ffffff;
+  --note-bg: #30403e;
+  --note-border: #00a98f;
+  --note-alt-bg: #4d3a1a;
+  --note-alt-border: #ff9900;
+  --blockquote-bg: #333;
+  --blockquote-border: #555;
+  --image-border: #555;
+  --image-caption-text: #999;
+}
+
+/* ======================================================= */
+/* Pengaturan Dasar (BARU) */
+/* ======================================================= */
+* {
+  box-sizing: border-box; /* Konsistensi layout */
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f7f6;
-    color: #333;
-    margin: 0;
-    padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  line-height: 1.6;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0; /* <-- PENTING: Hapus margin body */
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ======================================================= */
+/* Container Utama (DIPERBARUI) */
+/* ======================================================= */
 .container {
-    display: flex;
-    max-width: 1200px;
-    margin: 20px auto;
-    background: #ffffff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border-radius: 8px;
-    overflow: hidden;
+  display: flex;
+  width: 100%;
+  height: 100vh; /* <-- KUNCI 1: Isi tinggi viewport */
+  position: relative; /* <-- KUNCI 2: Untuk posisi tombol toggle */
+  background: var(--container-bg);
+  /* Hapus margin, max-width, shadow, radius (sudah tidak relevan) */
 }
 
-/* Sidebar Navigasi */
+/* ======================================================= */
+/* Sidebar (DIPERBARUI) */
+/* ======================================================= */
 .sidebar {
-    width: 240px;
-    background: #f9f9f9;
-    border-right: 1px solid #e0e0e0;
-    padding: 20px;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  height: 100vh; /* <-- KUNCI 3: Samakan tinggi container */
+  overflow-y: auto; /* <-- KUNCI 4: Sidebar punya scroll sendiri */
+  overflow-x: hidden;
+}
+
+.sidebar-content {
+  padding: 20px;
 }
 
 .sidebar h3 {
-    font-size: 1.2em;
-    color: #1a1a1a;
-    border-bottom: 2px solid #00a98f; /* Warna n8n */
-    padding-bottom: 10px;
+  font-size: 1.2em;
+  color: var(--header-color);
+  border-bottom: 2px solid var(--note-border);
+  padding-bottom: 10px;
 }
 
 .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .sidebar ul li a {
-    display: block;
-    padding: 10px 15px;
-    text-decoration: none;
-    color: #555;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    font-weight: 500;
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: var(--text-color-light);
+  border-radius: 5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar ul li a:hover {
-    background-color: #e6f7f5;
-    color: #007a66;
+  background-color: var(--link-hover-bg);
+  color: var(--link-hover-text);
 }
 
 .sidebar ul li a.active {
-    background-color: #00a98f;
-    color: white;
-    font-weight: 700;
+  background-color: var(--link-active-bg);
+  color: var(--link-active-text);
+  font-weight: 700;
 }
 
-/* Konten Utama */
-.content {
-    flex: 1;
-    padding: 30px 40px;
-    overflow-y: auto; /* Jika konten panjang */
+/* Tombol Tema (Style dari sebelumnya) */
+.theme-switcher {
+  padding: 0;
+  margin: 15px 0;
+  text-align: left;
 }
+
+#theme-toggle {
+  padding: 10px 15px;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+#theme-toggle:hover {
+  background-color: var(--link-hover-bg);
+  color: var(--link-hover-text);
+}
+
+/* ======================================================= */
+/* Konten Utama (DIPERBARUI) */
+/* ======================================================= */
+.content {
+  flex: 1;
+  height: 100vh; /* <-- KUNCI 3: Samakan tinggi container */
+  overflow-y: auto; /* <-- KUNCI 4: Konten punya scroll sendiri */
+  padding: 30px 40px;
+}
+
+/* ======================================================= */
+/* Tombol Toggle Sidebar (DIPERBARUI TOTAL) */
+/* ======================================================= */
+#sidebar-toggle {
+  position: absolute; /* <-- Menempel pada .container */
+  top: 50%; /* <-- KUNCI 5: Selalu di tengah layar */
+  transform: translateY(-50%); /* Penyesuaian agar pas di tengah */
+
+  /* Posisi horizontal, di atas border sidebar */
+  left: calc(var(--sidebar-width) - 15px);
+  z-index: 10;
+
+  /* Style Tombol */
+  width: 30px;
+  height: 40px;
+  background: var(--container-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 1px 4px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+#sidebar-toggle:hover {
+  background: var(--link-hover-bg);
+}
+
+/* ======================================================= */
+/* Status Sidebar Ditutup (DIPERBARUI) */
+/* ======================================================= */
+.container.sidebar-collapsed .sidebar {
+  width: 0;
+  min-width: 0;
+  border: none;
+}
+
+.container.sidebar-collapsed #sidebar-toggle {
+  /* Pindahkan tombol ke kiri saat sidebar ditutup */
+  left: -15px;
+  transform: translateY(-50%) scaleX(-1); /* Balik panah & tetap di tengah */
+  border-radius: 0 8px 8px 0;
+}
+
+/* ======================================================= */
+/* Styling Artikel (TIDAK BERUBAH) */
+/* ... (Salin semua style .article, .note, .image-wrapper Anda) ... */
+/* ======================================================= */
 
 article h1 {
-    font-size: 2.5em;
-    color: #1a1a1a;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
-    margin-top: 0;
+  font-size: 2.5em;
+  color: var(--header-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  margin-top: 0;
 }
 
 article h2 {
-    font-size: 1.8em;
-    color: #1a1a1a;
-    margin-top: 40px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 10px;
+  font-size: 1.8em;
+  color: var(--header-color);
+  margin-top: 40px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
 }
 
 article h3 {
-    font-size: 1.4em;
-    color: #333;
-    margin-top: 30px;
+  font-size: 1.4em;
+  color: var(--header-color);
+  margin-top: 30px;
 }
 
-article p, article ul, article ol {
-    font-size: 1.05em;
-    margin-bottom: 20px;
+article p,
+article ul,
+article ol {
+  font-size: 1.05em;
+  margin-bottom: 20px;
+  color: var(--text-color-light);
+}
+
+article p {
+  color: var(--text-color);
 }
 
 article p.intro {
-    font-size: 1.2em;
-    color: #555;
-    font-style: italic;
+  font-size: 1.2em;
+  color: var(--text-color-light);
+  font-style: italic;
 }
 
-article ul, article ol {
-    padding-left: 30px;
+article ul,
+article ol {
+  padding-left: 30px;
+}
+
+article ul.sub-list {
+  margin-top: 10px;
+  font-size: 0.95em;
 }
 
 article li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 article strong {
-    color: #1a1a1a;
+  color: var(--header-color);
+  font-weight: 600;
 }
 
-/* Elemen Khusus */
 .note {
-    background-color: #e6f7f5;
-    border-left: 5px solid #00a98f;
-    padding: 15px 20px;
-    margin: 20px 0;
-    border-radius: 5px;
+  background-color: var(--note-bg);
+  border-left: 5px solid var(--note-border);
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .note.alt {
-    background-color: #fffaf0;
-    border-left-color: #ff9900;
+  background-color: var(--note-alt-bg);
+  border-left-color: var(--note-alt-border);
+}
+
+.note strong {
+  color: var(--header-color);
 }
 
 blockquote {
-    font-size: 1.1em;
-    font-style: italic;
-    border-left: 5px solid #ccc;
-    padding: 10px 20px;
-    margin: 20px 0;
-    background: #f9f9f9;
+  font-size: 1.1em;
+  font-style: italic;
+  border-left: 5px solid var(--blockquote-border);
+  padding: 10px 20px;
+  margin: 20px 0;
+  background: var(--blockquote-bg);
+  transition: background-color 0.3s ease;
 }
 
-.img-placeholder {
-    background: #f0f0f0;
-    border: 1px dashed #ccc;
-    padding: 20px;
-    text-align: center;
-    margin: 20px 0;
-    border-radius: 5px;
+.image-wrapper {
+  text-align: center;
+  margin: 25px 0;
 }
 
-.img-placeholder p {
-    margin: 10px 0 0;
-    font-style: italic;
-    color: #777;
-    font-size: 0.9em;
+.image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--image-border);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  transition: border-color 0.3s ease;
 }
 
-/* Responsif (Sederhana) */
+.image-caption {
+  font-size: 0.9em;
+  color: var(--image-caption-text);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* ======================================================= */
+/* Responsif (DIPERBARUI) */
+/* ======================================================= */
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    
-    .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #e0e0e0;
-    }
+  /* Di mobile, kita kembalikan ke layout scrolling normal */
+  .container {
+    flex-direction: column;
+    height: auto; /* Biarkan konten menentukan tinggi */
+  }
 
-    .content {
-        padding: 20px;
-    }
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto; /* Biarkan konten menu menentukan tinggi */
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    overflow-y: hidden; /* Matikan scroll internal sidebar */
+  }
+
+  .content {
+    height: auto; /* Biarkan konten artikel menentukan tinggi */
+    overflow-y: hidden; /* Matikan scroll internal konten */
+  }
+
+  /* Sembunyikan tombol minimize di mobile */
+  #sidebar-toggle {
+    display: none;
+  }
 }
