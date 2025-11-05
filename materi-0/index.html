@@ -8,20 +8,7 @@
   </head>
   <body>
     <div class="container">
-      <nav class="sidebar">
-        <div class="sidebar-content">
-          <h3>Materi Belajar n8n</h3>
-          <div class="theme-switcher">
-            <button id="theme-toggle">Ganti Mode</button>
-          </div>
-          <ul>
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="index.html" class="active">Materi 0: Persiapan VPS</a></li>
-            <li><a href="../materi-1/index.html">Materi 1: Editor UI</a></li>
-          </ul>
-        </div>
-      </nav>
-
+    <div id="sidebar-placeholder"></div>
       <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
 
       <main class="content">
@@ -30,8 +17,8 @@
           <p class="intro">
             Sebelum kita mulai menjelajahi UI n8n di Materi 1, ada langkah
             paling awal yang krusial: menyiapkan "rumah" untuk n8n. Di materi
-            ini, kita akan membahas proses saya memilih server untuk
-            self-host n8n.
+            ini, kita akan membahas proses saya memilih server untuk self-host
+            n8n.
           </p>
 
           <div class="note">
@@ -64,14 +51,14 @@
 
           <h2>Kenapa VPS (Virtual Private Server)?</h2>
           <p>
-            Untuk self-host n8n, kita tidak bisa pakai <i>Shared Hosting</i> biasa
-            karena kita butuh <i>akses root</i> untuk menginstal
-            <strong>Docker</strong>. n8n sangat direkomendasikan untuk
-            dijalankan via Docker.
+            Untuk self-host n8n, kita tidak bisa pakai
+            <i>Shared Hosting</i> biasa karena kita butuh
+            <i>akses root</i> untuk menginstal <strong>Docker</strong>. n8n
+            sangat direkomendasikan untuk dijalankan via Docker.
           </p>
           <p>
-            Pilihannya ada dua: PC/komputer di rumah atau VPS. Saya memilih
-            VPS karena:
+            Pilihannya ada dua: PC/komputer di rumah atau VPS. Saya memilih VPS
+            karena:
           </p>
           <ul>
             <li>Nyala 24/7 tanpa perlu saya urus.</li>
@@ -82,13 +69,13 @@
           <h2>Pilihan VPS di Hostinger (yang Saya Tinjau)</h2>
           <p>
             Hostinger menawarkan beberapa paket VPS, tapi yang paling relevan
-            untuk n8n adalah paket KVM VPS mereka. Virtualisasi KVM ini
-            penting karena memberikan isolasi resource yang baik dan kompatibel
-            penuh dengan Docker.
+            untuk n8n adalah paket KVM VPS mereka. Virtualisasi KVM ini penting
+            karena memberikan isolasi resource yang baik dan kompatibel penuh
+            dengan Docker.
           </p>
           <p>
-            Berikut adalah paket KVM yang saya pilih 
-            (spesifikasi per November 2025, dan paling murah):
+            Berikut adalah paket KVM yang saya pilih (spesifikasi per November
+            2025, dan paling murah):
           </p>
 
           <h3>KVM 1</h3>
@@ -98,8 +85,8 @@
             <li><strong>Storage:</strong> 50 GB NVMe</li>
             <li>
               <strong>Keterangan:</strong> Ini paket minimum. Cukup untuk
-              belajar dan menjalankan workflow ringan, tapi mungkin akan
-              terasa lambat jika workflow-nya banyak atau memproses data besar.
+              belajar dan menjalankan workflow ringan, tapi mungkin akan terasa
+              lambat jika workflow-nya banyak atau memproses data besar.
             </li>
           </ul>
 
@@ -124,25 +111,33 @@
             <li>
               <strong>Keterangan:</strong> Pilihan ini lebih untuk skala besar,
               jika Anda berencana menjalankan banyak eksekusi workflow secara
-              bersamaan (concurrent) atau menjalankan aplikasi berat lain di
-              VPS yang sama.
+              bersamaan (concurrent) atau menjalankan aplikasi berat lain di VPS
+              yang sama.
             </li>
           </ul>
 
           <div class="note">
             <strong>Mau Coba Hostinger? (Link Referral)</strong><br />
-            Jika Anda juga tertarik untuk mendaftar di Hostinger setelah membaca perbandingan ini, Anda bisa menggunakan link referral saya di bawah.
+            Jika Anda juga tertarik untuk mendaftar di Hostinger setelah membaca
+            perbandingan ini, Anda bisa menggunakan link referral saya di bawah.
             <br /><br />
-            <a href="https://hostinger.co.id?REFERRALCODE=O4BNAUFALFMR" target="_blank" rel="noopener noreferrer">
-                <strong>https://hostinger.co.id?REFERRALCODE=O4BNAUFALFMR</strong>
+            <a
+              href="https://hostinger.co.id?REFERRALCODE=O4BNAUFALFMR"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <strong>https://hostinger.co.id?REFERRALCODE=O4BNAUFALFMR</strong>
             </a>
             <br /><br />
-            Saya mungkin akan mendapat sedikit komisi tanpa biaya tambahan untuk Anda (dan Anda mungkin juga mendapat diskon). Ini adalah cara yang bagus untuk mendukung dokumentasi ini jika Anda merasa terbantu. Terima kasih!
+            Saya mungkin akan mendapat sedikit komisi tanpa biaya tambahan untuk
+            Anda (dan Anda mungkin juga mendapat diskon). Ini adalah cara yang
+            bagus untuk mendukung dokumentasi ini jika Anda merasa terbantu.
+            Terima kasih!
           </div>
 
           <p>
-            Untuk tutorial video lengkap tentang proses pembelian dan setup
-            awal VPS di Hostinger, Anda bisa melihat referensi video berikut:
+            Untuk tutorial video lengkap tentang proses pembelian dan setup awal
+            VPS di Hostinger, Anda bisa melihat referensi video berikut:
             <a
               href="https://www.youtube.com/watch?v=7UCDmr9_k"
               target="_blank"
@@ -153,8 +148,8 @@
           <div class="note alt">
             <strong>Pilihan Saya</strong><br />
             Saya akhirnya memilih paket <strong>KVM 1</strong>. Meskipun KVM 2
-            direkomendasikan, untuk tahap awal belajar, saya memilih paket
-            yang paling hemat biaya. Dengan 4GB RAM, ini sudah cukup untuk
+            direkomendasikan, untuk tahap awal belajar, saya memilih paket yang
+            paling hemat biaya. Dengan 4GB RAM, ini sudah cukup untuk
             menjalankan workflow ringan. Jika nanti terasa lambat atau kebutuhan
             meningkat, saya bisa upgrade paketnya.
           </div>
@@ -194,17 +189,7 @@
             <a href="../materi-1/index.html">Materi 1: Menjelajahi Editor UI</a
             >.
           </p>
-          <div class="support-block">
-            <h3>Merasa Terbantu?</h3>
-            <p>
-              Terima kasih telah membaca! Jika catatan ini bermanfaat, Anda
-              bisa memberi dukungan agar saya tetap semangat
-              membuat dokumentasi dan materi baru lainnya.
-            </p>
-            <a href="https://saweria.co/naufalnabila" target="_blank" rel="noopener noreferrer" class="support-button">
-              ✨ Beri Dukungan
-            </a>
-          </div>
+          <div id="support-block-placeholder"></div>
         </article>
       </main>
     </div>
