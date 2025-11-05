@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 2: Membangun Workflow Mini</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav class="sidebar">
+        <div class="sidebar-content">
+          <h3>Materi Belajar n8n</h3>
+          <div class="theme-switcher">
+            <button id="theme-toggle">Ganti Mode</button>
+          </div>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../materi-0/index.html">Materi 0: Persiapan VPS</a></li>
+            <li><a href="../materi-1/index.html">Materi 1: Editor UI</a></li>
+            <li>
+              <a href="index.html" class="active">Materi 2: Workflow Mini</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 2: Membangun Workflow Mini</h1>
+          <p class="intro">
+            Di materi ini, kita akan membangun sebuah workflow kecil yang
+            mengambil 10 artikel tentang "automasi" dari Hacker News. Prosesnya
+            terdiri dari lima langkah:
+          </p>
+
+          <ol>
+            <li>Menambahkan node Manual Trigger</li>
+            <li>Menambahkan node Hacker News</li>
+            <li>Mengonfigurasi node Hacker News</li>
+            <li>Mengeksekusi node</li>
+            <li>Menyimpan workflow</li>
+          </ol>
+
+          <p>Workflow yang sudah jadi akan terlihat seperti ini:</p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-finished-workflow.png"
+              alt="Workflow mini yang sudah jadi"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Workflow selesai: Manual Trigger ke Hacker
+              News.
+            </p>
+          </div>
+
+          <h2>1. Menambahkan Node Manual Trigger</h2>
+          <p>
+            Buka panel node (ingat: Anda bisa membukanya dengan memilih ikon
+            <strong>+</strong> di pojok kanan atas kanvas atau menekan tombol
+            <strong>Tab</strong> di keyboard Anda).
+          </p>
+          <p>Lalu:</p>
+          <ul>
+            <li>Cari node <strong>Manual Trigger</strong>.</li>
+            <li>Pilih node tersebut saat muncul di pencarian.</li>
+          </ul>
+          <p>
+            Ini akan menambahkan node Manual Trigger ke kanvas Anda, yang
+            memungkinkan Anda menjalankan workflow kapan saja dengan memilih
+            tombol <strong>Execute workflow</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-manual-trigger.png"
+              alt="Menambahkan node manual trigger"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Menambahkan node Manual Trigger ke kanvas.
+            </p>
+          </div>
+          <div class="note">
+            <strong>Tips Pembuatan Workflow Cepat</strong><br />
+            Anda bisa melewati langkah ini di masa depan. Menambahkan node lain
+            tanpa trigger akan otomatis menambahkan node Manual Trigger ke
+            workflow.
+          </div>
+          <div class="note alt">
+            <strong>Skenario Dunia Nyata</strong><br />
+            Dalam skenario dunia nyata, Anda mungkin ingin mengatur jadwal
+            (schedule) atau trigger lain untuk menjalankan workflow.
+          </div>
+
+          <h2>2. Menambahkan Node Hacker News</h2>
+          <p>
+            Pilih ikon <strong>+</strong> di sebelah kanan node Manual Trigger
+            untuk membuka panel node.
+          </p>
+          <p>Lalu:</p>
+          <ul>
+            <li>Cari node <strong>Hacker News</strong>.</li>
+            <li>Pilih node tersebut saat muncul di pencarian.</li>
+            <li>
+              Di bagian <strong>Actions</strong>, pilih
+              <strong>Get many items</strong>.
+            </li>
+          </ul>
+          <p>
+            n8n akan menambahkan node ke kanvas Anda dan jendela node akan
+            terbuka untuk menampilkan detail konfigurasinya.
+          </p>
+
+          <h2>3. Mengonfigurasi Node Hacker News</h2>
+          <p>
+            Saat Anda menambahkan node baru ke Editor UI, node tersebut
+            otomatis aktif. Detail node akan terbuka di jendela dengan beberapa
+            opsi:
+          </p>
+          <ul>
+            <li>
+              <strong>Parameters:</strong> Menyesuaikan parameter untuk
+              menyempurnakan dan mengontrol fungsionalitas node.
+            </li>
+            <li>
+              <strong>Settings:</strong> Menyesuaikan pengaturan untuk
+              mengontrol desain dan eksekusi node.
+            </li>
+            <li>
+              <strong>Docs:</strong> Membuka dokumentasi n8n untuk node ini di
+              jendela baru.
+            </li>
+          </ul>
+          <blockquote>
+            <strong>Parameters vs. Settings</strong><br />
+            <strong>Parameters</strong> berbeda untuk setiap node, tergantung
+            pada fungsinya. <br />
+            <strong>Settings</strong> sama untuk semua node.
+          </blockquote>
+
+          <h3>Parameters</h3>
+          <p>
+            Kita perlu mengonfigurasi beberapa parameter agar node Hacker News
+            berfungsi:
+          </p>
+          <ul>
+            <li><strong>Resource: All</strong>
+                <br>Resource ini memilih semua catatan data (artikel).
+            </li>
+            <li><strong>Operation: Get Many</strong>
+                <br>Operasi ini mengambil semua artikel yang dipilih.
+            </li>
+            <li><strong>Limit: 10</strong>
+                <br>Parameter ini menetapkan batas jumlah hasil yang dikembalikan oleh operasi Get Many.
+            </li>
+            <li>
+              <strong>Additional Fields > Add Field > Keyword: automation</strong>
+                <br>Ini adalah opsi yang bisa Anda tambahkan untuk membuat
+                permintaan Anda lebih spesifik. Untuk contoh ini, kita hanya
+                ingin mendapatkan artikel yang menyertakan kata kunci "automasi" (automation).
+            </li>
+          </ul>
+          <p>
+            Konfigurasi parameter untuk node Hacker News sekarang akan terlihat
+            seperti ini:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-hacker-news-params.png"
+              alt="Parameter node Hacker News"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Konfigurasi parameter node Hacker News.
+            </p>
+          </div>
+
+          <h3>Settings</h3>
+          <p>
+            Bagian <strong>Settings</strong> mencakup beberapa opsi untuk
+            desain dan eksekusi node. Dalam kasus ini, kita hanya akan
+            mengonfigurasi dua pengaturan terakhir, yang mengatur tampilan node
+            di kanvas Editor UI.
+          </p>
+          <p>Di dalam Settings node Hacker News, edit:</p>
+          <ul>
+            <li><strong>Notes:</strong> Get the 10 latest articles.</li>
+            <li><strong>Display note in flow?:</strong> (toggle ke true)</li>
+          </ul>
+          <div class="note">
+            Seringkali sangat membantu untuk menambahkan deskripsi singkat di
+            node tentang apa yang dilakukannya. Ini sangat berguna untuk
+            workflow yang kompleks atau yang dibagikan!
+          </div>
+          <p>
+            Opsi ini akan menampilkan Catatan (Note) di bawah node di kanvas.
+            Konfigurasi settings sekarang akan terlihat seperti ini:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-hacker-news-settings.png"
+              alt="Pengaturan node Hacker News"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Konfigurasi settings node Hacker News.
+            </p>
+          </div>
+
+          <div class="note alt">
+            <strong>Mengganti Nama Node</strong><br />
+            Anda dapat mengganti nama node dengan nama yang lebih deskriptif.
+            Ada tiga cara untuk melakukannya:
+            <ul>
+              <li>
+                Pilih node yang ingin Anda ganti namanya dan tekan tombol F2.
+              </li>
+              <li>
+                Klik dua kali pada node untuk membuka jendela node. Klik pada
+                nama node di sudut kiri atas jendela, ganti namanya, lalu klik
+                Rename.
+              </li>
+              <li>Klik kanan pada node dan pilih opsi Rename.</li>
+            </ul>
+          </div>
+
+          <h2>4. Mengeksekusi Node</h2>
+          <p>
+            Pilih tombol <strong>Execute step</strong> di jendela detail node.
+            Anda akan melihat 10 hasil di tampilan <strong>Output Table</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-table-view.png"
+              alt="Hasil dalam tampilan tabel"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Hasil node Hacker News dalam tampilan Tabel.
+            </p>
+          </div>
+
+          <h3>Eksekusi Node</h3>
+          <blockquote>
+            <strong>Eksekusi Node</strong><br />
+            Sebuah eksekusi node mewakili satu kali jalannya node tersebut
+            untuk mengambil atau memproses data yang ditentukan.
+          </blockquote>
+          <p>
+            Jika node dieksekusi dengan sukses, tanda centang hijau kecil
+            muncul di atas node di kanvas.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-success-check.png"
+              alt="Node berhasil dieksekusi"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Tanda centang hijau menunjukkan eksekusi
+              berhasil.
+            </p>
+          </div>
+          <p>
+            Jika tidak ada masalah dengan parameter, data yang diminta akan
+            tampil di jendela node dalam format <strong>Table</strong>,
+            <strong>JSON</strong>, dan <strong>Schema</strong>. Anda dapat
+            berpindah antar tampilan ini.
+          </p>
+          <blockquote>
+            <strong>Tampilan Table vs JSON</strong><br />
+            Tampilan <strong>Table</strong> adalah default. Ini menampilkan
+            data dalam tabel. Tampilan <strong>JSON</strong> menampilkan
+            output data mentah dalam format JSON.
+          </blockquote>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-json-view.png"
+              alt="Hasil dalam tampilan JSON"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Hasil node Hacker News dalam tampilan JSON.
+            </p>
+          </div>
+          <p>
+            Jendela node menampilkan lebih banyak informasi tentang eksekusi
+            node:
+          </p>
+          <ul>
+            <li>
+              Di sebelah judul <strong>Output</strong>, ada ikon info. Jika
+              Anda mengarahkan kursor ke sana, Anda akan mendapatkan dua info
+              lagi: <strong>Start Time</strong> (Kapan eksekusi dimulai) dan
+              <strong>Execution Time</strong> (Berapa lama waktu yang
+              dibutuhkan).
+            </li>
+            <li>
+              Tepat di bawah judul <strong>Output</strong>, Anda akan melihat
+              info: <strong>10 items</strong>. Ini menampilkan jumlah item
+              (catatan) yang dikembalikan.
+            </li>
+          </ul>
+          <div class="note alt">
+            <strong>Error pada Node</strong><br />
+            Ikon peringatan merah pada node berarti node tersebut mengalami
+            error. Ini mungkin terjadi jika kredensial node hilang/salah atau
+            parameter tidak dikonfigurasi dengan benar.
+            <div class="image-wrapper" style="margin-top: 15px">
+              <img
+                src="../assets/images/materi-2-error-node.png"
+                alt="Node dengan error"
+              />
+              <p class="image-caption" style="margin-top: 5px">
+                (Ganti gambar ini) Node yang menunjukkan error.
+              </p>
+            </div>
+          </div>
+
+          <h2>5. Menyimpan Workflow</h2>
+          <p>
+            Setelah Anda selesai mengedit node, pilih
+            <strong>Back to canvas</strong> untuk kembali ke kanvas utama.
+          </p>
+          <p>
+            Secara default, workflow Anda disimpan sebagai "My workflow." Untuk
+            materi ini, ganti nama workflow menjadi
+            <strong>"Hacker News workflow."</strong>
+          </p>
+          <div class="note">
+            <strong>Pengingat:</strong> Anda dapat mengganti nama workflow
+            dengan mengklik nama workflow di bagian atas Editor UI.
+          </div>
+          <p>
+            Setelah Anda mengganti namanya, pastikan untuk menyimpannya. Ada
+            dua cara untuk menyimpan workflow:
+          </p>
+          <ul>
+            <li>
+              Tekan <strong>Ctrl + S</strong> (atau <strong>Cmd + S</strong>
+              untuk Mac) di keyboard Anda.
+            </li>
+            <li>
+              Pilih tombol <strong>Save</strong> di pojok kanan atas Editor UI.
+            </li>
+          </ul>
+          <p>
+            Jika Anda melihat teks <strong>Saved</strong> berwarna abu-abu,
+            berarti workflow Anda sudah tersimpan secara otomatis.
+          </p>
+
+          <h2>Ringkasan</h2>
+          <p>
+            Selamat, Anda baru saja membangun workflow pertama Anda! Di materi
+            ini, Anda belajar cara menggunakan node aplikasi, mengonfigurasi
+            parameter dan pengaturannya, serta menyimpan dan mengeksekusi
+V          </p>
+          <p>
+            Di materi selanjutnya, Anda akan bertemu klien baru Anda, Nathan,
+            yang perlu mengotomatiskan pekerjaan pelaporan penjualannya. Anda
+            akan membangun workflow yang lebih kompleks untuk kasus
+            penggunaannya, membantunya menjadi lebih produktif di tempat kerja.
+          </p>
+        </article>
+      </main>
+    </div>
+
+    <script src="../assets/script.js"></script>
+  </body>
+</html>

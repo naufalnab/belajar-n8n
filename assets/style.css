@@ -488,11 +488,11 @@ blockquote {
   #sidebar-toggle {
     display: none;
   }
-  
+
   article h1 {
     font-size: 2em;
   }
-  
+
   article h2 {
     font-size: 1.5em;
   }
@@ -515,3 +515,74 @@ blockquote {
     gap: 20px;
   }
 }
+
+
+  /* ======================================================= */
+  /* STYLE UNTUK TOMBOL & BLOK DUKUNGAN */
+  /* ======================================================= */
+
+  /* Tombol utama di Homepage */
+  .homepage-container .support-button {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--link-active-text);
+    background-color: var(
+      --note-alt-border
+    ); /* Warna oranye/kuning yang 'hangat' */
+    padding: 12px 24px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px -1px rgba(255, 153, 0, 0.2);
+  }
+
+  .homepage-container .support-button:hover {
+    transform: translateY(-2px);
+    background-color: #ffaa33; /* Sedikit lebih cerah saat hover */
+    box-shadow: 0 6px 15px -1px rgba(255, 153, 0, 0.3);
+  }
+
+  /* Blok dukungan di akhir artikel */
+  .support-block {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid var(--border-color);
+    text-align: center;
+  }
+
+  .support-block h3 {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: var(--header-color);
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  .support-block p {
+    font-size: 1.1em;
+    color: var(--text-color-light);
+    max-width: 600px;
+    margin: 0 auto 25px auto;
+  }
+
+  /* Tombol di dalam blok dukungan */
+  .support-block .support-button {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--link-active-text);
+    background-color: var(--note-border); /* Warna hijau n8n */
+    padding: 12px 30px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px -1px rgba(0, 169, 143, 0.2);
+  }
+
+  .support-block .support-button:hover {
+    transform: translateY(-2px);
+    background-color: #00c7a5; /* Versi lebih cerah */
+    box-shadow: 0 6px 15px -1px rgba(0, 169, 143, 0.3);
+  }
