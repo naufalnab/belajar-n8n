@@ -1,0 +1,170 @@
+/* Pengaturan Dasar */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Sidebar Navigasi */
+.sidebar {
+    width: 240px;
+    background: #f9f9f9;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+}
+
+.sidebar h3 {
+    font-size: 1.2em;
+    color: #1a1a1a;
+    border-bottom: 2px solid #00a98f; /* Warna n8n */
+    padding-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #555;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.sidebar ul li a:hover {
+    background-color: #e6f7f5;
+    color: #007a66;
+}
+
+.sidebar ul li a.active {
+    background-color: #00a98f;
+    color: white;
+    font-weight: 700;
+}
+
+/* Konten Utama */
+.content {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto; /* Jika konten panjang */
+}
+
+article h1 {
+    font-size: 2.5em;
+    color: #1a1a1a;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-top: 0;
+}
+
+article h2 {
+    font-size: 1.8em;
+    color: #1a1a1a;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+article h3 {
+    font-size: 1.4em;
+    color: #333;
+    margin-top: 30px;
+}
+
+article p, article ul, article ol {
+    font-size: 1.05em;
+    margin-bottom: 20px;
+}
+
+article p.intro {
+    font-size: 1.2em;
+    color: #555;
+    font-style: italic;
+}
+
+article ul, article ol {
+    padding-left: 30px;
+}
+
+article li {
+    margin-bottom: 10px;
+}
+
+article strong {
+    color: #1a1a1a;
+}
+
+/* Elemen Khusus */
+.note {
+    background-color: #e6f7f5;
+    border-left: 5px solid #00a98f;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.note.alt {
+    background-color: #fffaf0;
+    border-left-color: #ff9900;
+}
+
+blockquote {
+    font-size: 1.1em;
+    font-style: italic;
+    border-left: 5px solid #ccc;
+    padding: 10px 20px;
+    margin: 20px 0;
+    background: #f9f9f9;
+}
+
+.img-placeholder {
+    background: #f0f0f0;
+    border: 1px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.img-placeholder p {
+    margin: 10px 0 0;
+    font-style: italic;
+    color: #777;
+    font-size: 0.9em;
+}
+
+/* Responsif (Sederhana) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .content {
+        padding: 20px;
+    }
+}
