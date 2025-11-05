@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 1: Menjelajahi Editor UI n8n</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h3>Materi Belajar n8n</h3>
+            <ul>
+                <li><a href="#" class="active">Materi 1: Editor UI</a></li>
+                </ul>
+        </nav>
+
+        <main class="content">
+            <article>
+                <h1>Materi 1: Menjelajahi Editor UI</h1>
+                <p class="intro">Di materi ini, Anda akan belajar cara menavigasi Editor UI (User Interface) n8n. Kita akan menjelajahi kanvas dan menunjukkan arti setiap ikon serta di mana menemukan hal-hal yang Anda perlukan saat membangun workflow di n8n.</p>
+
+                <div class="note">
+                    <strong>Versi n8n</strong><br>
+                    Materi ini didasarkan pada n8n versi 1.82.1. Pada versi lain, beberapa antarmuka pengguna mungkin terlihat berbeda, tetapi ini seharusnya tidak memengaruhi fungsionalitas inti.
+                </div>
+
+                <h2>Memulai</h2>
+                <p>Mulailah dengan menyiapkan n8n.</p>
+                <p>Kami merekomendasikan memulai dengan <strong>n8n Cloud</strong>, solusi yang di-host yang tidak memerlukan instalasi dan menyertakan uji coba gratis.</p>
+
+                <div class="note alt">
+                    <strong>Pengaturan Alternatif</strong><br>
+                    Jika n8n Cloud bukan pilihan yang baik untuk Anda, Anda dapat melakukan <i>self-host</i> dengan Docker. Ini adalah opsi lanjutan yang direkomendasikan hanya untuk pengguna teknis yang terbiasa dengan layanan hosting, Docker, dan baris perintah (command line).
+                    <br><br>
+                    Untuk detail lebih lanjut tentang berbagai cara menyiapkan n8n, lihat dokumentasi platform kami.
+                </div>
+
+                <p>Setelah n8n berjalan, buka Editor UI di jendela browser. Masuk ke instans n8n Anda. Pilih <strong>Overview</strong> lalu <strong>Create Workflow</strong> untuk melihat kanvas utama.</p>
+                <p>Tampilannya akan terlihat seperti ini:</p>
+                <div class="img-placeholder">
+                    
+                    <p>Gambaran Editor UI n8n</p>
+                </div>
+
+                <h2>Pengaturan Editor UI</h2>
+                <p>Editor UI adalah antarmuka web tempat Anda membangun workflow. Anda dapat mengakses semua workflow dan kredensial Anda, serta halaman dukungan, dari Editor UI.</p>
+
+                <h3>Panel Sisi Kiri</h3>
+                <p>Di sisi kiri Editor UI, terdapat panel yang berisi fungsionalitas inti dan pengaturan untuk mengelola workflow Anda. Buka dan tutup panel ini dengan memilih ikon panah kecil.</p>
+                
+                <div class="img-placeholder">
+                    
+                    <p>Menu Sisi Kiri Editor UI</p>
+                </div>
+
+                <p>Panel ini berisi bagian-bagian berikut:</p>
+                <ul>
+                    <li><strong>Overview:</strong> Berisi semua workflow, kredensial, dan eksekusi yang dapat Anda akses. Selama kursus ini, buat workflow baru di sini.</li>
+                    <li><strong>Personal:</strong> Setiap pengguna mendapatkan proyek personal default. Jika Anda tidak membuat proyek kustom, workflow dan kredensial Anda disimpan di sini.</li>
+                    <li><strong>Projects:</strong> Memungkinkan Anda mengelompokkan workflow dan kredensial. Anda dapat menetapkan peran (role) ke pengguna dalam proyek untuk mengontrol apa yang dapat mereka lakukan. (Tidak tersedia di edisi Community).</li>
+                    <li><strong>Admin Panel:</strong> (Hanya n8n Cloud) Akses penggunaan instans n8n, tagihan, dan pengaturan versi Anda.</li>
+                    <li><strong>Templates:</strong> Kumpulan workflow siap pakai. Tempat yang bagus untuk memulai dengan kasus penggunaan umum.</li>
+                    <li><strong>Variables:</strong> Digunakan untuk menyimpan dan mengakses data tetap di seluruh workflow Anda. (Tersedia di Paket Pro dan Enterprise).</li>
+                    <li><strong>Insights:</strong> Menyediakan analitik dan wawasan tentang workflow Anda.</li>
+                    <li><strong>Help:</strong> Berisi sumber daya seputar produk dan komunitas n8n.</li>
+                    <li><strong>What’s New:</strong> Menampilkan pembaruan dan fitur produk terbaru.</li>
+                </ul>
+
+                <h3>Bilah Atas (Top Bar)</h3>
+                <p>Bilah atas Editor UI berisi informasi berikut:</p>
+                
+                <div class="img-placeholder">
+                    
+                    <p>Bilah Atas Editor UI</p>
+                </div>
+                
+                <ul>
+                    <li><strong>Nama Workflow:</strong> Secara default, n8n menamai workflow baru sebagai "My workflow", tetapi Anda dapat mengedit namanya kapan saja.</li>
+                    <li><strong>+ Add Tag:</strong> Tag membantu Anda mengatur workflow berdasarkan kategori, kasus penggunaan, atau apa pun yang relevan bagi Anda. Tag bersifat opsional.</li>
+                    <li><strong>Tombol Inactive/active:</strong> Tombol ini mengaktifkan atau menonaktifkan workflow saat ini. Secara default, workflow dinonaktifkan.</li>
+                    <li><strong>Share:</strong> Anda dapat berbagi dan berkolaborasi dengan orang lain pada workflow (di paket Starter, Pro, dan Enterprise).</li>
+                    <li><strong>Save:</strong> Tombol ini menyimpan workflow saat ini.</li>
+                    <li><strong>History:</strong> Setelah Anda menyimpan workflow, Anda dapat melihat versi sebelumnya di sini.</li>
+                </ul>
+
+                <h3>Kanvas (Canvas)</h3>
+                <p>Kanvas adalah latar belakang kotak-kotak abu-abu di Editor UI. Ini menampilkan beberapa ikon dan node dengan fungsionalitas berbeda:</p>
+                
+                <div class="img-placeholder">
+                    
+                    <p>Kanvas Workflow</p>
+                </div>
+
+                <ul>
+                    <li>Tombol untuk memperbesar (zoom) kanvas agar pas di layar, memperbesar atau memperkecil kanvas, mengatur ulang zoom, dan merapikan node di layar.</li>
+                    <li>Tombol untuk <strong>Execute workflow</strong> setelah Anda menambahkan node pertama Anda. Saat Anda mengkliknya, n8n mengeksekusi semua node di kanvas secara berurutan.</li>
+                    <li>Tombol dengan tanda <strong>+</strong> di dalamnya. Tombol ini membuka panel node.</li>
+                    <li>Tombol dengan ikon catatan (note). Tombol ini menambahkan catatan tempel (sticky note) ke kanvas (terlihat saat mengarahkan kursor ke ikon + di kanan atas).</li>
+                    <li>Tombol berlabel <strong>Ask Assistant</strong> muncul di sisi kanan kanvas. Anda dapat meminta bantuan AI Assistant untuk membangun workflow.</li>
+                    <li>Kotak putus-putus dengan teks "Add first step." Di sinilah Anda menambahkan node pertama Anda.</li>
+                </ul>
+
+                <div class="note">
+                    <strong>Memindahkan Kanvas</strong><br>
+                    Anda dapat memindahkan kanvas workflow dengan tiga cara:
+                    <ul>
+                        <li>Pilih <strong>Ctrl+Tombol Kiri mouse</strong> di kanvas dan gerakkan.</li>
+                        <li>Pilih <strong>Tombol Tengah mouse</strong> di kanvas dan gerakkan.</li>
+                        <li>Letakkan dua jari di touchpad Anda dan geser.</li>
+                    </ul>
+                </div>
+                <p>Jangan khawatir tentang eksekusi dan aktivasi workflow untuk saat ini; kami akan menjelaskan konsep-konsep ini nanti dalam kursus.</p>
+
+                <h2>Node</h2>
+                <p>Anda dapat menganggap node sebagai blok bangunan yang melayani fungsi berbeda yang, ketika disatukan, membentuk mesin yang berfungsi: workflow otomatis.</p>
+                <div class="img-placeholder">
+                    
+                    <p>Sebuah Node</p>
+                </div>
+                <blockquote>
+                    <strong>Node</strong> adalah langkah individual dalam workflow Anda: yang (a) memuat, (b) memproses, atau (c) mengirim data.
+                </blockquote>
+
+                <p>Berdasarkan fungsinya, n8n mengklasifikasikan node ke dalam empat jenis:</p>
+                <ul>
+                    <li><strong>Node Aplikasi atau Aksi:</strong> Menambah, menghapus, dan mengedit data; meminta dan mengirim data eksternal; dan memicu peristiwa di sistem lain.</li>
+                    <li><strong>Node Pemicu (Trigger):</strong> Memulai workflow dan memasok data awal.</li>
+                    <li><strong>Node Inti (Core):</strong> Bisa berupa node pemicu atau aplikasi. Jika sebagian besar node terhubung ke layanan eksternal tertentu, node inti menyediakan fungsionalitas seperti logika, penjadwalan, atau panggilan API generik.</li>
+                    <li><strong>Node Kluster:</strong> Adalah grup node yang bekerja sama untuk menyediakan fungsionalitas dalam workflow, terutama untuk workflow AI.</li>
+                </ul>
+
+                <h3>Menemukan Node</h3>
+                <p>Anda dapat menemukan semua node yang tersedia di panel node di sisi kanan Editor UI. Ada tiga cara untuk membuka panel node:</p>
+                <ul>
+                    <li>Klik ikon <strong>+</strong> di sudut kanan atas kanvas.</li>
+                    <li>Klik ikon <strong>+</strong> di sisi kanan node yang ada di kanvas (node yang ingin Anda tambahi node lain).</li>
+                    <li>Tekan tombol <strong>Tab</strong> di keyboard Anda.</li>
+                </ul>
+                <div class="img-placeholder">
+                    
+                    <p>Panel Node</p>
+                </div>
+                <p>Di panel node, perhatikan bahwa saat menambahkan node pertama, Anda akan melihat berbagai kategori node pemicu. Setelah Anda menambahkan node pemicu, Anda akan melihat panel node berubah untuk menampilkan node Advanced AI, Actions in an App, Data transformation, Flow, Core, dan Human in the loop.</p>
+                <p>Jika Anda ingin menemukan node tertentu, gunakan input pencarian di bagian atas panel node.</p>
+
+                <h3>Menambahkan Node</h3>
+                <p>Ada dua cara untuk menambahkan node ke kanvas Anda:</p>
+                <ol>
+                    <li>Pilih node yang Anda inginkan di panel node. Node baru akan otomatis terhubung ke node yang dipilih di kanvas.</li>
+                    <li>Seret (drag) dan lepas (drop) node dari panel node ke kanvas.</li>
+                </ol>
+
+                <h3>Tombol Node</h3>
+                <p>Jika Anda mengarahkan kursor ke sebuah node, Anda akan melihat tiga ikon muncul di atasnya:</p>
+                <ul>
+                    <li>Jalankan node (Ikon Play)</li>
+                    <li>Nonaktifkan/Aktifkan node (Ikon Power)</li>
+                    <li>Hapus node (Ikon Tempat Sampah)</li>
+                </ul>
+                <p>Juga akan ada ikon elipsis (tiga titik), yang membuka menu konteks berisi opsi node lainnya.</p>
+
+                <h2>Ringkasan</h2>
+                <p>Di materi ini, Anda telah belajar cara menavigasi Editor UI, arti ikon-ikonnya, cara mengakses panel sisi kiri dan panel node, serta cara menambahkan node ke kanvas.</p>
+                <p>Di materi selanjutnya, Anda akan membangun workflow mini untuk mempraktikkan apa yang telah Anda pelajari sejauh ini.</p>
+            </article>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
