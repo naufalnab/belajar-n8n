@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Materi 1: Menjelajahi Editor UI n8n</title>
     <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="container">
@@ -21,7 +27,6 @@
             setiap ikon serta di mana menemukan hal-hal yang Kita perlukan saat
             membangun workflow di n8n.
           </p>
-
           <div class="note">
             <strong>Versi n8n</strong><br />
             Materi ini didasarkan pada n8n versi 1.116.2. Pada versi lain,
@@ -31,20 +36,19 @@
           <div class="image-wrapper">
             <img
               src="../assets/images/n8n-version.png"
-              alt="Screenshot n8n versi 1.116.2"
+              alt="Screenshot n8n versi 1.116.2 di pojok kiri bawah."
+              loading="lazy"
             />
             <p class="image-caption">
               Contoh screenshot versi n8n yang sedang saya gunakan (1.116.2).
             </p>
           </div>
-
           <h2>Memulai</h2>
           <p>
             Kita bisa memulai dengan <strong>n8n Cloud</strong>, solusi yang
             di-host yang tidak memerlukan instalasi dan menyertakan uji coba
             gratis.
           </p>
-
           <div class="note alt">
             <strong>Pengaturan Alternatif</strong><br />
             Jika n8n Cloud bukan pilihan yang baik, kita dapat melakukan
@@ -57,17 +61,16 @@
             Untuk detail lebih lanjut tentang berbagai cara menyiapkan n8n, cek
             di materi sebelumnya.
           </div>
-
           <div class="image-wrapper">
             <img
               src="../assets/images/create-workflow.png"
-              alt="Gambaran Umum Editor UI n8n"
+              alt="Tombol 'Create Workflow' di dashboard n8n."
+              loading="lazy"
             />
             <p class="image-caption">
               Tampilan umum Editor UI n8n saat pertama kali dibuka.
             </p>
           </div>
-
           <p>
             Setelah n8n berjalan, buka Editor UI di jendela browser. Masuk ke
             instans n8n Kita. Pilih <strong>Overview</strong> lalu
@@ -77,13 +80,13 @@
           <div class="image-wrapper">
             <img
               src="../assets/images/first-workflow.png"
-              alt="Gambaran Umum Editor UI n8n"
+              alt="Kanvas workflow n8n yang masih kosong dengan node 'Start'."
+              loading="lazy"
             />
             <p class="image-caption">
               Tampilan umum Workflow n8n saat pertama kali dibuat.
             </p>
           </div>
-
           <h2>Pengaturan Editor UI</h2>
           <p>
             Editor UI adalah antarmuka web tempat Kita membangun workflow. Kita
@@ -100,7 +103,8 @@
           <div class="image-wrapper">
             <img
               src="../assets/images/left-panel.png"
-              alt="Gambaran Umum Editor UI n8n"
+              alt="Panel navigasi sisi kiri n8n yang menampilkan Overview, Templates, dll."
+              loading="lazy"
             />
             <p class="image-caption">
               Panel navigasi di sisi kiri Editor UI n8n.
@@ -140,20 +144,18 @@
               produk terbaru.
             </li>
           </ul>
-
           <h3>Bilah Atas (Top Bar)</h3>
           <p>Bilah atas Editor UI berisi informasi berikut:</p>
-
           <div class="image-wrapper">
             <img
               src="../assets/images/top-panel.png"
-              alt="Bilah Atas Editor UI n8n"
+              alt="Bilah atas n8n, menampilkan nama workflow, tombol save, dan menu elipsis."
+              loading="lazy"
             />
             <p class="image-caption">
               Bilah atas Editor UI yang berisi nama workflow, tombol save, dll.
             </p>
           </div>
-
           <ul>
             <li>
               <strong>Project/Folder:</strong> (Contoh: "Personal") Menunjukkan
@@ -228,7 +230,8 @@
           <div class="image-wrapper">
             <img
               src="../assets/images/canvas-overview.png"
-              alt="Kanvas Workflow n8n"
+              alt="Area kanvas n8n yang kosong dengan latar belakang titik-titik."
+              loading="lazy"
             />
             <p class="image-caption">Area kanvas tempat workflow dibangun.</p>
           </div>
@@ -284,8 +287,12 @@
             berfungsi: workflow otomatis.
           </p>
           <div class="image-wrapper">
-            <img src="../assets/images/node.png" alt="Contoh Sebuah Node di n8n" />
-            <p class="image-caption">Representasi nodes</p>
+            <img
+              src="../assets/images/node.png"
+              alt="Sebuah node 'Start' di kanvas n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">Representasi sebuah node individual.</p>
           </div>
           <blockquote>
             <strong>Node</strong> adalah langkah individual dalam workflow Kita:
@@ -332,7 +339,11 @@
             <li>Tekan tombol <strong>Tab</strong> di keyboard Kita.</li>
           </ul>
           <div class="image-wrapper">
-            <img src="../assets/images/nodes-panel.png" alt="Panel Node n8n" />
+            <img
+              src="../assets/images/nodes-panel.png"
+              alt="Panel node n8n di sisi kanan, menampilkan daftar trigger node."
+              loading="lazy"
+            />
             <p class="image-caption">
               Panel di sisi kanan untuk mencari dan menambahkan node.
             </p>
@@ -382,10 +393,20 @@
             ikon-ikonnya, cara mengakses panel sisi kiri dan panel node, serta
             cara menambahkan node ke kanvas.
           </p>
+          <h2>Ringkasan</h2>
           <p>
             Di materi selanjutnya, Kita akan membangun workflow mini untuk
             mempraktikkan apa yang telah Kita pelajari sejauh ini.
           </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-0/index.html"
+            data-prev-title="Materi 0: Persiapan VPS"
+            data-next-url="../materi-2/index.html"
+            data-next-title="Materi 2: Workflow Mini"
+          ></div>
+
           <div id="support-block-placeholder"></div>
         </article>
       </main>

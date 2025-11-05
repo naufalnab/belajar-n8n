@@ -461,6 +461,47 @@ blockquote {
 }
 
 /* ======================================================= */
+/* STYLE UNTUK NAVIGASI HALAMAN (PREV/NEXT) */
+/* ======================================================= */
+.page-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.page-navigation a {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text-color-light);
+  transition: all 0.2s ease;
+  max-width: 48%; /* Agar tidak terlalu lebar di mobile */
+}
+
+.page-navigation a:hover {
+  background-color: var(--link-hover-bg);
+  color: var(--link-hover-text);
+  border-color: var(--note-border);
+  transform: translateY(-2px);
+}
+
+.page-navigation .prev-page {
+  text-align: left;
+}
+
+.page-navigation .next-page {
+  text-align: right;
+  /* Jika hanya ada tombol next, paskan ke kanan */
+  margin-left: auto; 
+}
+
+/* ======================================================= */
 /* Responsif (DIPERBARUI) */
 /* ======================================================= */
 @media (max-width: 768px) {

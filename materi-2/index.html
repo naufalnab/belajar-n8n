@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Materi 2: Membangun Workflow Mini</title>
     <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="container">
@@ -33,7 +39,8 @@
           <div class="image-wrapper">
             <img
               src="../assets/images/materi-2-finished-workflow.png"
-              alt="Workflow mini yang sudah jadi"
+              alt="Workflow mini yang sudah jadi, dari node Start ke Hacker News."
+              loading="lazy"
             />
             <p class="image-caption">
               (Ganti gambar ini) Workflow selesai: Manual Trigger ke Hacker
@@ -60,7 +67,8 @@
           <div class="image-wrapper">
             <img
               src="../assets/images/materi-2-manual-trigger.png"
-              alt="Menambahkan node manual trigger"
+              alt="Mencari dan memilih node Manual Trigger di panel node."
+              loading="lazy"
             />
             <p class="image-caption">
               (Ganti gambar ini) Menambahkan node Manual Trigger ke kanvas.
@@ -99,9 +107,8 @@
 
           <h2>3. Mengonfigurasi Node Hacker News</h2>
           <p>
-            Saat Anda menambahkan node baru ke Editor UI, node tersebut
-            otomatis aktif. Detail node akan terbuka di jendela dengan beberapa
-            opsi:
+            Saat Anda menambahkan node baru ke Editor UI, node tersebut otomatis
+            aktif. Detail node akan terbuka di jendela dengan beberapa opsi:
           </p>
           <ul>
             <li>
@@ -130,20 +137,26 @@
             berfungsi:
           </p>
           <ul>
-            <li><strong>Resource: All</strong>
-                <br>Resource ini memilih semua catatan data (artikel).
-            </li>
-            <li><strong>Operation: Get Many</strong>
-                <br>Operasi ini mengambil semua artikel yang dipilih.
-            </li>
-            <li><strong>Limit: 10</strong>
-                <br>Parameter ini menetapkan batas jumlah hasil yang dikembalikan oleh operasi Get Many.
+            <li>
+              <strong>Resource: All</strong> <br />Resource ini memilih semua
+              catatan data (artikel).
             </li>
             <li>
-              <strong>Additional Fields > Add Field > Keyword: automation</strong>
-                <br>Ini adalah opsi yang bisa Anda tambahkan untuk membuat
-                permintaan Anda lebih spesifik. Untuk contoh ini, kita hanya
-                ingin mendapatkan artikel yang menyertakan kata kunci "automasi" (automation).
+              <strong>Operation: Get Many</strong> <br />Operasi ini mengambil
+              semua artikel yang dipilih.
+            </li>
+            <li>
+              <strong>Limit: 10</strong> <br />Parameter ini menetapkan batas
+              jumlah hasil yang dikembalikan oleh operasi Get Many.
+            </li>
+            <li>
+              <strong
+                >Additional Fields > Add Field > Keyword: automation</strong
+              >
+              <br />Ini adalah opsi yang bisa Anda tambahkan untuk membuat
+              permintaan Anda lebih spesifik. Untuk contoh ini, kita hanya ingin
+              mendapatkan artikel yang menyertakan kata kunci "automasi"
+              (automation).
             </li>
           </ul>
           <p>
@@ -162,10 +175,10 @@
 
           <h3>Settings</h3>
           <p>
-            Bagian <strong>Settings</strong> mencakup beberapa opsi untuk
-            desain dan eksekusi node. Dalam kasus ini, kita hanya akan
-            mengonfigurasi dua pengaturan terakhir, yang mengatur tampilan node
-            di kanvas Editor UI.
+            Bagian <strong>Settings</strong> mencakup beberapa opsi untuk desain
+            dan eksekusi node. Dalam kasus ini, kita hanya akan mengonfigurasi
+            dua pengaturan terakhir, yang mengatur tampilan node di kanvas
+            Editor UI.
           </p>
           <p>Di dalam Settings node Hacker News, edit:</p>
           <ul>
@@ -211,7 +224,8 @@
           <h2>4. Mengeksekusi Node</h2>
           <p>
             Pilih tombol <strong>Execute step</strong> di jendela detail node.
-            Anda akan melihat 10 hasil di tampilan <strong>Output Table</strong>.
+            Anda akan melihat 10 hasil di tampilan
+            <strong>Output Table</strong>.
           </p>
           <div class="image-wrapper">
             <img
@@ -226,12 +240,12 @@
           <h3>Eksekusi Node</h3>
           <blockquote>
             <strong>Eksekusi Node</strong><br />
-            Sebuah eksekusi node mewakili satu kali jalannya node tersebut
-            untuk mengambil atau memproses data yang ditentukan.
+            Sebuah eksekusi node mewakili satu kali jalannya node tersebut untuk
+            mengambil atau memproses data yang ditentukan.
           </blockquote>
           <p>
-            Jika node dieksekusi dengan sukses, tanda centang hijau kecil
-            muncul di atas node di kanvas.
+            Jika node dieksekusi dengan sukses, tanda centang hijau kecil muncul
+            di atas node di kanvas.
           </p>
           <div class="image-wrapper">
             <img
@@ -251,9 +265,9 @@
           </p>
           <blockquote>
             <strong>Tampilan Table vs JSON</strong><br />
-            Tampilan <strong>Table</strong> adalah default. Ini menampilkan
-            data dalam tabel. Tampilan <strong>JSON</strong> menampilkan
-            output data mentah dalam format JSON.
+            Tampilan <strong>Table</strong> adalah default. Ini menampilkan data
+            dalam tabel. Tampilan <strong>JSON</strong> menampilkan output data
+            mentah dalam format JSON.
           </blockquote>
           <div class="image-wrapper">
             <img
@@ -270,9 +284,9 @@
           </p>
           <ul>
             <li>
-              Di sebelah judul <strong>Output</strong>, ada ikon info. Jika
-              Anda mengarahkan kursor ke sana, Anda akan mendapatkan dua info
-              lagi: <strong>Start Time</strong> (Kapan eksekusi dimulai) dan
+              Di sebelah judul <strong>Output</strong>, ada ikon info. Jika Anda
+              mengarahkan kursor ke sana, Anda akan mendapatkan dua info lagi:
+              <strong>Start Time</strong> (Kapan eksekusi dimulai) dan
               <strong>Execution Time</strong> (Berapa lama waktu yang
               dibutuhkan).
             </li>
@@ -313,8 +327,8 @@
             dengan mengklik nama workflow di bagian atas Editor UI.
           </div>
           <p>
-            Setelah Anda mengganti namanya, pastikan untuk menyimpannya. Ada
-            dua cara untuk menyimpan workflow:
+            Setelah Anda mengganti namanya, pastikan untuk menyimpannya. Ada dua
+            cara untuk menyimpan workflow:
           </p>
           <ul>
             <li>
@@ -334,18 +348,24 @@
           <p>
             Selamat, Anda baru saja membangun workflow pertama Anda! Di materi
             ini, Anda belajar cara menggunakan node aplikasi, mengonfigurasi
-            parameter dan pengaturannya, serta menyimpan dan mengeksekusi
-V          </p>
+            parameter dan pengaturannya, serta menyimpan dan mengeksekusi V
+          </p>
           <p>
             Di materi selanjutnya, Anda akan bertemu klien baru Anda, Nathan,
             yang perlu mengotomatiskan pekerjaan pelaporan penjualannya. Anda
             akan membangun workflow yang lebih kompleks untuk kasus
             penggunaannya, membantunya menjadi lebih produktif di tempat kerja.
           </p>
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-1/index.html"
+            data-prev-title="Materi 1: Editor UI"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
         </article>
       </main>
     </div>
-
     <script src="../assets/script.js"></script>
   </body>
 </html>
