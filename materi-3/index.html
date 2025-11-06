@@ -23,16 +23,15 @@
           <h1>Materi 3: Mengotomatiskan Kasus (Dunia Nyata)</h1>
           <p class="intro">
             Di materi sebelumnya, kita telah belajar dasar-dasar UI dan membuat
-            workflow mini. Sekarang, kita akan naik level. Kita akan menerapkan
-            pengetahuan kita pada skenario studi kasus yang realistis.
+            workflow mini. Sekarang, kita akan naik level. Kita akan
+            menerapkan pengetahuan kita pada skenario studi kasus yang realistis.
           </p>
 
           <h2>Bertemu Nathan 🙋</h2>
           <p>
-            Perkenalkan Nathan, seorang Analytics Manager di ABCorp.
-            Pekerjaannya adalah mendukung tim dengan laporan dan analitik.
-            Namun, karena ia serba bisa, ia juga menangani beberapa inisiatif
-            lain.
+            Perkenalkan Nathan, seorang Analytics Manager di ABCorp. Pekerjaannya
+            adalah mendukung tim dengan laporan dan analitik. Namun, karena ia
+            serba bisa, ia juga menangani beberapa inisiatif lain.
           </p>
           <p>
             Beberapa pekerjaan Nathan bersifat repetitif dan membosankan. Ia
@@ -49,7 +48,7 @@
           </p>
 
           <blockquote class="dialogue">
-            <strong>Kita 🤵🏻:</strong>
+            <strong>Kita 👩‍🔧:</strong>
             <p>
               Senang bertemu denganmu, Nathan. Senang bisa membantu! Apa tugas
               repetitif yang rawan kesalahan dan ingin sekali kamu selesaikan
@@ -71,10 +70,12 @@
             </p>
             <p>
               Tugas saya: Saya harus menghitung jumlah total (sum) dari semua
-              pesanan yang statusnya "Booked" dan mengumumkannya di Discord
-              perusahaan. Setelah itu, saya harus membuat spreadsheet dari semua
-              pesanan "Processing" agar Manajer Penjualan dapat meninjaunya dan
-              mengecek apakah mereka perlu menindaklanjuti pelanggan.
+              pesanan yang statusnya <strong>"Booked"</strong> dan
+              mengumumkannya di Discord perusahaan. Setelah itu, saya harus
+              membuat spreadsheet dari semua pesanan
+              <strong>"Processing"</strong> agar Manajer Penjualan dapat
+              meninjaunya dan mengecek apakah mereka perlu menindaklanjuti
+              pelanggan.
             </p>
             <p>
               Pekerjaan manual ini berat dan butuh perhatian tinggi agar semua
@@ -85,7 +86,7 @@
           </blockquote>
 
           <blockquote class="dialogue">
-            <strong>Kita 🤵🏻:</strong>
+            <strong>Kita 👩‍🔧:</strong>
             <p>
               Oh tidak! Apakah data warehouse itu tidak punya cara untuk
               mengekspor data?
@@ -96,14 +97,14 @@
             <strong>Nathan 🙋:</strong>
             <p>
               Data warehouse ini dibuat sendiri (in-house) bertahun-tahun yang
-              lalu. Tidak ada ekspor CSV, tapi mereka baru-baru ini menambahkan
-              beberapa <strong>API endpoint</strong> yang mengekspos data ini,
-              jika itu membantu.
+              lalu. Tidak ada ekspor CSV, tapi mereka baru-baru ini
+              menambahkan beberapa <strong>API endpoint</strong> yang
+              mengekspos data ini, jika itu membantu.
             </p>
           </blockquote>
 
           <blockquote class="dialogue">
-            <strong>Kita 🤵🏻:</strong>
+            <strong>Kita 👩‍🔧:</strong>
             <p>
               Sempurna! Itu awal yang sangat baik. Jika kita memiliki API
               generik, kita bisa menambahkan sedikit kode kustom dan beberapa
@@ -124,8 +125,9 @@
               <strong>Schedule Node</strong>.
             </li>
             <li>
-              <strong>Ambil Data:</strong> Kita perlu "mengambil data dari API".
-              Kita akan menggunakan <strong>HTTP Request Node</strong>.
+              <strong>Ambil Data:</strong> Kita perlu "mengambil data dari
+              API". Kita akan menggunakan
+              <strong>HTTP Request Node</strong>.
             </li>
             <li>
               <strong>Pisahkan Data:</strong> Kita harus memisahkan data
@@ -135,7 +137,9 @@
             <li>
               <strong>Tugas "Booked":</strong>
               <ul>
-                <li>Menghitung total (sum) dari pesanan "Booked".</li>
+                <li>
+                  Menghitung total (sum) dari pesanan "Booked".
+                </li>
                 <li>
                   Mengirim totalnya ke Discord (<strong>Discord Node</strong>).
                 </li>
@@ -144,8 +148,14 @@
             <li>
               <strong>Tugas "Processing":</strong>
               <ul>
-                <li>Membuat spreadsheet dari pesanan "Processing".</li>
-                <li>Kita bisa pakai <strong>Google Sheets Node</strong>.</li>
+                <li>
+                  Membuat spreadsheet dari pesanan "Processing".
+                </li>
+                <li>
+                  Kita bisa pakai <strong>Google Sheets Node</strong>.
+                  (Contoh di JSON menggunakan <strong>Airtable</strong>, yang
+                  fungsinya serupa).
+                </li>
               </ul>
             </li>
           </ol>
@@ -158,7 +168,7 @@
           <div class="image-wrapper">
             <img
               src="../assets/images/materi-3-workflow-diagram.png"
-              alt="Diagram alur kerja: Trigger -> HTTP Request -> IF Node. IF Node bercabang dua: (Cabang Booked -> Hitung -> Discord) dan (Cabang Processing -> Google Sheets)."
+              alt="Diagram alur kerja: Trigger -> HTTP Request -> IF Node. IF Node bercabang dua: (Cabang Booked -> Hitung -> Discord) dan (Cabang Processing -> Airtable/Sheets)."
               loading="lazy"
             />
             <p class="image-caption">
@@ -168,6 +178,18 @@
           </div>
 
           <div class="note">
+            <strong>Unduh File Workflow (JSON)</strong><br />
+            Kita bisa mengunduh file JSON alur kerja yang sudah jadi ini
+            untuk diimpor ke n8n. Ini adalah "cetak biru" dari
+            keseluruhan solusi yang akan kita bangun.
+            <br /><br />
+            <a href="finished.json" target="_blank" rel="noopener noreferrer">
+              <strong>Klik di sini untuk melihat finished.json</strong>
+            </a>
+            <br />
+            (Kita bisa klik kanan > "Save Link As..." untuk menyimpannya)
+          </div>
+          <div class="note alt">
             Di materi selanjutnya, kita akan mulai membangun alur kerja ini
             langkah demi langkah.
           </div>
