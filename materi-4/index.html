@@ -1,140 +1,108 @@
-<!DOCTYPE html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Materi 4: Merancang Alur Kerja (Workflow)</title>
-    <link rel="stylesheet" href="../assets/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+---
+layout: base.html
+title: "Materi 4: Merancang Alur Kerja (Workflow)"
+---
+
+<article>
+  <h1>Materi 4: Merancang Alur Kerja (Workflow)</h1>
+  <p class="intro">
+    Setelah kita tahu apa yang ingin diotomatiskan oleh Nathan (dari Materi 3),
+    saatnya kita merancang solusi langkah demi langkah. Inilah proses di mana
+    kita menerjemahkan "masalah" menjadi "alur kerja n8n".
+  </p>
+
+  <h2>Membedah Rencana Nathan</h2>
+  <p>
+    Berdasarkan percakapan kita, kita tahu bahwa Nathan perlu mengambil tindakan
+    berikut untuk mencapai tujuannya:
+  </p>
+  <ol>
+    <li>
+      Mengambil data yang relevan (ID pesanan, status, nilai, nama karyawan)
+      dari data warehouse.
+    </li>
+    <li>
+      Memfilter pesanan berdasarkan statusnya (<strong>Processing</strong> atau
+      <strong>Booked</strong>).
+    </li>
+    <li>
+      Menghitung total nilai dari semua pesanan yang statusnya
+      <strong>Booked</strong>.
+    </li>
+    <li>
+      Memberi tahu anggota tim tentang pesanan <strong>Booked</strong>
+      di channel Discord perusahaan.
+    </li>
+    <li>
+      Memasukkan detail pesanan <strong>Processing</strong> ke Airtable untuk
+      ditindaklanjuti.
+    </li>
+    <li>Menjadwalkan alur kerja ini agar berjalan setiap Senin pagi.</li>
+  </ol>
+
+  <h2>Merancang Alur di n8n</h2>
+  <p>
+    Alur kerja Nathan melibatkan pengiriman data dari data warehouse internal
+    perusahaan ke dua layanan eksternal:
+  </p>
+  <ul>
+    <li><strong>Discord</strong></li>
+    <li><strong>Airtable</strong></li>
+  </ul>
+  <p>
+    Sebelum itu, data harus "diolah" terlebih dahulu menggunakan fungsi umum
+    (seperti pemfilteran kondisional, kalkulasi, dan penjadwalan).
+  </p>
+  <p>
+    Berita baiknya, n8n menyediakan integrasi untuk <b>semua</b>langkah ini.
+    Jadi, alur kerja Nathan di n8n akan terlihat seperti ini secara visual:
+  </p>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-3-workflow-diagram.png"
+      alt="Diagram alur kerja: Trigger -> HTTP Request -> IF Node. IF Node bercabang dua: (Cabang Booked -> Hitung -> Discord) dan (Cabang Processing -> Airtable)."
+      loading="lazy"
     />
-  </head>
-  <body>
-    <div class="container">
-      <div id="sidebar-placeholder"></div>
+    <p class="image-caption">
+      Rencana alur kerja kita. Satu input (Trigger), bercabang menjadi dua
+      output (Discord & Airtable).
+    </p>
+  </div>
 
-      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+  <h2>Rencana Pembangunan</h2>
+  <p>
+    Kita akan membangun alur kerja lengkap ini dalam 8 langkah ke depan (di
+    materi-materi selanjutnya):
+  </p>
+  <ol>
+    <li><strong>Materi 5:</strong> Mengambil data dari data warehouse.</li>
+    <li><strong>Materi 6:</strong> Memasukkan data ke Airtable.</li>
+    <li><strong>Materi 7:</strong> Memfilter pesanan.</li>
+    <li>
+      <strong>Materi 8:</strong> Mengatur nilai untuk pesanan "Processing".
+    </li>
+    <li><strong>Materi 9:</strong> Menghitung pesanan "Booked".</li>
+    <li><strong>Materi 10:</strong> Memberi notifikasi ke tim.</li>
+    <li><strong>Materi 11:</strong> Menjadwalkan alur kerja.</li>
+    <li><strong>Materi 12:</strong> Mengaktifkan dan menguji alur kerja.</li>
+  </ol>
+  <div class="note alt">
+    <strong>Catatan Kredensial</strong><br />
+    Untuk membangun alur kerja ini, kita akan membutuhkan kredensial (seperti
+    kunci API) untuk layanan seperti Airtable dan Discord.
+    <br /><br />
+    Jika Anda mengikuti kursus resmi n8n, mereka biasanya memberikan kredensial
+    demo melalui email saat mendaftar. Jika tidak, jangan khawatir! Kita bisa
+    membuat akun gratis kita sendiri di Airtable dan Discord untuk mendapatkan
+    kunci API kita sendiri.
+  </div>
+  <div
+    id="page-nav-placeholder"
+    data-prev-url="../materi-3/index.html"
+    data-prev-title="Materi 3: Skenario Kasus Nathan"
+    data-next-url="../materi-5/index.html"
+    data-next-title="Materi 5: Mengambil Data (HTTP)"
+  ></div>
 
-      <main class="content">
-        <article>
-          <h1>Materi 4: Merancang Alur Kerja (Workflow)</h1>
-          <p class="intro">
-            Setelah kita tahu apa yang ingin diotomatiskan oleh Nathan (dari
-            Materi 3), saatnya kita merancang solusi langkah demi langkah.
-            Inilah proses di mana kita menerjemahkan "masalah" menjadi "alur
-            kerja n8n".
-          </p>
-
-          <h2>Membedah Rencana Nathan</h2>
-          <p>
-            Berdasarkan percakapan kita, kita tahu bahwa Nathan perlu mengambil
-            tindakan berikut untuk mencapai tujuannya:
-          </p>
-          <ol>
-            <li>
-              Mengambil data yang relevan (ID pesanan, status, nilai, nama
-              karyawan) dari data warehouse.
-            </li>
-            <li>
-              Memfilter pesanan berdasarkan statusnya (<strong
-                >Processing</strong
-              >
-              atau <strong>Booked</strong>).
-            </li>
-            <li>
-              Menghitung total nilai dari semua pesanan yang statusnya
-              <strong>Booked</strong>.
-            </li>
-            <li>
-              Memberi tahu anggota tim tentang pesanan <strong>Booked</strong>
-              di channel Discord perusahaan.
-            </li>
-            <li>
-              Memasukkan detail pesanan <strong>Processing</strong> ke Airtable
-              untuk ditindaklanjuti.
-            </li>
-            <li>
-              Menjadwalkan alur kerja ini agar berjalan setiap Senin pagi.
-            </li>
-          </ol>
-
-          <h2>Merancang Alur di n8n</h2>
-          <p>
-            Alur kerja Nathan melibatkan pengiriman data dari data warehouse
-            internal perusahaan ke dua layanan eksternal:
-          </p>
-          <ul>
-            <li><strong>Discord</strong></li>
-            <li><strong>Airtable</strong></li>
-          </ul>
-          <p>
-            Sebelum itu, data harus "diolah" terlebih dahulu menggunakan fungsi
-            umum (seperti pemfilteran kondisional, kalkulasi, dan penjadwalan).
-          </p>
-          <p>
-            Berita baiknya, n8n menyediakan integrasi untuk <b>semua</b>langkah
-            ini. Jadi, alur kerja Nathan di n8n akan terlihat seperti ini secara
-            visual:
-          </p>
-          <div class="image-wrapper">
-            <img
-              src="../assets/images/materi-3-workflow-diagram.png"
-              alt="Diagram alur kerja: Trigger -> HTTP Request -> IF Node. IF Node bercabang dua: (Cabang Booked -> Hitung -> Discord) dan (Cabang Processing -> Airtable)."
-              loading="lazy"
-            />
-            <p class="image-caption">
-              Rencana alur kerja kita. Satu input (Trigger), bercabang menjadi
-              dua output (Discord & Airtable).
-            </p>
-          </div>
-
-          <h2>Rencana Pembangunan</h2>
-          <p>
-            Kita akan membangun alur kerja lengkap ini dalam 8 langkah ke depan
-            (di materi-materi selanjutnya):
-          </p>
-          <ol>
-            <li>
-              <strong>Materi 5:</strong> Mengambil data dari data warehouse.
-            </li>
-            <li><strong>Materi 6:</strong> Memasukkan data ke Airtable.</li>
-            <li><strong>Materi 7:</strong> Memfilter pesanan.</li>
-            <li>
-              <strong>Materi 8:</strong> Mengatur nilai untuk pesanan
-              "Processing".
-            </li>
-            <li><strong>Materi 9:</strong> Menghitung pesanan "Booked".</li>
-            <li><strong>Materi 10:</strong> Memberi notifikasi ke tim.</li>
-            <li><strong>Materi 11:</strong> Menjadwalkan alur kerja.</li>
-            <li>
-              <strong>Materi 12:</strong> Mengaktifkan dan menguji alur kerja.
-            </li>
-          </ol>
-          <div class="note alt">
-            <strong>Catatan Kredensial</strong><br />
-            Untuk membangun alur kerja ini, kita akan membutuhkan kredensial
-            (seperti kunci API) untuk layanan seperti Airtable dan Discord.
-            <br /><br />
-            Jika Anda mengikuti kursus resmi n8n, mereka biasanya memberikan
-            kredensial demo melalui email saat mendaftar. Jika tidak, jangan
-            khawatir! Kita bisa membuat akun gratis kita sendiri di Airtable dan
-            Discord untuk mendapatkan kunci API kita sendiri.
-          </div>
-          <div
-            id="page-nav-placeholder"
-            data-prev-url="../materi-3/index.html"
-            data-prev-title="Materi 3: Skenario Kasus Nathan"
-            data-next-url="../materi-5/index.html"
-            data-next-title="Materi 5: Mengambil Data (HTTP)"
-          ></div>
-
-          <div id="support-block-placeholder"></div>
-        </article>
-      </main>
-    </div>
-    <script src="../assets/script.js"></script>
-  </body>
-</html>
+  <div id="support-block-placeholder"></div>
+</article>
