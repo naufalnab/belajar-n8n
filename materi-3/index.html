@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 3: Mengotomatiskan Kasus Dunia Nyata</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 3: Mengotomatiskan Kasus (Dunia Nyata)</h1>
+          <p class="intro">
+            Di materi sebelumnya, kita telah belajar dasar-dasar UI dan membuat
+            workflow mini. Sekarang, kita akan naik level. Kita akan
+            menerapkan pengetahuan kita pada skenario studi kasus yang realistis.
+          </p>
+
+          <h2>Bertemu Nathan 🙋</h2>
+          <p>
+            Perkenalkan Nathan, seorang Analytics Manager di ABCorp. Pekerjaannya
+            adalah mendukung tim dengan laporan dan analitik. Namun, karena ia
+            serba bisa, ia juga menangani beberapa inisiatif lain.
+          </p>
+          <p>
+            Beberapa pekerjaan Nathan bersifat repetitif dan membosankan. Ia
+            ingin mengotomatiskan beberapa tugas ini agar tidak *burnout*.
+            Sebagai Ahli Otomasi (yaitu kita!), kita bertemu dengan Nathan hari
+            ini untuk membantunya memindahkan sebagian tanggung jawabnya ke
+            n8n.
+          </p>
+
+          <h2>Memahami Skenario</h2>
+          <p>
+            Berikut adalah percakapan kita dengan Nathan untuk memahami
+            masalahnya:
+          </p>
+
+          <blockquote class="dialogue">
+            <strong>Anda 👩‍🔧:</strong>
+            <p>
+              Senang bertemu denganmu, Nathan. Senang bisa membantu! Apa tugas
+              repetitif yang rawan kesalahan dan ingin sekali kamu selesaikan
+              pertama kali?
+            </p>
+          </blockquote>
+
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Terima kasih sudah datang! Yang paling menyebalkan adalah
+              pelaporan penjualan mingguan.
+            </p>
+            <p>
+              Setiap hari Senin, saya harus mengumpulkan data penjualan dari
+              data warehouse lama kami. Setiap pesanan penjualan bisa memiliki
+              status <strong>"Processing"</strong> atau
+              <strong>"Booked"</strong>.
+            </p>
+            <p>
+              Tugas saya: Saya harus menghitung jumlah total (sum) dari semua
+              pesanan yang statusnya "Booked" dan mengumumkannya di Discord
+              perusahaan. Setelah itu, saya harus membuat spreadsheet dari
+              semua pesanan "Processing" agar Manajer Penjualan dapat
+              meninjaunya dan mengecek apakah mereka perlu menindaklanjuti
+              pelanggan.
+            </p>
+            <p>
+              Pekerjaan manual ini berat dan butuh perhatian tinggi agar semua
+              angka benar. Seringkali, saya kehilangan fokus dan salah ketik
+              angka, atau saya tidak menyelesaikannya tepat waktu. Saya pernah
+              dikritik oleh manajer saya karena salah menghitung data.
+            </p>
+          </blockquote>
+
+          <blockquote class="dialogue">
+            <strong>Anda 👩‍🔧:</strong>
+            <p>
+              Oh tidak! Apakah data warehouse itu tidak punya cara untuk
+              mengekspor data?
+            </p>
+          </blockquote>
+
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Data warehouse ini dibuat sendiri (in-house) bertahun-tahun yang
+              lalu. Tidak ada ekspor CSV, tapi mereka baru-baru ini
+              menambahkan beberapa *API endpoint* yang mengekspos data ini,
+              jika itu membantu.
+            </p>
+          </blockquote>
+
+          <blockquote class="dialogue">
+            <strong>Anda 👩‍🔧:</strong>
+            <p>
+              Sempurna! Itu awal yang sangat baik. Jika kita memiliki API
+              generik, kita bisa menambahkan sedikit kode kustom dan beberapa
+              layanan untuk membuat alur kerja otomatis. Ini pekerjaan yang
+              sangat cocok untuk n8n. Mari kita mulai!
+            </p>
+          </blockquote>
+
+          <h2>Rencana Alur Kerja (Workflow)</h2>
+          <p>
+            Dari percakapan di atas, kita bisa memecah masalah Nathan menjadi
+            beberapa langkah logis yang bisa ditangani n8n:
+          </p>
+          <ol>
+            <li>
+              <strong>Pemicu (Trigger):</strong> Kita perlu sesuatu yang
+              berjalan "setiap hari Senin". Ini akan menggunakan
+              <strong>Schedule Node</strong>.
+            </li>
+            <li>
+              <strong>Ambil Data:</strong> Kita perlu "mengambil data dari
+              API". Kita akan menggunakan <strong>HTTP Request Node</strong>.
+            </li>
+            <li>
+              <strong>Pisahkan Data:</strong> Kita harus memisahkan data
+              "Processing" dan "Booked". Ini adalah pekerjaan sempurna untuk
+              <strong>IF Node</strong>.
+            </li>
+            <li>
+              <strong>Tugas "Booked":</strong>
+              <ul>
+                <li>Menghitung total (sum) dari pesanan "Booked".</li>
+                <li>Mengirim totalnya ke Discord (<strong>Discord Node</strong>).</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Tugas "Processing":</strong>
+              <ul>
+                <li>Membuat spreadsheet dari pesanan "Processing".</li>
+                <li>Kita bisa pakai <strong>Google Sheets Node</strong>.</li>
+              </ul>
+            </li>
+          </ol>
+
+          <h3>Visualisasi Alur Kerja</h3>
+          <p>
+            Secara visual, inilah yang akan kita bangun di materi-materi
+            selanjutnya:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-3-workflow-diagram.png"
+              alt="Diagram alur kerja: Trigger -> HTTP Request -> IF Node. IF Node bercabang dua: (Cabang Booked -> Hitung -> Discord) dan (Cabang Processing -> Google Sheets)."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Rencana alur kerja kita. Satu input, bercabang
+              menjadi dua output yang berbeda.
+            </p>
+          </div>
+
+          <div class="note">
+            Di materi selanjutnya, kita akan mulai membangun alur kerja ini
+            langkah demi langkah.
+          </div>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-2/index.html"
+            data-prev-title="Materi 2: Workflow Mini"
+            data-next-url="../materi-4/index.html"
+            data-next-title="Materi 4: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
