@@ -47,8 +47,8 @@
 
           <h2>Langkah 1: Menyiapkan Tabel "Tujuan" di Airtable</h2>
           <p>
-            Sebelum kita bisa mengirim data <b>ke</b>Airtable, kita perlu
-            menyiapkan "wadah" atau "tabel" untuk menerimanya. Ini adalah
+            Sebelum kita bisa mengirim data <strong>ke</strong> Airtable, kita
+            perlu menyiapkan "wadah" atau "tabel" untuk menerimanya. Ini adalah
             langkah yang sangat penting.
           </p>
 
@@ -252,7 +252,7 @@
             <li>Cari <strong>Airtable</strong>.</li>
             <div class="image-wrapper">
               <img
-                src="../assets/images/materi-6-n8n-12-cari-airtable.png"
+                src="../assets/images/materi-6-n8n-1-cari-airtable.png"
                 alt="Mencari Airtable dan memilih aksi 'Create a record'."
                 loading="lazy"
               />
@@ -268,7 +268,7 @@
           </ol>
           <div class="image-wrapper">
             <img
-              src="../assets/images/materi-6-n8n-13-create-a-record.png"
+              src="../assets/images/materi-6-n8n-2-create-a-record.png"
               alt="Mencari Airtable dan memilih aksi 'Create a record'."
               loading="lazy"
             />
@@ -295,16 +295,92 @@
               Biarkan opsi default <strong>Connect using: Access Token</strong>
               terpilih.
             </li>
-            <li>
-              <strong>Access token:</strong> Ikuti instruksi dari halaman
-              <a href="https://n8n.io/credentials/airtable/" target="_blank"
-                >kredensial Airtable</a
-              >
-              untuk membuat token Kita. Pastikan untuk memberikan 'scope' (izin)
-              yang direkomendasikan dan menambahkan akses ke 'Base' "beginner
-              course" Kita.
-            </li>
           </ul>
+
+          <div class="note alt">
+            <strong>Cara Membuat Access Token di Airtable</strong><br />
+            Untuk mendapatkan <strong>Access Token</strong>, Kita perlu
+            membuatnya di dalam akun Airtable Kita. Berikut adalah
+            langkah-langkah visualnya:
+            <ol>
+              <li>
+                Di Airtable, navigasi ke
+                <a
+                  href="https://airtable.com/developers/web/api/introduction"
+                  target="_blank"
+                  >Builder Hub</a
+                >
+                (atau Akun > Developer hub) dan pilih
+                <strong>Personal access tokens</strong>.
+              </li>
+              <li>Klik <strong>"Create token"</strong>.</li>
+            </ol>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-airtable-token-1-start.png"
+                alt="Halaman 'Personal access tokens' di Airtable dengan tombol 'Create token'."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Halaman awal untuk membuat personal access token Kita.
+              </p>
+            </div>
+            <p style="margin-top: 20px">
+              Selanjutnya, kita perlu mengonfigurasi Token tersebut:
+            </p>
+            <ul>
+              <li>
+                <strong>Name:</strong> Beri nama yang deskriptif, misal
+                <strong><code>n8n-belajar</code></strong
+                >.
+              </li>
+              <li>
+                <strong>Scopes:</strong> Ini adalah izin. Kita perlu menambahkan
+                (<code>+ Add a scope</code>) setidaknya:
+                <ul>
+                  <li><code>data.records:read</code></li>
+                  <li><code>data.records:write</code></li>
+                  <li><code>schema.bases:read</code></li>
+                </ul>
+              </li>
+              <li>
+                <strong>Access:</strong> Pilih 'Base' mana yang boleh diakses
+                oleh token ini. Kita pilih <strong>"beginner course"</strong>.
+              </li>
+            </ul>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-airtable-token-2-scopes.png"
+                alt="Formulir 'Create new token' diisi dengan Nama, Scopes, dan Access."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Mengisi Nama, Scopes (izin), dan Access (database) untuk token
+                Kita.
+              </p>
+            </div>
+            <p style="margin-top: 20px">
+              Terakhir, klik <strong>"Create token"</strong>. Airtable akan
+              menampilkan token Anda <strong>satu kali saja</strong>.
+            </p>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-airtable-token-3-created.png"
+                alt="Popup 'Your token has been created' dengan token rahasia."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Token Kita sudah jadi! Salin (copy) kode rahasia ini.
+              </p>
+            </div>
+          </div>
+
+          <p style="margin-top: 30px">
+            Sekarang, kembali ke n8n dan klik
+            <strong>+ Create new credential</strong> lagi (jika tertutup) atau
+            isi popup yang sudah ada:
+          </p>
+
           <div class="image-wrapper">
             <img
               src="../assets/images/materi-6-n8n-2-create-creds.png"
@@ -312,7 +388,8 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Membuat kredensial baru dengan Access Token dari Airtable.
+              Tempelkan token yang baru Kita salin dari Airtable ke bidang
+              'Access Token' di n8n.
             </p>
           </div>
           <p>
@@ -358,9 +435,20 @@
             <strong>Apa itu 'Map automatically'?</strong><br />
             Ini adalah fitur yang sangat hebat. Karena kita sudah bersusah payah
             membuat nama kolom di Airtable (<code>orderID</code>)
-            <strong>sama persis</strong> dengan nama kolom di data n8n Kita
+            <strong>sama persis</strong> dengan nama kolom di data n8n kita
             (<code>orderID</code>), n8n bisa secara otomatis memetakannya. Kita
             tidak perlu menghubungkannya satu per satu.
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-n8n-4-output.png"
+                alt="Tampilan output node Airtable di n8n dengan kolom yang terpetakan otomatis dan 30 record berhasil dibuat."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Tampilan output node Airtable di n8n setelah fitur
+                <em>Map automatically</em> digunakan
+              </p>
+            </div>
           </div>
 
           <h2>Langkah 4: Menguji Node Airtable</h2>
@@ -376,7 +464,7 @@
           </p>
           <div class="image-wrapper">
             <img
-              src="../assets/images/materi-6-n8n-4-output.png"
+              src="../assets/images/materi-6-n8n-5-output.png"
               alt="Output node Airtable di n8n, menunjukkan 30 item berhasil dibuat."
               loading="lazy"
             />
@@ -391,7 +479,7 @@
           </p>
           <div class="image-wrapper">
             <img
-              src="../assets/images/materi-6-airtable-6-final-data.png"
+              src="../assets/images/materi-6-airtable-12-final-data.png"
               alt="Tabel 'orders' di Airtable sekarang terisi penuh dengan 30 record data."
               loading="lazy"
             />
@@ -409,10 +497,10 @@
             <strong>Nathan 🙋:</strong>
             <p>
               Wow, ini sudah sangat berguna! Tapi ini memasukkan
-              <b>semua</b>data yang dikumpulkan dari node HTTP Request ke
-              Airtable. Ingat, saya sebenarnya hanya perlu memasukkan pesanan
-              yang statusnya "Processing" ke tabel, dan menghitung total harga
-              dari pesanan "Booked"?
+              <strong>semua</strong> data yang dikumpulkan dari node HTTP
+              Request ke Airtable. Ingat, saya sebenarnya hanya perlu memasukkan
+              pesanan yang statusnya "Processing" ke tabel, dan menghitung total
+              harga dari pesanan "Booked"?
             </p>
           </blockquote>
           <blockquote class="dialogue">
@@ -420,7 +508,7 @@
             <p>
               Tentu, tidak masalah. Kita baru saja membuat 'pipa' datanya.
               Sebagai langkah selanjutnya, saya akan menggunakan node baru untuk
-              <b>memfilter</b>pesanan berdasarkan statusnya.
+              <strong>memfilter</strong> pesanan berdasarkan statusnya.
             </p>
           </blockquote>
 
