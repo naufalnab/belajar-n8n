@@ -23,22 +23,23 @@
           <h1>Materi 3: Mengotomatiskan Kasus (Dunia Nyata)</h1>
           <p class="intro">
             Di materi sebelumnya, kita telah belajar dasar-dasar UI dan membuat
-            workflow mini. Sekarang, kita akan naik level. Kita akan
-            menerapkan pengetahuan kita pada skenario studi kasus yang realistis.
+            workflow mini. Sekarang, kita akan naik level. Kita akan menerapkan
+            pengetahuan kita pada skenario studi kasus yang realistis.
           </p>
 
           <h2>Bertemu Nathan 🙋</h2>
           <p>
-            Perkenalkan Nathan, seorang Analytics Manager di ABCorp. Pekerjaannya
-            adalah mendukung tim dengan laporan dan analitik. Namun, karena ia
-            serba bisa, ia juga menangani beberapa inisiatif lain.
+            Perkenalkan Nathan, seorang Analytics Manager di ABCorp.
+            Pekerjaannya adalah mendukung tim dengan laporan dan analitik.
+            Namun, karena ia serba bisa, ia juga menangani beberapa inisiatif
+            lain.
           </p>
           <p>
             Beberapa pekerjaan Nathan bersifat repetitif dan membosankan. Ia
-            ingin mengotomatiskan beberapa tugas ini agar tidak *burnout*.
-            Sebagai Ahli Otomasi (yaitu kita!), kita bertemu dengan Nathan hari
-            ini untuk membantunya memindahkan sebagian tanggung jawabnya ke
-            n8n.
+            ingin mengotomatiskan beberapa tugas ini agar tidak
+            <strong>burnout</strong>. Sebagai Ahli Otomasi (yaitu kita!), kita
+            bertemu dengan Nathan hari ini untuk membantunya memindahkan
+            sebagian tanggung jawabnya ke n8n.
           </p>
 
           <h2>Memahami Skenario</h2>
@@ -71,10 +72,9 @@
             <p>
               Tugas saya: Saya harus menghitung jumlah total (sum) dari semua
               pesanan yang statusnya "Booked" dan mengumumkannya di Discord
-              perusahaan. Setelah itu, saya harus membuat spreadsheet dari
-              semua pesanan "Processing" agar Manajer Penjualan dapat
-              meninjaunya dan mengecek apakah mereka perlu menindaklanjuti
-              pelanggan.
+              perusahaan. Setelah itu, saya harus membuat spreadsheet dari semua
+              pesanan "Processing" agar Manajer Penjualan dapat meninjaunya dan
+              mengecek apakah mereka perlu menindaklanjuti pelanggan.
             </p>
             <p>
               Pekerjaan manual ini berat dan butuh perhatian tinggi agar semua
@@ -96,8 +96,8 @@
             <strong>Nathan 🙋:</strong>
             <p>
               Data warehouse ini dibuat sendiri (in-house) bertahun-tahun yang
-              lalu. Tidak ada ekspor CSV, tapi mereka baru-baru ini
-              menambahkan beberapa *API endpoint* yang mengekspos data ini,
+              lalu. Tidak ada ekspor CSV, tapi mereka baru-baru ini menambahkan
+              beberapa <strong>API endpoint</strong> yang mengekspos data ini,
               jika itu membantu.
             </p>
           </blockquote>
@@ -124,8 +124,8 @@
               <strong>Schedule Node</strong>.
             </li>
             <li>
-              <strong>Ambil Data:</strong> Kita perlu "mengambil data dari
-              API". Kita akan menggunakan <strong>HTTP Request Node</strong>.
+              <strong>Ambil Data:</strong> Kita perlu "mengambil data dari API".
+              Kita akan menggunakan <strong>HTTP Request Node</strong>.
             </li>
             <li>
               <strong>Pisahkan Data:</strong> Kita harus memisahkan data
@@ -136,7 +136,9 @@
               <strong>Tugas "Booked":</strong>
               <ul>
                 <li>Menghitung total (sum) dari pesanan "Booked".</li>
-                <li>Mengirim totalnya ke Discord (<strong>Discord Node</strong>).</li>
+                <li>
+                  Mengirim totalnya ke Discord (<strong>Discord Node</strong>).
+                </li>
               </ul>
             </li>
             <li>
