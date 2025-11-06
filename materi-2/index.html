@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 2: Modifikasi - Workflow RSS Feed Berita</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 2: Modifikasi - Workflow RSS Feed Berita</h1>
+          <p class="intro">
+            Di sinilah kita benar-benar menerapkan prinsip
+            <strong>Amati, Tiru, Modifikasi (ATM)</strong>. Di dokumentasi
+            resmi, mereka mencontohkan cara mengambil data dari Hacker News. Itu
+            bagus, tapi mari kita buat sesuatu yang lebih relevan untuk kita.
+          </p>
+          <p>
+            Kita akan <strong>memodifikasi</strong> alur tersebut. Alih-alih
+            Hacker News, kita akan menggunakan node yang jauh lebih kuat dan
+            universal: <strong>RSS Feed Reader</strong>.
+          </p>
+          <p>
+            <strong>Tujuan kita:</strong> Membuat workflow yang secara otomatis
+            mengambil berita teknologi terbaru langsung dari
+            <strong>detikINET (Detik.com)</strong>.
+          </p>
+          <p>
+            Konsepnya 100% sama dengan tutorial resmi, tapi hasilnya jauh lebih
+            personal dan berguna:
+          </p>
+          <ol>
+            <li>Memulai Workflow (Masih pakai Manual Trigger).</li>
+            <li>
+              Menambahkan Node Pengambil Data (Modifikasi:
+              <strong>RSS Feed Reader</strong>).
+            </li>
+            <li>
+              Mengonfigurasi Node (Mengisi URL feed, bukan 'Limit' atau
+              'Keyword').
+            </li>
+            <li>Mengeksekusi dan Memeriksa Hasil (Output-nya akan berbeda!).</li>
+            <li>Menyimpan Workflow kita yang sudah dimodifikasi.</li>
+          </ol>
+          <p>
+            Workflow kita yang sudah jadi akan terlihat mirip, tapi nodenya
+            berbeda:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-finished-workflow-rss.png"
+              alt="Workflow mini modifikasi: node Start ke node RSS Feed Reader."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Workflow baru kita: Manual Trigger terhubung ke
+              node RSS Feed Reader.
+            </p>
+          </div>
+
+          <h2>Langkah 1: Memulai Alur Kerja (Tiru)</h2>
+          <p>
+            Langkah pertama ini kita tiru persis. Setiap workflow butuh pemicu.
+            Saat Anda membuat workflow baru, Anda akan disambut oleh kanvas
+            kosong dengan node "Start".
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-canvas-start.png"
+              alt="Kanvas n8n yang masih kosong hanya dengan node Start."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Kanvas kosong. Node "Start" ini adalah Manual
+              Trigger bawaan kita.
+            </p>
+          </div>
+          <p>
+            Kita bisa langsung klik tanda <strong>+</strong> di node "Start"
+            itu. Node ini sempurna untuk pengujian karena workflow hanya akan
+            berjalan ketika kita menekan tombol "Execute workflow". Tidak perlu
+            menghapus atau menambah node trigger baru.
+          </p>
+          <div class="note">
+            <strong>Tips Belajar</strong><br />
+            Node "Start" dan node "Manual Trigger" (jika dicari di panel node)
+            memiliki fungsi yang identik. Jangan bingung jika melihat keduanya,
+            anggap saja mereka sama.
+          </div>
+
+          <h2>Langkah 2: Menambahkan Node RSS Feed (Modifikasi)</h2>
+          <p>
+            Inilah langkah "Modifikasi" kita. Alih-alih mencari "Hacker News",
+            kita akan mencari node yang jauh lebih serbaguna.
+          </p>
+          <p>
+            Klik ikon <strong>+</strong> di sebelah kanan node "Start" Anda.
+            Ini akan membuka panel node.
+          </p>
+          <p>
+            Di kotak pencarian, ketik: <strong>"RSS"</strong>. Anda akan
+            langsung melihat node <strong>"RSS Feed Reader"</strong>. Klik
+            node tersebut.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-search-rss.png"
+              alt="Mencari 'RSS Feed Reader' di panel pencarian node n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Panel node setelah saya mencari 'RSS'. Node
+              inilah yang kita inginkan.
+            </p>
+          </div>
+          <p>
+            Berbeda dengan node Hacker News yang mungkin menanyakan "Action",
+            node <strong>RSS Feed Reader</strong> ini lebih simpel. Ia hanya
+            punya satu tujuan: membaca feed. Jadi, node ini akan langsung
+            ditambahkan ke kanvas dan jendela pengaturannya akan terbuka secara
+            otomatis.
+          </p>
+
+          <h2>Langkah 3: Mengonfigurasi Node RSS Feed</h2>
+          <p>
+            Jendela pengaturan node <strong>RSS Feed Reader</strong> jauh lebih
+            sederhana daripada Hacker News, yang justru bagus untuk dipelajari.
+            Ini menunjukkan bahwa setiap node itu unik.
+          </p>
+          <blockquote>
+            <strong>Parameters vs. Settings (Analogi Resep)</strong><br />
+            Konsep ini tetap sama. <strong>Parameters</strong> adalah *bahan*
+            resep (spesifik untuk node RSS).
+            <strong>Settings</strong> adalah *catatan di pinggir resep*
+            (sama untuk semua node).
+          </blockquote>
+
+          <h3>Bagian 1: Mengatur Parameters (Bahan Utama)</h3>
+          <p>
+            Node ini hanya punya satu parameter *wajib*:
+            <strong>URL</strong>.
+          </p>
+          <p>
+            Kita perlu memberinya link ke file RSS feed berita. Untuk contoh
+            ini, kita akan memakai feed dari detikINET.
+          </p>
+          <ul>
+            <li>
+              Di bidang <strong>URL</strong>, masukkan:
+              <code>https://rss.detik.com/inet.xml</code>
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-rss-params.png"
+              alt="Jendela parameter RSS Feed Reader diisi dengan URL detikINET."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Satu-satunya hal yang saya isi. Sangat
+              sederhana!
+            </p>
+          </div>
+          <div class="note alt">
+            <strong>Bagaimana Cara Menemukan URL RSS Feed Situs Lain?</strong><br />
+            Hampir semua situs berita/blog memilikinya! Coba salah satu cara
+            ini:
+            <ol>
+              <li>
+                Cari halaman di situs mereka yang berjudul "RSS" atau "Feed".
+              </li>
+              <li>
+                Buka situsnya, klik kanan, pilih "View Page Source" (Lihat
+                Sumber Halaman), lalu cari (Ctrl+F) kata
+                <code>type="application/rss+xml"</code>. Link di dalam
+                <code>href</code> itulah URL-nya.
+              </li>
+            </ol>
+            Contoh lain: <code>https://www.theverge.com/rss/index.xml</code>
+          </div>
+
+          <h3>Bagian 2: Mengatur Settings (Catatan Resep)</h3>
+          <p>
+            Langkah ini 100% sama dengan tutorial resmi, tapi kita akan ubah
+            catatannya. Klik tab <strong>"Settings"</strong>.
+          </p>
+          <ul>
+            <li>
+              <strong>Notes:</strong> Kita tulis catatan yang jelas, misal:
+              <code>Mengambil 10 berita terbaru dari detikINET.</code>
+            </li>
+            <li>
+              <strong>Display note in flow?:</strong> Aktifkan (geser ke
+              kanan).
+            </li>
+          </ul>
+          <p>
+            Terakhir, mari kita ganti nama node ini agar profesional. Klik dua
+            kali pada nama "RSS Feed Reader" di kiri atas, dan ganti namanya
+            menjadi <strong>"Ambil Berita detikINET"</strong>, lalu klik
+            "Rename".
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-rss-settings-rename.png"
+              alt="Tab Settings di node RSS, menampilkan Notes yang diisi dan proses rename."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Saya mengisi Notes dan mengganti nama node
+              agar mudah dibaca.
+            </p>
+          </div>
+
+          <h2>Langkah 4: Mengeksekusi & Mengamati Hasilnya</h2>
+          <p>
+            Resep kita sudah siap. Saatnya menguji node ini. Di jendela node
+            "Ambil Berita detikINET", klik tombol
+            <strong>"Execute step"</strong> (ikon 'Play' ▶️) di pojok kanan
+            atas.
+          </p>
+          <p>
+            Setelah beberapa detik, node akan selesai bekerja dan menampilkan
+            tab <strong>"Output"</strong>. Jika Anda kembali ke kanvas (klik
+            <strong>"Back to canvas"</strong>), Anda akan melihat tanda centang
+            hijau di atas node Anda. Sukses!
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-rss-success.png"
+              alt="Node RSS Feed Reader dengan tanda centang hijau sukses."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Tanda centang hijau di node RSS kita.
+            </p>
+          </div>
+          <h3>Memahami Output RSS (Ini Berbeda!)</h3>
+          <p>
+            Output dari node RSS akan memiliki struktur yang berbeda dari node
+            Hacker News. Inilah gunanya memodifikasi! Kita jadi belajar hal
+            baru.
+          </p>
+          <p>
+            Buka kembali jendelanya dan lihat tab <strong>Table</strong>. Anda
+            akan melihat kolom-kolom seperti <code>title</code>,
+            <code>link</code>, <code>pubDate</code> (tanggal publikasi),
+            <code>creator</code>, dan <code>content</code>. Ini adalah struktur
+            standar RSS.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-rss-table-view.png"
+              alt="Hasil output RSS feed dalam tampilan Tabel, menunjukkan kolom title dan pubDate."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Tampilan 'Table'. Kita bisa lihat semua judul
+              berita terbaru dari detikINET!
+            </p>
+          </div>
+          <p>
+            Sekarang, klik tab <strong>JSON</strong>. Anda akan melihat data
+            mentahnya. Ini sangat berguna untuk melihat data apa *sebenarnya*
+            yang kita dapatkan.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-rss-json-view.png"
+              alt="Data JSON mentah dari RSS feed, menunjukkan properti 'content:encoded'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Tampilan 'JSON'. Perhatikan, ada data seperti
+              'content:encoded' yang berisi HTML lengkap dari artikelnya!
+            </p>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-rss-schema-view.png"
+              alt="Tampilan Schema dari output RSS, menunjukkan 'title' sebagai string."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Tampilan 'Schema'. Ini seperti daftar isi
+              data, menunjukkan 'title' adalah string, 'pubDate' adalah
+              string, dll.
+            </p>
+          </div>
+
+          <div class="note">
+            <strong>Observasi Penting: Di Mana Filternya?</strong><br />
+            Anda mungkin sadar: "Lho, kok hasilnya ada 20?" atau "Bagaimana
+            cara saya membatasi (limit) jadi 10?".<br /><br />
+            Selamat! Anda baru saja menemukan poin belajar yang penting. Node
+            <strong>RSS Feed Reader</strong> <strong>tidak punya
+            parameter 'Limit' bawaan</strong> seperti node Hacker News. Node
+            ini dirancang untuk mengambil *semua* yang ada di file RSS.
+            <br /><br />
+            Di materi-materi selanjutnya, kita akan belajar cara memanipulasi
+            output ini menggunakan node lain (seperti <strong>Split in
+            Batches</strong> atau <strong>Code</strong>) untuk mengambil hanya
+            10 item teratas. Tapi untuk sekarang, menerima semua datanya sudah
+            merupakan sebuah kesuksesan!
+          </div>
+
+          <h2>Langkah 5: Menyimpan Workflow Modifikasi Kita</h2>
+          <p>
+            Langkah terakhir ini kita tiru lagi. Klik
+            <strong>"Back to canvas"</strong>.
+          </p>
+          <p>
+            Klik nama workflow "My workflow" di bagian atas layar, dan beri
+            nama yang bagus, seperti
+            <strong>"Materi 2 - Ambil Berita detikINET"</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-2-rename-workflow-rss.png"
+              alt="Mengganti nama workflow menjadi 'Materi 2 - Ambil Berita detikINET'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Memberi nama yang jelas pada workflow kita.
+            </p>
+          </div>
+          <p>
+            Terakhir, tekan <strong>Ctrl + S</strong> (atau <strong>Cmd +
+            S</strong>) atau klik tombol <strong>"Save"</strong> di pojok kanan
+            atas sampai berubah menjadi teks "Saved" berwarna abu-abu.
+          </p>
+
+          <h2>Ringkasan: Kita Telah Berhasil Memodifikasi!</h2>
+          <p>
+            Luar biasa! Anda tidak hanya "meniru" dokumentasi, tapi Anda telah
+            berhasil <strong>mengamati</strong> konsepnya dan
+            <strong>memodifikasinya</strong> untuk kebutuhan yang lebih nyata
+            dan relevan.
+          </p>
+          <p>
+            Di materi ini, kita belajar:
+          </p>
+          <ul>
+            <li>
+              Bahwa node <strong>RSS Feed Reader</strong> adalah alternatif
+              yang hebat untuk mengambil data berita.
+            </li>
+            <li>Cara mencari URL RSS feed dari sebuah situs.</li>
+            <li>
+              Bahwa setiap node memiliki <strong>Parameter</strong> unik (RSS
+              hanya butuh URL).
+            </li>
+            <li>
+              Cara membaca output <strong>Table</strong> dan
+              <strong>JSON</strong> yang strukturnya berbeda (khas RSS).
+            </li>
+            <li>
+              Observasi penting bahwa tidak semua node punya parameter 'Limit',
+              dan itu wajar.
+            </li>
+          </ul>
+          <p>
+            Di materi selanjutnya, kita akan belajar cara mengambil output ini
+            dan *melakukan sesuatu* dengannya, seperti memfilter, memanipulasi,
+            dan mengirimkannya ke layanan lain.
+          </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-1/index.html"
+            data-prev-title="Materi 1: Editor UI"
+            data-next-url="../materi-3/index.html"
+            data-next-title="Materi 3: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
