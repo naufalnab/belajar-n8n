@@ -9,5 +9,7 @@ module.exports = function (eleventyConfig) {
     },
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
+
+    pathPrefix: "/belajar-n8n/",
   };
 };
