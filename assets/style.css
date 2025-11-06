@@ -23,6 +23,8 @@
   --blockquote-border: #ccc;
   --image-border: #e0e0e0;
   --image-caption-text: #777;
+  --link-color: #007a66; 
+  --link-hover-color: #00a98f;
 }
 
 body.dark-mode {
@@ -46,6 +48,8 @@ body.dark-mode {
   --blockquote-border: #555;
   --image-border: #555;
   --image-caption-text: #999;
+  --link-color: #00c7a5; /* Teal n8n yang terang, sangat terbaca! */
+  --link-hover-color: #33e0c7;
 }
 
 /* ======================================================= */
@@ -267,6 +271,18 @@ article li {
 article strong {
   color: var(--header-color);
   font-weight: 600;
+}
+
+article a {
+  color: var(--link-color);
+  font-weight: 600; /* Sedikit tebal agar menonjol */
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+article a:hover {
+  color: var(--link-hover-color);
+  text-decoration: none; /* Hilangkan underline saat di-hover */
 }
 
 .note {
