@@ -11,10 +11,12 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="/belajar-n8n/assets/style.css" />
   </head>
   <body class="homepage-body">
+    <button id="theme-toggle" class="theme-toggle-floating" aria-label="Ganti mode">
+      </button>
+
     
 <div class="homepage-container">
   <header>
@@ -31,129 +33,29 @@
     >
       ✨ Beri Dukungan
     </a>
-    <div class="theme-switcher-homepage">
-      <button id="theme-toggle">Ganti Mode</button>
-    </div>
-  </header>
+    </header>
 
-  <main class="homepage-main">
-    <section class="level-section">
-      <h2 class="level-title">
-        Level 1: Dasar-Dasar & Alur Kerja Pertama
-      </h2>
-      <p class="level-description">
-        Materi 0-13: Pengenalan, setup, mengambil data, memfilter, dan
-        membangun alur kerja studi kasus Nathan.
-      </p>
-
-      <div class="card-list">
-        <a href="materi-0/index.html" class="card">
-          <div class="card-content">
-            <span class="card-number">Materi 0</span>
-            <h2 class_card_title>Persiapan Self-Hosting (VPS)</h2>
-            <p class="card-description">
-              Membahas langkah awal: memilih VPS (Hostinger KVM), setup OS
-              Ubuntu, dan alasan memilih self-host.
-            </p>
-          </div>
-        </a>
-
-        <a href="materi-1/index.html" class="card">
-          <div class="card-content">
-            <span class="card-number">Materi 1</span>
-            <h2 class="card-title">Menjelajahi Editor UI</h2>
-            <p class="card-description">
-              Mengenal antarmuka pengguna n8n. Mulai dari Panel Sisi Kiri, Top
-              Bar, Kanvas, dan konsep dasar Node.
-            </p>
-          </div>
-        </a>
-
-        <a href="materi-2/index.html" class="card">
-          <div class="card-content">
-            <span class="card-number">Materi 2</span>
-            <h2 class="card-title">Membangun Workflow Mini</h2>
-            <p class="card-description">
-              Membangun workflow pertama kita dengan mengambil 10 artikel
-              tentang "automasi" dari Hacker News.
-            </p>
-          </div>
-        </a>
-
-        <a href="materi-3/index.html" class="card">
-          <div class="card-content">
-            <span class="card-number">Materi 3</span>
-            <h2 class="card-title">Mengotomatiskan Kasus Dunia Nyata</h2>
-            <p class="card-description">
-              Membedah studi kasus nyata (Nathan) untuk merancang workflow yang
-              lebih kompleks: API, IF, Discord, & Google Sheets.
-            </p>
-          </div>
-        </a>
-        <a href="materi-4/index.html" class="card">
-          <div class="card-content">
-            <span class="card-number">Materi 4</span>
-            <h2 class="card-title">Merancang Alur Kerja (Workflow)</h2>
-            <p class="card-description">
-              Memecah masalah Nathan menjadi 8 langkah praktis dan merancang
-              diagram alur kerja yang akan kita bangun.
-            </p>
-          </div>
-        </a>
-        <a href="materi-5/index.html" class="card">
-          <div class="card-content">
-            <span class="card-number">Materi 5</span>
-            <h2 class="card-title">Mengambil Data (HTTP Request)</h2>
-            <p class="card-description">
-              Langkah pertama pembangunan: menggunakan Node HTTP Request untuk
-              mengambil data dari API data warehouse eksternal.
-            </p>
-          </div>
-        </a>
-        <a href="materi-6/index.html" class="card">
-          <div class="card-content">
-            <span class="card-number">Materi 6</span>
-            <h2 class="card-title">Memasukkan Data ke Airtable</h2>
-            <p class="card-description">
-              Mempersiapkan base di Airtable dan menggunakan Node Airtable untuk
-              menyimpan data yang telah kita ambil.
-            </p>
-          </div>
-        </a>
-        <a href="materi-7/index.html" class="card">
-          <div class="card-content">
-            <span class="card-number">Materi 7</span>
-            <h2 class="card-title">Memfilter Data (IF Node)</h2>
-            <p class="card-description">
-              Menggunakan logika kondisional dengan Node IF untuk memisahkan
-              data 'processing' dan 'booked'.
-            </p>
-          </div>
-        </a>
-        </div>
-    </section>
-
-    <section class="level-section">
-      <h2 class="level-title">Level 2: Teknik Lanjutan</h2>
-      <p class="level-description">
-        Materi 14-21: Manipulasi data tingkat lanjut, *error handling*,
-        *sub-workflow*, dan kasus penggunaan yang lebih kompleks.
-      </p>
-
-      <div class="card-list">
-        <a href="#" class="card coming-soon">
-          <div class="card-content">
-            <span class="card-number">Materi 14</span>
-            <h2 class="card-title">Segera Hadir...</h2>
-            <p class="card-description">
-              Materi Level 2 sedang dalam pengerjaan dan akan segera tersedia di
-              sini.
-            </p>
-          </div>
-        </a>
-
-        </div>
-    </section>
+  <main class="card-list level-chooser">
+    <a href="/belajar-n8n/level-1.html" class="card level-card">
+      <div class="card-content">
+        <span class="card-number">Level 1</span>
+        <h2 class="card-title">Dasar-Dasar & Alur Kerja Pertama</h2>
+        <p class="card-description">
+          Materi 0-13. Mulai dari setup VPS hingga membangun alur kerja Nathan
+          (Discord/Airtable).
+        </p>
+      </div>
+    </a>
+    <a href="/belajar-n8n/level-2.html" class="card level-card">
+      <div class="card-content">
+        <span class="card-number">Level 2</span>
+        <h2 class="card-title">Teknik Lanjutan</h2>
+        <p class="card-description">
+          Materi 14-21. Manipulasi data, error handling, sub-workflow, dan
+          lainnya.
+        </p>
+      </div>
+    </a>
   </main>
 </div>
 

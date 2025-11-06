@@ -121,22 +121,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (themeToggle) {
       const savedTheme = localStorage.getItem("theme");
+      
+      // Atur ikon saat halaman dimuat
       if (savedTheme === "dark") {
         body.classList.add("dark-mode");
-        themeToggle.textContent = "Mode Terang";
+        themeToggle.innerHTML = "☀️"; // Tampilkan ikon matahari di dark mode
       } else {
         body.classList.remove("dark-mode");
-        themeToggle.textContent = "Mode Gelap";
+        themeToggle.innerHTML = "🌙"; // Tampilkan ikon bulan di light mode
       }
 
+      // Tambahkan event listener untuk klik
       themeToggle.addEventListener("click", () => {
         body.classList.toggle("dark-mode");
+
+        // Atur ikon dan simpan preferensi saat diklik
         if (body.classList.contains("dark-mode")) {
           localStorage.setItem("theme", "dark");
-          themeToggle.textContent = "Mode Terang";
+          themeToggle.innerHTML = "☀️"; // Tampilkan ikon matahari
         } else {
           localStorage.setItem("theme", "light");
-          themeToggle.textContent = "Mode Gelap";
+          themeToggle.innerHTML = "🌙"; // Tampilkan ikon bulan
         }
       });
     }
