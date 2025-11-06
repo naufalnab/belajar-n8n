@@ -67,7 +67,7 @@
             </p>
           </div>
           <p>
-            Untuk latihan, Anda juga bisa mencarinya secara manual. Buka panel
+            Untuk latihan, kita juga bisa mencarinya secara manual. Buka panel
             node (tekan <strong>Tab</strong> atau klik ikon
             <strong>+</strong> di kanan atas).
           </p>
@@ -92,15 +92,15 @@
           </div>
           <div class="note">
             <strong>Tips Pembuatan Workflow Cepat</strong><br />
-            Anda bisa melewati langkah ini di masa depan. Menambahkan node lain
+            kita bisa melewati langkah ini di masa depan. Menambahkan node lain
             tanpa trigger (seperti node Hacker News) akan otomatis menambahkan
-            node Trigger manually untuk Anda.
+            node Trigger manually untuk kita.
           </div>
 
           <h2>2. Menambahkan Node Hacker News</h2>
           <p>
             Sekarang, klik ikon <strong>+</strong> di sebelah kanan node Trigger
-            Anda untuk membuka panel node lagi.
+            kita untuk membuka panel node lagi.
           </p>
           <p>Lalu:</p>
           <ul>
@@ -114,8 +114,7 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Panel node menampilkan 'Hacker News' setelah
-              dicari.
+              Panel node menampilkan 'Hacker News' setelah dicari.
             </p>
           </div>
 
@@ -132,12 +131,12 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Node Hacker News bisa melakukan banyak hal. Kita pilih
-              'Get many items' untuk mendapatkan daftar artikel.
+              Node Hacker News bisa melakukan banyak hal. Kita pilih 'Get many
+              items' untuk mendapatkan daftar artikel.
             </p>
           </div>
           <p>
-            n8n akan menambahkan node ke kanvas Anda, menghubungkannya secara
+            n8n akan menambahkan node ke kanvas kita, menghubungkannya secara
             otomatis, dan membuka jendela konfigurasinya.
           </p>
 
@@ -149,9 +148,9 @@
           </p>
           <blockquote>
             <strong>Parameters vs. Settings</strong><br />
-            <strong>Parameters</strong> adalah pengaturan yang <b>spesifik</b> untuk
+            <strong>Parameters</strong> adalah pengaturan yang *spesifik* untuk
             node ini (misal: 'artikel apa yang dicari?'). <br />
-            <strong>Settings</strong> adalah pengaturan <b>umum</b> untuk semua node
+            <strong>Settings</strong> adalah pengaturan *umum* untuk semua node
             (misal: 'ganti nama node ini').
           </blockquote>
 
@@ -202,26 +201,23 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Screenshot proses menambah dan mengisi field
-              'Keyword'.
+              Screenshot proses menambah dan mengisi field 'Keyword'.
             </p>
           </div>
 
-          <p>Konfigurasi parameter Anda sekarang akan terlihat seperti ini:</p>
+          <p>Konfigurasi parameter kita sekarang akan terlihat seperti ini:</p>
           <div class="image-wrapper">
             <img
               src="../assets/images/materi-2-hacker-news-params.png"
               alt="Konfigurasi parameter Hacker News yang sudah selesai, dengan Limit 10 dan Keyword automation."
               loading="lazy"
             />
-            <p class="image-caption">
-              Konfigurasi parameter node Hacker News.
-            </p>
+            <p class="image-caption">Konfigurasi parameter node Hacker News.</p>
           </div>
 
           <h3>Settings</h3>
           <p>
-            Ini adalah praktik terbaik untuk mendokumentasikan node Anda. Klik
+            Ini adalah praktik terbaik untuk mendokumentasikan node kita. Klik
             tab <strong>Settings</strong>.
           </p>
           <p>Di dalam Settings node Hacker News, edit:</p>
@@ -254,35 +250,42 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Screenshot toggle 'Display note in flow?' yang
-              sudah aktif.
+              Screenshot toggle 'Display note in flow?' yang sudah aktif.
             </p>
           </div>
 
           <div class="note">
-            Menambahkan catatan seperti ini sangat membantu. Saat Anda membuka
-            lagi workflow ini 6 bulan ke depan, Anda akan langsung tahu apa
+            Menambahkan catatan seperti ini sangat membantu. Saat kita membuka
+            lagi workflow ini 6 bulan ke depan, kita akan langsung tahu apa
             fungsi node ini tanpa perlu membukanya.
           </div>
-          <p>Konfigurasi settings Anda akan terlihat seperti ini:</p>
+          <p>Konfigurasi settings kita akan terlihat seperti ini:</p>
           <div class="image-wrapper">
             <img
               src="../assets/images/materi-2-hacker-news-settings.png"
               alt="Pengaturan node Hacker News dengan 'Notes' diisi dan 'Display note' diaktifkan."
               loading="lazy"
             />
-            <p class="image-caption">
-              Konfigurasi settings node Hacker News.
-            </p>
+            <p class="image-caption">Konfigurasi settings node Hacker News.</p>
           </div>
 
           <div class="note alt">
             <strong>Tips: Mengganti Nama Node</strong><br />
-            Anda bisa mengganti nama node agar lebih deskriptif. Klik dua kali
+            kita bisa mengganti nama node agar lebih deskriptif. Klik dua kali
             pada nama "Hacker News" di kiri atas jendela, ganti namanya (misal:
             "Ambil Berita Automasi"), lalu klik <strong>Rename</strong>.
-          </div>
 
+            <div class="image-wrapper" style="margin-top: 15px">
+              <img
+                src="../assets/images/materi-2-rename-node.png"
+                alt="Dialog popup untuk mengganti nama node Hacker News."
+                loading="lazy"
+              />
+              <p class="image-caption" style="margin-top: 5px">
+                Mengganti nama node menjadi 'Ambil Berita Automasi'.
+              </p>
+            </div>
+          </div>
           <h2>4. Mengeksekusi Node</h2>
           <p>
             Sekarang saatnya pengujian. Di jendela node, klik tombol
@@ -295,13 +298,12 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Klik tombol 'Execute step' untuk menguji node
-              ini saja.
+              Klik tombol 'Execute step' untuk menguji node ini saja.
             </p>
           </div>
 
           <p>
-            Setelah beberapa detik, node akan selesai. Anda akan melihat 10
+            Setelah beberapa detik, node akan selesai. kita akan melihat 10
             hasil di tampilan <strong>Output Table</strong>.
           </p>
           <div class="image-wrapper">
@@ -337,9 +339,9 @@
           </div>
           <p>
             Data yang diminta akan tampil dalam 3 format:
-            <strong>Table</strong> (tampilan spreadsheet),
-            <strong>JSON</strong> (data mentah), dan
-            <strong>Schema</strong> (struktur data).
+            <strong>Schema</strong> (struktur data),
+            <strong>Table</strong> (tampilan spreadsheet), dan
+            <strong>JSON</strong> (data mentah).
           </p>
           <div class="image-wrapper">
             <img
@@ -352,14 +354,14 @@
             </p>
           </div>
           <p>
-            Di atas output, Anda akan melihat informasi:
+            Di atas output, kita akan melihat informasi:
             <strong>10 items</strong>. Ini mengonfirmasi bahwa parameter
             <strong>Limit</strong> kita berfungsi.
           </p>
           <div class="note alt">
             <strong>Bagaimana Jika Error?</strong><br />
-            Jika node Anda menunjukkan ikon peringatan merah, berarti ada yang
-            salah. Periksa kembali konfigurasi parameter Anda. Apakah ada yang
+            Jika node kita menunjukkan ikon peringatan merah, berarti ada yang
+            salah. Periksa kembali konfigurasi parameter kita. Apakah ada yang
             salah ketik?
             <div class="image-wrapper" style="margin-top: 15px">
               <img
@@ -390,13 +392,13 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Mengganti nama workflow dari 'My workflow'
-              menjadi 'Materi 2 - Hacker News'.
+              Mengganti nama workflow dari 'My workflow' menjadi 'Materi 2 -
+              Hacker News'.
             </p>
           </div>
 
           <p>
-            Setelah itu, pastikan Anda menyimpannya. Tekan
+            Setelah itu, pastikan kita menyimpannya. Tekan
             <strong>Ctrl + S</strong> (atau <strong>Cmd + S</strong> untuk Mac),
             atau klik tombol <strong>Save</strong> di pojok kanan atas sampai
             tulisannya berubah menjadi "Saved".
@@ -408,30 +410,29 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Klik tombol 'Save' untuk menyimpan kemajuan
-              Anda.
+              Klik tombol 'Save' untuk menyimpan kemajuan kita.
             </p>
           </div>
 
           <h2>Ringkasan</h2>
           <p>
-            Selamat, Anda baru saja membangun workflow pertama Anda! Di materi
-            ini, Anda belajar cara menggunakan node aplikasi (Hacker News),
+            Selamat, kita baru saja membangun workflow pertama kita! Di materi
+            ini, kita belajar cara menggunakan node aplikasi (Hacker News),
             mengonfigurasi parameternya (termasuk Limit dan Keyword),
             menggunakan Settings untuk memberi catatan, serta mengeksekusi dan
-            menyimpan workflow Anda.
+            menyimpan workflow kita.
           </p>
           <p>
             Di materi selanjutnya, kita akan mulai membangun workflow yang lebih
             kompleks dan memanipulasi data yang kita dapatkan.
           </p>
-
+          
           <div
             id="page-nav-placeholder"
             data-prev-url="../materi-1/index.html"
             data-prev-title="Materi 1: Editor UI"
             data-next-url="../materi-3/index.html"
-            data-next-title="Materi 3: (Segera Hadir)"
+            data-next-title="Materi 3: Skenario Kasus Nathan"
           ></div>
 
           <div id="support-block-placeholder"></div>
