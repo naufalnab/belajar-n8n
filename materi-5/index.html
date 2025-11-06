@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 5: Mengambil Data (HTTP Request)</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 5: Mengambil Data dari Data Warehouse</h1>
+          <p class="intro">
+            Ini adalah bagian pertama dari pembangunan alur kerja Nathan. Di
+            sini, kita akan belajar cara mendapatkan data dengan membuat
+            permintaan HTTP (HTTP requests) menggunakan node
+            <strong>HTTP Request</strong>.
+          </p>
+          <p>
+            Setelah menyelesaikan bagian ini, alur kerja kita akan terlihat
+            seperti ini (kita akan menambahkan pemicu jadwal nanti, untuk saat
+            ini kita mulai dengan trigger manual):
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-step-1-workflow.png"
+              alt="Diagram alur kerja hanya dengan Schedule Trigger dan HTTP Request node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Alur kerja tahap pertama kita.
+            </p>
+          </div>
+
+          <h2>Langkah 1: Membuat Workflow Baru</h2>
+          <p>
+            Buka Editor UI n8n Anda dan buat workflow baru. Kita bisa
+            menggunakan salah satu dari dua cara:
+          </p>
+          <ul>
+            <li>
+              Pilih <strong>Ctrl+Alt+N</strong> (atau
+              <strong>Cmd+Option+N</strong> di Mac).
+            </li>
+            <li>
+              Buka menu kiri, navigasi ke <strong>Workflows</strong>, dan pilih
+              <strong>Add workflow</strong>.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-add-workflow.png"
+              alt="Menu 'Add workflow' di sidebar n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Membuat workflow baru dari sidebar.
+            </p>
+          </div>
+          <p>
+            Setelah kanvas baru terbuka, ganti nama workflow ini menjadi
+            <strong>"Workflow Nathan"</strong>.
+          </p>
+
+          <h2>Langkah 2: Menambahkan Node HTTP Request</h2>
+          <p>
+            Hal pertama yang harus kita lakukan adalah mengambil data dari data
+            warehouse lama ABCorp.
+          </p>
+          <p>
+            Di Materi 2, kita menggunakan node khusus (Hacker News). Tapi
+            bagaimana jika tidak ada node khusus untuk layanan yang kita
+            butuhkan? Seperti kasus data warehouse lama Nathan.
+          </p>
+          <p>
+            Untungnya, Nathan memberi tahu kita bahwa data warehouse-nya
+            memiliki <strong>API endpoint</strong>. Ini adalah "pintu" yang
+            bisa kita gunakan untuk meminta data. Di n8n, node yang sempurna
+            untuk ini adalah <strong>HTTP Request</strong>.
+          </p>
+          <blockquote>
+            <strong>Apa itu Node HTTP Request?</strong><br />
+            Anggap saja node ini seperti browser mini. Kita memberinya URL, dan
+            ia akan "mengunjungi" URL tersebut untuk mengambil data apa pun
+            yang ada di sana. Ini adalah salah satu node paling serbaguna dan
+            penting di n8n.
+          </blockquote>
+          <p>
+            Di kanvas Anda, klik tanda <strong>+</strong> pada node "Start"
+            Anda, lalu cari dan tambahkan node <strong>HTTP Request</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-search-http-node.png"
+              alt="Mencari node 'HTTP Request' di panel node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Menambahkan node HTTP Request ke kanvas.
+            </p>
+          </div>
+          <p>Jendela konfigurasi node akan terbuka.</p>
+
+          <h2>Langkah 3: Memahami & Menyiapkan Kredensial</h2>
+          <p>
+            Node ini akan membutuhkan kredensial. Kredensial adalah "kunci"
+            (seperti username/password atau API key) yang membuktikan bahwa
+            kita berhak mengakses data.
+          </p>
+          <div class="note alt">
+            <strong>Catatan Kredensial</strong><br />
+            Jika Anda mengikuti kursus resmi n8n, mereka akan memberikan
+            kredensial demo di email pendaftaran. Untuk dokumentasi ini, kita
+            akan berpura-pura telah menerima kredensial tersebut.
+          </div>
+
+          <h2>Langkah 4: Mengonfigurasi Node HTTP Request</h2>
+          <p>
+            Ini adalah bagian paling detail. Kita akan mengisi semua parameter
+            yang dibutuhkan untuk "membuka pintu" API.
+          </p>
+
+          <h3>Bagian 1: URL dan Headers</h3>
+          <p>
+            Di tab <strong>Parameters</strong>, isi sebagai berikut:
+          </p>
+          <ul>
+            <li>
+              <strong>Method:</strong> Pastikan ini diatur ke
+              <strong><code>GET</code></strong>. (Artinya kita ingin
+              "MENDAPATKAN" data).
+            </li>
+            <li>
+              <strong>URL:</strong> Masukkan <strong>Dataset URL</strong> yang
+              Anda terima dari email kursus. (Contoh:
+              <code>https://internal.users.n8n.cloud/...</code>)
+            </li>
+            <li>
+              <strong>Send Headers:</strong> Aktifkan (geser ke
+              <strong>true</strong>). Headers adalah "metadata" tambahan yang
+              kita kirim bersama permintaan kita.
+            </li>
+            <li>
+              <strong>Specify Headers:</strong> Pastikan
+              <strong>Using Fields Below</strong> terpilih.
+            </li>
+            <li>
+              <strong>Header Parameters > Name:</strong> Masukkan
+              <strong><code>unique_id</code></strong>.
+            </li>
+            <li>
+              <strong>Header Parameters > Value:</strong> Masukkan
+              <strong>Unique ID</strong> yang Anda terima dari email.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-param-headers.png"
+              alt="Mengisi URL dan Header Parameters di node HTTP Request."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Screenshot konfigurasi URL dan Header
+              Parameters.
+            </p>
+          </div>
+
+          <h3>Bagian 2: Otentikasi & Kredensial</h3>
+          <p>
+            Sekarang, scroll ke bawah ke bagian <strong>Authentication</strong>.
+          </p>
+          <ul>
+            <li>
+              <strong>Authentication:</strong> Pilih
+              <strong><code>Generic Credential Type</code></strong>.
+            </li>
+            <li>
+              <strong>Generic Auth Type:</strong> Pilih
+              <strong><code>Header Auth</code></strong>. (Ini akan muncul
+              setelah Anda memilih langkah sebelumnya).
+            </li>
+            <li>
+              <strong>Credential for Header Auth:</strong> Ini adalah kuncinya.
+              Klik <strong>+ Create new credential</strong>.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-param-create-creds.png"
+              alt="Memilih 'Header Auth' dan mengklik 'Create new credential'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Kita akan membuat kredensial baru untuk API
+              ini.
+            </p>
+          </div>
+          <p>
+            Sebuah jendela popup "Create new credential" akan muncul. Di sinilah
+            kita menyimpan "kunci" rahasia kita dengan aman.
+          </p>
+          <ul>
+            <li>
+              <strong>Name:</strong> Masukkan <strong>Header Auth name</strong>
+              dari email (Misal:
+              <code>Nathan's ABCorp data warehouse account</code>).
+            </li>
+            <li>
+              <strong>Value:</strong> Masukkan <strong>Header Auth value</strong>
+              dari email.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-creds-window.png"
+              alt="Jendela popup kredensial diisi dengan Nama dan Value."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Mengisi detail kredensial rahasia kita.
+            </p>
+          </div>
+          <p>
+            Klik tombol <strong>Save</strong> di jendela popup. n8n akan
+            menyimpan kredensial ini dengan aman. Jendela popup akan tertutup,
+            dan Anda akan melihat kredensial Anda sekarang sudah terpilih.
+          </p>
+
+          <h2>Langkah 5: Mengeksekusi Node & Memeriksa Data</h2>
+          <p>
+            Konfigurasi selesai! Saatnya menguji. Klik tombol
+            <strong>Execute step</strong> (ikon 'Play' ▶️) di pojok kanan atas
+            jendela node.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-execute-step.png"
+              alt="Tombol 'Execute step' (ikon Play) di pojok kanan atas jendela node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Klik 'Execute step' untuk mengambil data.
+            </p>
+          </div>
+          <p>
+            Setelah beberapa detik, jika kredensial dan URL Anda benar, node
+            akan berhasil. Tab <strong>Output</strong> akan menunjukkan data
+            dalam tampilan <strong>Table</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-http-output.png"
+              alt="Hasil data penjualan dari HTTP Request dalam tampilan 'Table'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              (Ganti gambar ini) Sukses! Data dari data warehouse ABCorp sudah
+              muncul.
+            </p>
+          </div>
+          <p>
+            Ini adalah data yang Nathan butuhkan! Kita bisa melihat 30 item
+            (pelanggan) dengan lima kolom:
+          </p>
+          <ul>
+            <li><strong>orderID:</strong> ID unik pesanan.</li>
+            <li><strong>customerID:</strong> ID unik pelanggan.</li>
+            <li><strong>employeeName:</strong> Nama kolega Nathan.</li>
+            <li><strong>orderPrice:</strong> Total harga pesanan.</li>
+            <li>
+              <strong>orderStatus:</strong> Status pesanan (
+              <strong><code>booked</code></strong> atau
+              <strong><code>processing</code></strong> ).
+            </li>
+          </ul>
+
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Kita baru saja menyelesaikan bagian terpenting: mengambil data.
+            Sekarang kita bisa mulai mengolahnya.
+          </p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Ini hebat! Kita sudah mengotomatiskan bagian penting dari
+              pekerjaan saya hanya dengan satu node. Sekarang, alih-alih
+              mengakses data secara manual setiap saat, saya bisa menggunakan
+              node HTTP Request untuk mendapatkan informasi secara otomatis.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Tepat sekali! Di langkah selanjutnya, saya akan bantu kita satu
+              langkah lebih jauh dan memasukkan data yang kita ambil ini ke
+              Airtable.
+            </p>
+          </blockquote>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-4/index.html"
+            data-prev-title="Materi 4: Merancang Alur Kerja"
+            data-next-url="../materi-6/index.html"
+            data-next-title="Materi 6: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
