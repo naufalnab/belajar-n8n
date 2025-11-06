@@ -1,0 +1,5 @@
+# Folder build lokal (untuk npm start)
+_site/
+
+# Folder build produksi (untuk npm run build)
+docs/

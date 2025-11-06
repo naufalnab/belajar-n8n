@@ -1,0 +1,5 @@
+# Folder dependensi Node
+node_modules/
+
+# Folder build lokal Eleventy
+_site/

@@ -11,10 +11,12 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="{{ '/assets/style.css' | url }}" />
   </head>
   <body class="homepage-body">
+    <button id="theme-toggle" class="theme-toggle-floating" aria-label="Ganti mode">
+      </button>
+
     {{ content | safe }}
 
     <script src="{{ '/assets/script.js' | url }}"></script>

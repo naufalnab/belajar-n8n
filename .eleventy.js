@@ -1,15 +1,15 @@
+const isProduction = process.env.NODE_ENV === "production";
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets");
-
   return {
     dir: {
       input: ".",
-      output: "docs",
+      output: isProduction ? "docs" : "_site",
       includes: "_includes",
     },
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
-
-    pathPrefix: "/belajar-n8n/",
+    pathPrefix: isProduction ? "/belajar-n8n/" : "/",
   };
 };

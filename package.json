@@ -1,23 +1,16 @@
 {
-  "name": "ai-automation",
+  "name": "belajar-n8n",
   "version": "1.0.0",
-  "description": "Selamat datang di repositori catatan pembelajaran n8n saya!",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/naufalnab/belajar-n8n.git"
+    "start": "eleventy --serve",
+    "build": "NODE_ENV=production eleventy"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/naufalnab/belajar-n8n/issues"
-  },
-  "homepage": "https://github.com/naufalnab/belajar-n8n#readme",
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.2"
+    "@11ty/eleventy": "^3.0.0"
   }
 }

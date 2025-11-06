@@ -23,7 +23,7 @@
   --blockquote-border: #ccc;
   --image-border: #e0e0e0;
   --image-caption-text: #777;
-  --link-color: #007a66; 
+  --link-color: #007a66;
   --link-hover-color: #00a98f;
 }
 
@@ -48,7 +48,7 @@ body.dark-mode {
   --blockquote-border: #555;
   --image-border: #555;
   --image-caption-text: #999;
-  --link-color: #00c7a5; /* Teal n8n yang terang, sangat terbaca! */
+  --link-color: #00c7a5;
   --link-hover-color: #33e0c7;
 }
 
@@ -134,13 +134,18 @@ body {
   font-weight: 700;
 }
 
-/* Tombol Tema (Sidebar) */
+/* ======================================================= */
+/* Tombol Tema */
+/* ======================================================= */
+
+/* Tombol Tema (Di dalam Sidebar Materi) */
 .theme-switcher {
   padding: 0;
   margin: 15px 0;
   text-align: left;
 }
 
+/* Ini adalah style untuk #theme-toggle DI DALAM sidebar */
 #theme-toggle {
   padding: 10px 15px;
   border: 1px solid var(--border-color);
@@ -156,6 +161,34 @@ body {
 #theme-toggle:hover {
   background-color: var(--link-hover-bg);
   color: var(--link-hover-text);
+}
+
+/* Tombol Tema (Floating Ikon di Homepage) */
+.theme-toggle-floating {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%; /* Membuatnya bulat */
+  border: 1px solid var(--border-color);
+  background-color: var(--container-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 1.5rem; /* Ukuran emoji */
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-floating:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 6px 12px var(--shadow-color);
 }
 
 /* ======================================================= */
@@ -379,31 +412,18 @@ blockquote {
   margin: 0 auto;
 }
 
+/* Tombol tema teks lama di homepage (disembunyikan) */
 .theme-switcher-homepage {
-  margin-top: 30px;
+  display: none;
 }
 
-/* Tombol dark mode di homepage */
 .theme-switcher-homepage #theme-toggle {
+  /* Style ini tidak lagi digunakan, tapi biarkan saja */
   padding: 12px 24px;
-  border: 1px solid var(--border-color);
-  background-color: var(--container-bg);
-  color: var(--text-color);
-  cursor: pointer;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
-    0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 .theme-switcher-homepage #theme-toggle:hover {
-  background-color: var(--link-hover-bg);
-  color: var(--link-hover-text);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.07),
-    0 2px 8px -1px rgba(0, 0, 0, 0.04);
+  /* Style ini tidak lagi digunakan */
 }
 
 /* DAFTAR CARD (PERUBAHAN BESAR) */
@@ -506,6 +526,39 @@ blockquote {
   margin-bottom: 30px;
 }
 
+.level-chooser {
+  /* Atur agar 2 kartu 'level-card' memenuhi layar */
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.level-card {
+  /* Buat kartu level lebih menonjol */
+  border-width: 2px;
+}
+
+.level-card .card-title {
+  font-size: 1.8rem; /* Judul kartu lebih besar */
+}
+
+.back-to-home {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--link-color);
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.back-to-home:hover {
+  background-color: var(--link-hover-bg);
+  border-color: var(--border-color);
+}
+
 /* ======================================================= */
 /* STYLE UNTUK NAVIGASI HALAMAN (PREV/NEXT) */
 /* ======================================================= */
@@ -544,10 +597,78 @@ blockquote {
 .page-navigation .next-page {
   text-align: right;
   /* Jika hanya ada tombol next, paskan ke kanan */
-  margin-left: auto; 
+  margin-left: auto;
 }
 
+/* ======================================================= */
+/* (PINDAHAN) STYLE UNTUK TOMBOL & BLOK DUKUNGAN */
+/* ======================================================= */
 
+/* Tombol utama di Homepage */
+.homepage-container .support-button {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--link-active-text);
+  background-color: var(
+    --note-alt-border
+  ); /* Warna oranye/kuning yang 'hangat' */
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px -1px rgba(255, 153, 0, 0.2);
+}
+
+.homepage-container .support-button:hover {
+  transform: translateY(-2px);
+  background-color: #ffaa33; /* Sedikit lebih cerah saat hover */
+  box-shadow: 0 6px 15px -1px rgba(255, 153, 0, 0.3);
+}
+
+/* Blok dukungan di akhir artikel */
+.support-block {
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 2px solid var(--border-color);
+  text-align: center;
+}
+
+.support-block h3 {
+  font-size: 1.6em;
+  font-weight: 600;
+  color: var(--header-color);
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.support-block p {
+  font-size: 1.1em;
+  color: var(--text-color-light);
+  max-width: 600px;
+  margin: 0 auto 25px auto;
+}
+
+/* Tombol di dalam blok dukungan */
+.support-block .support-button {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--link-active-text);
+  background-color: var(--note-border); /* Warna hijau n8n */
+  padding: 12px 30px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px -1px rgba(0, 169, 143, 0.2);
+}
+
+.support-block .support-button:hover {
+  transform: translateY(-2px);
+  background-color: #00c7a5; /* Versi lebih cerah */
+  box-shadow: 0 6px 15px -1px rgba(0, 169, 143, 0.3);
+}
 
 /* ======================================================= */
 /* Responsif (DIPERBARUI) */
@@ -603,75 +724,17 @@ blockquote {
   .card-list {
     gap: 20px;
   }
+
+  .level-chooser {
+    grid-template-columns: 1fr; /* Buat kartu level jadi 1 kolom di HP */
+    gap: 20px;
+  }
+
+  .theme-toggle-floating {
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
 }
-
-
-  /* ======================================================= */
-  /* STYLE UNTUK TOMBOL & BLOK DUKUNGAN */
-  /* ======================================================= */
-
-  /* Tombol utama di Homepage */
-  .homepage-container .support-button {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--link-active-text);
-    background-color: var(
-      --note-alt-border
-    ); /* Warna oranye/kuning yang 'hangat' */
-    padding: 12px 24px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    margin-top: 10px;
-    box-shadow: 0 4px 10px -1px rgba(255, 153, 0, 0.2);
-  }
-
-  .homepage-container .support-button:hover {
-    transform: translateY(-2px);
-    background-color: #ffaa33; /* Sedikit lebih cerah saat hover */
-    box-shadow: 0 6px 15px -1px rgba(255, 153, 0, 0.3);
-  }
-
-  /* Blok dukungan di akhir artikel */
-  .support-block {
-    margin-top: 50px;
-    padding-top: 30px;
-    border-top: 2px solid var(--border-color);
-    text-align: center;
-  }
-
-  .support-block h3 {
-    font-size: 1.6em;
-    font-weight: 600;
-    color: var(--header-color);
-    margin-top: 0;
-    margin-bottom: 15px;
-  }
-
-  .support-block p {
-    font-size: 1.1em;
-    color: var(--text-color-light);
-    max-width: 600px;
-    margin: 0 auto 25px auto;
-  }
-
-  /* Tombol di dalam blok dukungan */
-  .support-block .support-button {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--link-active-text);
-    background-color: var(--note-border); /* Warna hijau n8n */
-    padding: 12px 30px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 10px -1px rgba(0, 169, 143, 0.2);
-  }
-
-  .support-block .support-button:hover {
-    transform: translateY(-2px);
-    background-color: #00c7a5; /* Versi lebih cerah */
-    box-shadow: 0 6px 15px -1px rgba(0, 169, 143, 0.3);
-  }
