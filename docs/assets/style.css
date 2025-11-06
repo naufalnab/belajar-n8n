@@ -477,6 +477,36 @@ blockquote {
 }
 
 /* ======================================================= */
+/* STYLE UNTUK HOMEPAGE (TAMBAHAN LEVEL) */
+/* ======================================================= */
+.homepage-main {
+  /* Hapus padding default jika ada */
+  padding: 0;
+}
+
+.level-section {
+  /* Beri jarak antar bagian Level 1 dan Level 2 */
+  margin-bottom: 60px;
+}
+
+.level-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--header-color);
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.level-description {
+  font-size: 1.1rem;
+  color: var(--text-color-light);
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+/* ======================================================= */
 /* STYLE UNTUK NAVIGASI HALAMAN (PREV/NEXT) */
 /* ======================================================= */
 .page-navigation {
@@ -516,6 +546,8 @@ blockquote {
   /* Jika hanya ada tombol next, paskan ke kanan */
   margin-left: auto; 
 }
+
+
 
 /* ======================================================= */
 /* Responsif (DIPERBARUI) */
