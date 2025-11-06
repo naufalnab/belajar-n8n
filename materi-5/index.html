@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 5: Mengambil Data (HTTP Request)</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 5: Mengambil Data dari Data Warehouse</h1>
+          <p class="intro">
+            Ini adalah bagian pertama dari pembangunan alur kerja Nathan. Di
+            sini, kita akan belajar cara mendapatkan data dengan membuat
+            permintaan HTTP (HTTP requests) menggunakan node
+            <strong>HTTP Request</strong>.
+          </p>
+
+          <h2>Langkah 1: Membuat Workflow Baru</h2>
+          <p>
+            Buka Editor UI n8n Kita dan buat workflow baru. Kita bisa
+            menggunakan salah satu dari dua cara:
+          </p>
+          <ul>
+            <li>
+              Pilih <strong>Ctrl+Alt+N</strong> (atau
+              <strong>Cmd+Option+N</strong> di Mac).
+            </li>
+            <li>
+              Buka menu kiri, navigasi ke <strong>Workflows</strong>, dan pilih
+              <strong>Add workflow</strong>.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-add-workflow.png"
+              alt="Menu 'Add workflow' di sidebar n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">Membuat workflow baru dari sidebar.</p>
+          </div>
+          <p>
+            Setelah kanvas baru terbuka, ganti nama workflow ini menjadi
+            <strong>"Workflow Nathan"</strong>.
+          </p>
+
+          <h2>Langkah 2: Menambahkan Node HTTP Request</h2>
+          <p>
+            Tugas pertama kita adalah mengambil data dari API data warehouse
+            Nathan. Untuk ini, kita akan menggunakan node
+            <strong>HTTP Request</strong>.
+          </p>
+          <p>
+            Di kanvas Kita, klik tanda <strong>+</strong> pada node "Start"
+            Kita, lalu cari dan tambahkan node <strong>HTTP Request</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-search-http-node.png"
+              alt="Mencari node 'HTTP Request' di panel node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Menambahkan node HTTP Request ke kanvas.
+            </p>
+          </div>
+          <p>
+            Jendela konfigurasi node akan terbuka. Node ini akan membutuhkan
+            kredensial, yang akan kita dapatkan di langkah berikutnya.
+          </p>
+
+          <h2>Langkah 3: Mendapatkan Kredensial Demo (Wajib)</h2>
+          <p>
+            Node HTTP Request kita perlu mengakses API demo. Untuk
+            mendapatkan kredensialnya (kunci API, URL, dll.), kita perlu
+            mendaftar ke kursus Level 1 n8n.
+          </p>
+          <p>
+            Berikut adalah langkah-langkah persis yang saya lakukan untuk
+            mendapatkannya.
+          </p>
+
+          <h3>3.1: Kunjungi Halaman Pendaftaran</h3>
+          <p>
+            Pertama, kita mengunjungi halaman pendaftaran n8n Certification
+            Course Level 1 dan klik "Sign Up".
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-1-welcome.png"
+              alt="Halaman pendaftaran n8n Certification Course Level 1."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Tampilan awal halaman pendaftaran untuk mendapatkan Unique ID.
+            </p>
+          </div>
+
+          <h3>3.2: Isi Formulir Pendaftaran</h3>
+          <p>
+            Kita akan mengisi formulir Typeform dengan data Kita.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-2-name.png"
+              alt="Formulir Typeform meminta nama lengkap Kita (Naufal Nabila)."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Memasukkan nama lengkap Kita di formulir.
+            </p>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-3-email.png"
+              alt="Formulir Typeform meminta alamat email Kita."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Memasukkan alamat email tempat kredensial akan dikirim.
+            </p>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-4-forum.png"
+              alt="Formulir Typeform meminta username forum n8n Kita (naufalnabila)."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Memasukkan username forum n8n Kita.
+            </p>
+          </div>
+
+          <h3>3.3: Jawab Survei Singkat</h3>
+          <p>
+            Selanjutnya, ada beberapa pertanyaan survei singkat.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-5-work.png"
+              alt="Pertanyaan survei: 'Which of these areas do you mainly work in?' diisi 'Automation Consulting'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Jawaban untuk pertanyaan area kerja utama.
+            </p>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-6-skills.png"
+              alt="Pertanyaan survei: 'How are your coding skills?' diisi dengan rating 5."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Jawaban untuk pertanyaan tingkat kemampuan coding Kita.
+            </p>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-7-build.png"
+              alt="Pertanyaan survei: 'What is the first thing you want to build with n8n?' diisi 'Automate Customer Service'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Jawaban untuk pertanyaan tentang proyek pertama yang ingin Kita
+              bangun.
+            </p>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-8-success.png"
+              alt="Layar sukses pendaftaran: 'You're all set to start your n8n journey!'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Layar konfirmasi bahwa pendaftaran Kita berhasil.
+            </p>
+          </div>
+
+          <h3>3.4: Periksa Email & Catat Kredensial</h3>
+          <p>
+            Segera setelah mendaftar, email dari n8n akan masuk ke inbox Kita.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-9-inbox.png"
+              alt="Inbox Gmail menunjukkan email baru dari n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Email konfirmasi sudah masuk ke kotak masuk Kita.
+            </p>
+          </div>
+          <p>Buka email tersebut. Di sinilah semua data penting kita berada!</p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-10-email-content.png"
+              alt="Isi email dari n8n yang berisi kredensial demo (Unique ID, Webhook URL, Dataset URL, Header Auth)."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Isi email, memperlihatkan semua kredensial demo yang Kita butuhkan.
+            </p>
+          </div>
+          <div class="note alt">
+            <strong>Data Kredensial Kita!</strong><br />
+            Kita akan menggunakan data-data berikut di langkah selanjutnya:
+            <ul>
+              <li>
+                <strong>Unique ID:</strong>
+                <code>(Nilai unik di email Anda)</code>
+              </li>
+              <li>
+                <strong>Dataset URL:</strong>
+                <code>https://internal.users.n8n.cloud/webhook/custom-erp</code>
+              </li>
+              <li><strong>Header Auth name:</strong> <code>api_key</code></li>
+              <li>
+                <strong>Header Auth value:</strong>
+                <code>(Nilai unik di email Anda)</code>
+              </li>
+            </ul>
+          </div>
+
+          <h2>Langkah 4: Mengonfigurasi Node HTTP Request</h2>
+          <p>
+            Oke, sekarang kita punya semua "kunci"-nya. Mari kita kembali ke
+            node <strong>HTTP Request</strong> di n8n dan masukkan kredensial
+            kita.
+          </p>
+
+          <h3>Bagian 4.1: URL dan Headers</h3>
+          <p>Di tab <strong>Parameters</strong>, isi sebagai berikut:</p>
+          <ul>
+            <li>
+              <strong>Method:</strong> Pastikan ini
+              <strong><code>GET</code></strong
+              >.
+            </li>
+            <li>
+              <strong>URL:</strong> Masukkan <strong>Dataset URL</strong> dari
+              email. (<code>https://internal.../custom-erp</code>)
+            </li>
+            <li>
+              <strong>Send Headers:</strong> Aktifkan (geser ke
+              <strong>true</strong>).
+            </li>
+            <li>
+              <strong>Specify Headers:</strong> Pastikan
+              <strong>Using Fields Below</strong> terpilih.
+            </li>
+            <li>
+              <strong>Header Parameters > Name:</strong> Masukkan
+              <strong><code>unique_id</code></strong
+              >.
+            </li>
+            <li>
+              <strong>Header Parameters > Value:</strong> Masukkan
+              <strong>Unique ID</strong> Kita dari email.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-param-headers.png"
+              alt="Mengisi URL dan Header Parameters di node HTTP Request."
+              loading="lazy"
+            />
+            <p class="image-caption">Konfigurasi URL dan Header Parameters.</p>
+          </div>
+
+          <h3>Bagian 4.2: Otentikasi & Kredensial</h3>
+          <p>
+            Sekarang, scroll ke bawah ke bagian <strong>Authentication</strong>.
+          </p>
+          <ul>
+            <li>
+              <strong>Authentication:</strong> Pilih
+              <strong><code>Generic Credential Type</code></strong
+              >.
+            </li>
+            <li>
+              <strong>Generic Auth Type:</strong> Pilih
+              <strong><code>Header Auth</code></strong
+              >.
+            </li>
+            <li>
+              <strong>Credential for Header Auth:</strong> Klik
+              <strong>+ Create new credential</strong>.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-param-create-creds.png"
+              alt="Memilih 'Header Auth' dan mengklik 'Create new credential'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita akan membuat kredensial baru untuk API ini.
+            </p>
+          </div>
+          <p>Sebuah jendela popup "Create new credential" akan muncul.</p>
+          <ul>
+            <li>
+              <strong>Name:</strong> Beri nama yang jelas, misal:
+              <strong><code>Kredensial Data Warehouse Nathan</code></strong
+              >. (Ini adalah <strong>Header Auth name</strong> dari email:
+              <code>api_key</code>)
+            </li>
+            <li>
+              <strong>Value:</strong> Masukkan
+              <strong>Header Auth value</strong>
+              dari email. (<code>jIvKYdY68H(:WFb</code>)
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-creds-window.png"
+              alt="Jendela popup kredensial diisi dengan Nama dan Value."
+              loading="lazy"
+            />
+            <p class="image-caption">Mengisi detail kredensial rahasia kita.</p>
+          </div>
+          <p>
+            Klik tombol <strong>Save</strong>. Kredensial Kita sekarang aman
+            tersimpan di n8n.
+          </p>
+
+          <h2>Langkah 5: Mengeksekusi Node & Memeriksa Data</h2>
+          <p>
+            Konfigurasi selesai! Klik tombol
+            <strong>Execute step</strong> (ikon 'Play' ▶️) di pojok kanan atas
+            jendela node.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-execute-step.png"
+              alt="Tombol 'Execute step' (ikon Play) di pojok kanan atas jendela node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Klik 'Execute step' untuk mengambil data.
+            </p>
+          </div>
+          <p>
+            Jika semua kredensial benar, node akan berhasil dan menampilkan data
+            di tab <strong>Output</strong>.
+          </p>
+          <p>
+            Ini adalah data yang Nathan butuhkan! Kita bisa melihat 30 item
+            dengan lima kolom:
+          </p>
+          <ul>
+            <li><strong>orderID</strong></li>
+            <li><strong>customerID</strong></li>
+            <li><strong>employeeName</strong></li>
+            <li><strong>orderPrice</strong></li>
+            <li>
+              <strong>orderStatus</strong> (
+              <strong><code>booked</code></strong> atau
+              <strong><code>processing</code></strong> )
+            </li>
+          </ul>
+
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Kita baru saja menyelesaikan bagian terpenting: mengambil data.
+            Sekarang kita bisa mulai mengolahnya.
+          </p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Ini hebat! Kita sudah mengotomatiskan bagian penting dari
+              pekerjaan saya hanya dengan satu node.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Tepat sekali! Di langkah selanjutnya, saya akan bantu kita satu
+              langkah lebih jauh dan memasukkan data yang kita ambil ini ke
+              Airtable.
+            </p>
+          </blockquote>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-4/index.html"
+            data-prev-title="Materi 4: Merancang Alur Kerja"
+            data-next-url="../materi-6/index.html"
+            data-next-title="Materi 6: Menyimpan ke Airtable"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
