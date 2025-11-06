@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Materi 0: Persiapan Self-Hosting (Memilih VPS)</title>
+
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+  <h1>Materi 0: Persiapan Self-Hosting (Memilih VPS)</h1>
+  <p class="intro">
+    Sebelum kita mulai menjelajahi UI n8n di Materi 1, ada langkah paling awal
+    yang krusial: menyiapkan "rumah" untuk n8n. Di materi ini, kita akan
+    membahas proses saya memilih server untuk self-host n8n.
+  </p>
+
+  <div class="note">
+    <strong>Catatan Pribadi:</strong>
+    Seperti yang pernah saya sebutkan, saya memilih menggunakan Hostinger untuk
+    VPS saya. Ini murni pilihan pribadi untuk belajar dan bukan disponsori.
+    Catatan ini adalah bagian dari dokumentasi proses belajar saya.
+  </div>
+
+  <h2>Kenapa Self-Host?</h2>
+  <p>
+    n8n menawarkan versi Cloud mereka, tetapi saya memilih self-host karena
+    beberapa alasan:
+  </p>
+  <ul>
+    <li>
+      <strong>Kontrol Penuh:</strong> Saya bisa menentukan versi n8n, mengelola
+      sumber daya (CPU/RAM), dan mengatur keamanan sendiri.
+    </li>
+    <li>
+      <strong>Privasi Data:</strong> Semua data workflow dan kredensial
+      tersimpan di server saya sendiri.
+    </li>
+    <li>
+      <strong>Biaya:</strong> Untuk workflow yang berjalan intensif, self-host
+      bisa jadi lebih hemat dalam jangka panjang.
+    </li>
+  </ul>
+
+  <h2>Kenapa VPS (Virtual Private Server)?</h2>
+  <p>
+    Untuk self-host n8n, kita tidak bisa pakai
+    <i>Shared Hosting</i> biasa karena kita butuh <i>akses root</i> untuk
+    menginstal <strong>Docker</strong>. n8n sangat direkomendasikan untuk
+    dijalankan via Docker.
+  </p>
+  <p>
+    Pilihannya ada dua: PC/komputer di rumah atau VPS. Saya memilih VPS karena:
+  </p>
+  <ul>
+    <li>Nyala 24/7 tanpa perlu saya urus.</li>
+    <li>Mendapat IP publik statis.</li>
+    <li>Koneksi internet server yang stabil dan cepat.</li>
+  </ul>
+
+  <h2>Pilihan VPS di Hostinger (yang Saya Tinjau)</h2>
+  <p>
+    Hostinger menawarkan beberapa paket VPS, tapi yang paling relevan untuk n8n
+    adalah paket KVM VPS mereka. Virtualisasi KVM ini penting karena memberikan
+    isolasi resource yang baik dan kompatibel penuh dengan Docker.
+  </p>
+  <p>
+    Berikut adalah paket KVM yang saya pilih (spesifikasi per November 2025, dan
+    paling murah):
+  </p>
+
+  <h3>KVM 1</h3>
+  <ul>
+    <li><strong>vCPU:</strong> 1 Core</li>
+    <li><strong>RAM:</strong> 4 GB</li>
+    <li><strong>Storage:</strong> 50 GB NVMe</li>
+    <li>
+      <strong>Keterangan:</strong> Ini paket minimum. Cukup untuk belajar dan
+      menjalankan workflow ringan, tapi mungkin akan terasa lambat jika
+      workflow-nya banyak atau memproses data besar.
+    </li>
+  </ul>
+
+  <h3>KVM 2</h3>
+  <ul>
+    <li><strong>vCPU:</strong> 2 Core</li>
+    <li><strong>RAM:</strong> 8 GB</li>
+    <li><strong>Storage:</strong> 100 GB NVMe</li>
+    <li>
+      <strong>Keterangan:</strong> Ini adalah pilihan yang sangat
+      direkomendasikan. Dengan 8GB RAM, server ini sangat mampu menjalankan
+      Docker dan n8n untuk skala kecil hingga menengah dengan lancar.
+    </li>
+  </ul>
+
+  <h3>KVM 4</h3>
+  <ul>
+    <li><strong>vCPU:</strong> 4 Core</li>
+    <li><strong>RAM:</strong> 16 GB</li>
+    <li><strong>Storage:</strong> 200 GB NVMe</li>
+    <li>
+      <strong>Keterangan:</strong> Pilihan ini lebih untuk skala besar, jikakita
+      berencana menjalankan banyak eksekusi workflow secara bersamaan
+      (concurrent) atau menjalankan aplikasi berat lain di VPS yang sama.
+    </li>
+  </ul>
+
+  <div class="note">
+    <strong>Mau Coba Hostinger? (Link Referral)</strong><br />
+    Jikakita juga tertarik untuk mendaftar di Hostinger setelah membaca
+    perbandingan ini,kita bisa menggunakan link referral saya di bawah.
+    <br /><br />
+    <a
+      href="https://hostinger.co.id?REFERRALCODE=O4BNAUFALFMR"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <strong>https://hostinger.co.id?REFERRALCODE=O4BNAUFALFMR</strong>
+    </a>
+    <br /><br />
+    Saya mungkin akan mendapat sedikit komisi tanpa biaya tambahan untuk kita
+    (dankita mungkin juga mendapat diskon). Ini adalah cara yang bagus untuk
+    mendukung dokumentasi ini jikakita merasa terbantu. Terima kasih!
+  </div>
+
+  <p>
+    Untuk tutorial video lengkap tentang proses pembelian dan setup awal VPS di
+    Hostinger,kita bisa melihat referensi video berikut:
+    <a
+      href="https://www.youtube.com/watch?v=7UCDmr9_k"
+      target="_blank"
+      rel="noopener noreferrer"
+      >Tutorial Lengkap Pembelian Hostinger di YouTube</a
+    >.
+  </p>
+  <div class="note alt">
+    <strong>Pilihan Saya</strong><br />
+    Saya akhirnya memilih paket <strong>KVM 1</strong>. Meskipun KVM 2
+    direkomendasikan, untuk tahap awal belajar, saya memilih paket yang paling
+    hemat biaya. Dengan 4GB RAM, ini sudah cukup untuk menjalankan workflow
+    ringan. Jika nanti terasa lambat atau kebutuhan meningkat, saya bisa upgrade
+    paketnya.
+  </div>
+
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/hostinger-dashboard.png"
+      alt="Tangkapan layar dashboard VPS Hostinger KVM 1."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Tampilan dashboard VPS saya di Hostinger setelah setup.
+    </p>
+  </div>
+
+  <h2>Konfigurasi Awal</h2>
+  <p>
+    Setelah memesan, saya masuk ke dashboard VPS dan melakukan instalasi Sistem
+    Operasi (OS). Saya memilih
+    <strong>Ubuntu 22.04 LTS</strong> karena ini adalah OS yang paling umum dan
+    banyak dukungannya untuk instalasi Docker.
+  </p>
+
+  <h2>Langkah Selanjutnya</h2>
+  <p>
+    Setelah VPS aktif dengan Ubuntu 22.04, server kita masih "kosong". Langkah
+    selanjutnya (yang akan jadi materi lain) adalah:
+  </p>
+  <ol>
+    <li>Melakukan setup keamanan dasar (firewall, user baru).</li>
+    <li>Menginstal Docker dan Docker Compose.</li>
+    <li>Menjalankan n8n menggunakan Docker.</li>
+  </ol>
+  <p>
+    Setelah semua itu siap, barulah kita bisa mulai bekerja dengan n8n, seperti
+    yang akan kita lihat di
+    <a href="../materi-1/index.html">Materi 1: Menjelajahi Editor UI</a>.
+  </p>
+  <h2>Langkah Selanjutnya</h2>
+  <p>
+    Setelah semua itu siap, barulah kita bisa mulai bekerja dengan n8n, seperti
+    yang akan kita lihat di
+    <a href="../materi-1/index.html">Materi 1: Menjelajahi Editor UI</a>.
+  </p>
+
+  <div
+    id="page-nav-placeholder"
+    data-next-url="../materi-1/index.html"
+    data-next-title="Materi 1: Editor UI"
+  ></div>
+
+  <div id="support-block-placeholder"></div>
+</article>
+        
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>

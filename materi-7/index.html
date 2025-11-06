@@ -1,0 +1,343 @@
+---
+layout: base.html
+title: "Materi 7: Memfilter Data (IF Node)"
+---
+
+<article>
+  <h1>Materi 7: Memfilter Data dengan IF Node</h1>
+  <p class="intro">
+    Di langkah ini, Kita akan belajar cara memfilter data menggunakan logika
+    kondisional. Kita juga akan belajar cara menggunakan
+    <strong>Expressions</strong> (Ekspresi) di dalam node menggunakan node
+    <strong>IF</strong>.
+  </p>
+  <p>
+    Setelah langkah ini, alur kerja Kita akan mulai bercabang dan terlihat
+    seperti ini:
+  </p>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-workflow-diagram.png"
+      alt="Diagram alur kerja: HTTP Request terhubung ke IF Node, yang bercabang ke Airtable."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Alur kerja Kita sekarang memiliki 'otak' (IF Node) di tengahnya.
+    </p>
+  </div>
+
+  <h2>Logika "Jika-Maka"</h2>
+  <p>
+    Saat ini, alur kerja Kita mengambil 30 data dan memasukkan *semuanya* ke
+    Airtable. Tapi, dari percakapan dengan Nathan, Kita tahu dia hanya ingin
+    data <strong>"processing"</strong> yang masuk ke Airtable.
+  </p>
+  <p>
+    Pada dasarnya, kita ingin memberi tahu program:
+    <strong>JIKA</strong> status pesanan adalah "processing",
+    <strong>MAKA</strong> masukkan data itu ke Airtable;
+    <strong>JIKA TIDAK</strong> (ELSE), lakukan hal lain (yang akan kita urus
+    nanti).
+  </p>
+  <p>
+    Perintah "jika-maka-lain" ini adalah <strong>logika kondisional</strong>. Di
+    n8n, kita bisa menambahkan logika ini dengan <strong>IF Node</strong>, yang
+    memecah alur kerja berdasarkan operasi perbandingan.
+  </p>
+  <div class="note">
+    <strong>IF vs. Switch</strong><br />
+    Jika Kita perlu memfilter data berdasarkan lebih dari dua pilihan (misal:
+    'Booked', 'Processing', 'Cancelled', 'Refunded'), Kita bisa menggunakan node
+    <strong>Switch</strong>. Node Switch mirip dengan IF, tetapi mendukung
+    banyak cabang output.
+  </div>
+
+  <h2>Langkah 1: Menambahkan IF Node di Tengah</h2>
+  <p>
+    Pertama, mari kita tambahkan IF Node di antara node
+    <strong>HTTP Request</strong> dan <strong>Airtable</strong>.
+  </p>
+  <ol>
+    <li>
+      Arahkan kursor ke *panah koneksi* antara node "HTTP Request" dan
+      "Airtable".
+    </li>
+    <li>
+      Kita akan melihat ikon tempat sampah. Klik ikon itu untuk
+      <strong>menghapus koneksi</strong>.
+    </li>
+  </ol>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-delete-connection.png"
+      alt="Menghapus koneksi antara node HTTP Request dan Airtable."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Kita putuskan dulu koneksinya agar bisa menyisipkan node baru di tengah.
+    </p>
+  </div>
+  <p>
+    Sekarang, klik ikon <strong>+</strong> di sebelah kanan node
+    <strong>HTTP Request</strong> Anda:
+  </p>
+  <ul>
+    <li>Cari node <strong>If</strong>.</li>
+    <li>Pilih node tersebut saat muncul di pencarian.</li>
+  </ul>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-search-if-node.png"
+      alt="Mencari 'If' di panel pencarian node n8n."
+      loading="lazy"
+    />
+    <p class="image-caption">Mencari dan memilih node 'If'.</p>
+  </div>
+
+  <h2>Langkah 2: Mengonfigurasi IF Node</h2>
+  <p>
+    Jendela IF Node akan terbuka. Di sinilah kita akan mengatur
+    "pertanyaan"-nya. Untuk node IF, kita akan menggunakan
+    <strong>Expression</strong>.
+  </p>
+  <blockquote>
+    <strong>Apa itu Expression?</strong><br />
+    Sebuah <strong>Expression</strong> adalah cara Kita memberi tahu n8n untuk
+    "mengambil data dari node sebelumnya". Alih-alih mengetik nilai statis
+    (seperti "Naufal"), kita mengetik kode khusus (seperti
+    <code>{{ $json.nama }}</code>) yang akan mengambil nilai dinamis dari data
+    yang masuk.
+  </blockquote>
+  <p>Di jendela IF Node, kita akan mengonfigurasi 3 bidang utama:</p>
+
+  <h3>2.1: Mengatur Value 1 (Data dari Node Sebelumnya)</h3>
+  <ul>
+    <li>Arahkan kursor ke bidang <strong>Value 1</strong>.</li>
+    <li>Klik tab <strong>Expression</strong> yang muncul di sebelah kanan.</li>
+  </ul>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-if-expression-tab.png"
+      alt="Mengklik tab 'Expression' di bidang Value 1 pada IF Node."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Kita beralih dari nilai 'Fixed' ke 'Expression'.
+    </p>
+  </div>
+  <ul>
+    <li>
+      Selanjutnya, buka editor ekspresi dengan mengklik ikon 'tautan' (<strong
+        >Open Expression Editor</strong
+      >).
+    </li>
+  </ul>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-if-open-expression-editor.png"
+      alt="Mengklik ikon 'Open Expression Editor' (ikon tautan)."
+      loading="lazy"
+    />
+    <p class="image-caption">Membuka Expression Editor.</p>
+  </div>
+  <p>
+    Di dalam Expression Editor, gunakan panel kiri untuk menavigasi ke:
+    <strong>Input Data > HTTP Request > orderStatus</strong>. Seret (drag)
+    <strong>orderStatus</strong> ke bidang <strong>Expression</strong> di
+    tengah.
+  </p>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-if-expression-editor.png"
+      alt="Expression Editor, menunjukkan 'orderStatus' ditarik dari panel kiri ke bidang Expression."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Ini adalah cara visual untuk membangun ekspresi Kita.
+    </p>
+  </div>
+  <p>
+    Anda akan melihat bidang Expression sekarang berisi
+    <strong><code>{{ $json.orderStatus }}</code></strong
+    >. Tutup dialog "Edit Expression".
+  </p>
+
+  <h3>2.2: Mengatur Operation (Jenis Perbandingan)</h3>
+  <ul>
+    <li>
+      Di bidang <strong>Operation</strong>, klik dropdown dan pilih
+      <strong>String > is equal to</strong>.
+    </li>
+  </ul>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-if-operation.png"
+      alt="Memilih 'String' dan 'is equal to' dari dropdown Operation."
+      loading="lazy"
+    />
+    <p class="image-caption">Kita ingin perbandingan teks yang sama persis.</p>
+  </div>
+
+  <h3>2.3: Mengatur Value 2 (Nilai Pembanding)</h3>
+  <ul>
+    <li>
+      Di bidang <strong>Value 2</strong>, ketik nilai statis:
+      <strong><code>processing</code></strong
+      >.
+    </li>
+  </ul>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-if-value2.png"
+      alt="Mengisi 'processing' di bidang Value 2."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Kondisi lengkap: Apakah 'orderStatus' SAMA DENGAN 'processing'?
+    </p>
+  </div>
+
+  <h3>2.4: Menguji IF Node</h3>
+  <p>Sekarang, klik <strong>Execute step</strong> untuk menguji logika Kita.</p>
+  <p>
+    Hasilnya akan sangat berbeda. Node IF memecah output menjadi dua:
+    <strong>True Branch</strong> (jika kondisi terpenuhi) dan
+    <strong>False Branch</strong> (jika kondisi tidak terpenuhi).
+  </p>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-if-output-true.png"
+      alt="Output IF Node, menampilkan 14 item di 'True Branch'."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Output 'True Branch' (Benar): ada 14 item yang statusnya 'processing'.
+    </p>
+  </div>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-if-output-false.png"
+      alt="Output IF Node, menampilkan 16 item di 'False Branch'."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Output 'False Branch' (Salah): ada 16 item yang statusnya 'booked'.
+    </p>
+  </div>
+  <p>
+    Sempurna! Node kita berhasil memisahkan data. Tutup jendela IF Node (klik
+    "Back to canvas").
+  </p>
+
+  <h2>Langkah 3: Menghubungkan & Menguji Ulang Airtable</h2>
+  <p>
+    Sekarang di kanvas, Anda akan melihat node IF Anda memiliki dua titik
+    output: "true" dan "false".
+  </p>
+  <p>
+    Ingat, Nathan hanya ingin pesanan <strong>processing</strong> di Airtable.
+    Jadi, kita akan menghubungkan output <strong>"true"</strong> ke node
+    Airtable.
+  </p>
+  <ul>
+    <li>
+      Klik dan seret (drag) titik konektor <strong>true</strong> dari node IF ke
+      titik input di node Airtable.
+    </li>
+  </ul>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-connect-true-to-airtable.png"
+      alt="Menghubungkan titik output 'true' dari IF Node ke input Airtable Node."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Sekarang, *hanya* data yang lolos filter (true) yang akan dikirim ke
+      Airtable.
+    </p>
+  </div>
+
+  <h3>Menguji Ulang Alur</h3>
+  <p>Ini adalah praktik terbaik. Mari kita uji ulang node Airtable Kita.</p>
+  <ol>
+    <li>
+      Buka tabel "orders" Kita di Airtable dan
+      <strong>hapus semua 30 baris</strong> yang Kita masukkan di materi
+      sebelumnya.
+    </li>
+    <li>Kembali ke n8n, buka node <strong>Airtable</strong>.</li>
+    <li>Klik <strong>Execute step</strong>.</li>
+  </ol>
+  <p>Hasil di n8n akan menunjukkan "14 items" (bukan 30!):</p>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-airtable-output-14.png"
+      alt="Output node Airtable di n8n, sekarang hanya menunjukkan 14 item."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Node Airtable hanya menerima dan memproses 14 item dari cabang 'true'.
+    </p>
+  </div>
+  <p>
+    Jika Kita periksa tabel Airtable Kita, sekarang tabel itu hanya berisi 14
+    baris, dan semua <strong>orderStatus</strong>-nya adalah
+    <strong>processing</strong>!
+  </p>
+  <div class="image-wrapper">
+    <img
+      src="../assets/images/materi-7-airtable-final-14.png"
+      alt="Tabel Airtable hanya berisi 14 record dengan status 'processing'."
+      loading="lazy"
+    />
+    <p class="image-caption">
+      Tabel Airtable kita sekarang sudah benar, hanya berisi data yang difilter.
+    </p>
+  </div>
+
+  <h2>Langkah Selanjutnya</h2>
+  <p>
+    Kita sudah berhasil memfilter data! Tapi Nathan punya permintaan lain...
+  </p>
+  <blockquote class="dialogue">
+    <strong>Nathan 🙋:</strong>
+    <p>
+      Node IF ini sangat berguna untuk memfilter data! Sekarang saya punya semua
+      informasi tentang pesanan "processing". Sebenarnya saya hanya butuh
+      <strong>employeeName</strong> dan <strong>orderID</strong>, tapi saya rasa
+      tidak apa-apa menyimpan semua kolom lainnya.
+    </p>
+  </blockquote>
+  <blockquote class="dialogue">
+    <strong>Kita 🤵🏻:</strong>
+    <p>
+      Sebenarnya, saya tidak merekomendasikan itu. Memasukkan lebih banyak data
+      membutuhkan lebih banyak daya komputasi, transfer data lebih lambat, dan
+      memakan lebih banyak sumber daya penyimpanan di tabel Kita. Dalam kasus
+      ini, 14 record dengan 5 kolom mungkin tidak terasa bedanya, tetapi jika
+      bisnis Kita berkembang menjadi ribuan record dan puluhan kolom, bahkan
+      satu kolom ekstra dapat memengaruhi kinerja.
+    </p>
+  </blockquote>
+  <blockquote class="dialogue">
+    <strong>Nathan 🙋:</strong>
+    <p>
+      Oh, itu poin yang bagus. Bisakah Kita memilih hanya dua kolom saja dari
+      pesanan "processing"?
+    </p>
+  </blockquote>
+  <blockquote class="dialogue">
+    <strong>Kita 🤵🏻:</strong>
+    <p>Tentu saja! Kita akan lakukan itu di langkah selanjutnya.</p>
+  </blockquote>
+
+  <div
+    id="page-nav-placeholder"
+    data-prev-url="../materi-6/index.html"
+    data-prev-title="Materi 6: Menyimpan ke Airtable"
+    data-next-url="../materi-8/index.html"
+    data-next-title="Materi 8: (Segera Hadir)"
+  ></div>
+
+  <div id="support-block-placeholder"></div>
+</article>

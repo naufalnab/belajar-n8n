@@ -1,0 +1,645 @@
+/* ======================================================= */
+/* Variabel Tema (Light & Dark Mode) */
+/* ======================================================= */
+:root {
+  --sidebar-width: 260px;
+  --bg-color: #f4f7f6;
+  --text-color: #333;
+  --text-color-light: #555;
+  --header-color: #1a1a1a;
+  --container-bg: #ffffff;
+  --sidebar-bg: #f9f9f9;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --link-hover-bg: #e6f7f5;
+  --link-hover-text: #007a66;
+  --link-active-bg: #00a98f;
+  --link-active-text: #ffffff;
+  --note-bg: #e6f7f5;
+  --note-border: #00a98f;
+  --note-alt-bg: #fffaf0;
+  --note-alt-border: #ff9900;
+  --blockquote-bg: #f9f9f9;
+  --blockquote-border: #ccc;
+  --image-border: #e0e0e0;
+  --image-caption-text: #777;
+  --link-color: #007a66; 
+  --link-hover-color: #00a98f;
+}
+
+body.dark-mode {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --text-color-light: #aaa;
+  --header-color: #ffffff;
+  --container-bg: #2c2c2c;
+  --sidebar-bg: #252525;
+  --border-color: #444;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --link-hover-bg: #30403e;
+  --link-hover-text: #00a98f;
+  --link-active-bg: #00a98f;
+  --link-active-text: #ffffff;
+  --note-bg: #30403e;
+  --note-border: #00a98f;
+  --note-alt-bg: #4d3a1a;
+  --note-alt-border: #ff9900;
+  --blockquote-bg: #333;
+  --blockquote-border: #555;
+  --image-border: #555;
+  --image-caption-text: #999;
+  --link-color: #00c7a5; /* Teal n8n yang terang, sangat terbaca! */
+  --link-hover-color: #33e0c7;
+}
+
+/* ======================================================= */
+/* Pengaturan Dasar */
+/* ======================================================= */
+* {
+  box-sizing: border-box; /* Konsistensi layout */
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ======================================================= */
+/* Container Utama (Halaman Materi) */
+/* ======================================================= */
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background: var(--container-bg);
+}
+
+/* ======================================================= */
+/* Sidebar (Halaman Materi) */
+/* ======================================================= */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-content {
+  padding: 20px;
+}
+
+.sidebar h3 {
+  font-size: 1.2em;
+  color: var(--header-color);
+  border-bottom: 2px solid var(--note-border);
+  padding-bottom: 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: var(--text-color-light);
+  border-radius: 5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+  background-color: var(--link-hover-bg);
+  color: var(--link-hover-text);
+}
+
+.sidebar ul li a.active {
+  background-color: var(--link-active-bg);
+  color: var(--link-active-text);
+  font-weight: 700;
+}
+
+/* Tombol Tema (Sidebar) */
+.theme-switcher {
+  padding: 0;
+  margin: 15px 0;
+  text-align: left;
+}
+
+#theme-toggle {
+  padding: 10px 15px;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+#theme-toggle:hover {
+  background-color: var(--link-hover-bg);
+  color: var(--link-hover-text);
+}
+
+/* ======================================================= */
+/* Konten Utama (Halaman Materi) */
+/* ======================================================= */
+.content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 30px 40px;
+}
+
+/* ======================================================= */
+/* Tombol Toggle Sidebar (Halaman Materi) */
+/* ======================================================= */
+#sidebar-toggle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(var(--sidebar-width) - 15px);
+  z-index: 10;
+  width: 30px;
+  height: 40px;
+  background: var(--container-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 1px 4px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+#sidebar-toggle:hover {
+  background: var(--link-hover-bg);
+}
+
+/* Status Sidebar Ditutup */
+.container.sidebar-collapsed .sidebar {
+  width: 0;
+  min-width: 0;
+  border: none;
+}
+
+.container.sidebar-collapsed #sidebar-toggle {
+  left: -15px;
+  transform: translateY(-50%) scaleX(-1);
+  border-radius: 0 8px 8px 0;
+}
+
+/* ======================================================= */
+/* Styling Artikel (Halaman Materi) */
+/* ======================================================= */
+article h1 {
+  font-size: 2.5em;
+  color: var(--header-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  margin-top: 0;
+}
+
+article h2 {
+  font-size: 1.8em;
+  color: var(--header-color);
+  margin-top: 40px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+article h3 {
+  font-size: 1.4em;
+  color: var(--header-color);
+  margin-top: 30px;
+}
+
+article p,
+article ul,
+article ol {
+  font-size: 1.05em;
+  margin-bottom: 20px;
+  color: var(--text-color-light);
+}
+
+article p {
+  color: var(--text-color);
+}
+
+article p.intro {
+  font-size: 1.2em;
+  color: var(--text-color-light);
+  font-style: italic;
+}
+
+article ul,
+article ol {
+  padding-left: 30px;
+}
+
+article ul.sub-list {
+  margin-top: 10px;
+  font-size: 0.95em;
+}
+
+article li {
+  margin-bottom: 10px;
+}
+
+article strong {
+  color: var(--header-color);
+  font-weight: 600;
+}
+
+article a {
+  color: var(--link-color);
+  font-weight: 600; /* Sedikit tebal agar menonjol */
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+article a:hover {
+  color: var(--link-hover-color);
+  text-decoration: none; /* Hilangkan underline saat di-hover */
+}
+
+.note {
+  background-color: var(--note-bg);
+  border-left: 5px solid var(--note-border);
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.note.alt {
+  background-color: var(--note-alt-bg);
+  border-left-color: var(--note-alt-border);
+}
+
+.note strong {
+  color: var(--header-color);
+}
+
+blockquote {
+  font-size: 1.1em;
+  font-style: italic;
+  border-left: 5px solid var(--blockquote-border);
+  padding: 10px 20px;
+  margin: 20px 0;
+  background: var(--blockquote-bg);
+  transition: background-color 0.3s ease;
+}
+
+.image-wrapper {
+  text-align: center;
+  margin: 25px 0;
+}
+
+.image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--image-border);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  transition: border-color 0.3s ease;
+}
+
+.image-caption {
+  font-size: 0.9em;
+  color: var(--image-caption-text);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* ======================================================= */
+/* STYLE UNTUK HOMEPAGE (VERSI BARU YANG LEBIH BERKELAS)   */
+/* ======================================================= */
+.homepage-body {
+  background: var(--bg-color);
+  background: linear-gradient(
+    180deg,
+    var(--link-hover-bg) 0%,
+    var(--bg-color) 25%
+  );
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+.homepage-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* HEADER / HERO SECTION */
+.homepage-container header {
+  text-align: center;
+  border-bottom: none;
+  padding-bottom: 20px;
+  margin-bottom: 50px;
+}
+
+.homepage-container h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--header-color);
+  margin-bottom: 15px;
+  letter-spacing: -1.5px;
+}
+
+.homepage-container header p {
+  font-size: 1.25rem;
+  color: var(--text-color-light);
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.theme-switcher-homepage {
+  margin-top: 30px;
+}
+
+/* Tombol dark mode di homepage */
+.theme-switcher-homepage #theme-toggle {
+  padding: 12px 24px;
+  border: 1px solid var(--border-color);
+  background-color: var(--container-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.theme-switcher-homepage #theme-toggle:hover {
+  background-color: var(--link-hover-bg);
+  color: var(--link-hover-text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.07),
+    0 2px 8px -1px rgba(0, 0, 0, 0.04);
+}
+
+/* DAFTAR CARD (PERUBAHAN BESAR) */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  display: block;
+  text-decoration: none;
+  background-color: var(--container-bg);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px -5px var(--link-hover-bg),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+  border-color: transparent;
+}
+
+.card.coming-soon {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.card.coming-soon:hover {
+  transform: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card-content {
+  padding: 24px 28px;
+}
+
+/* Nomor Materi dibuat seperti 'Badge' */
+.card-number {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--link-hover-text);
+  background-color: var(--link-hover-bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--header-color);
+  margin-top: 0;
+  margin-bottom: 12px;
+  transition: color 0.3s ease;
+}
+
+.card:hover .card-title {
+  color: var(--note-border);
+}
+
+.card-description {
+  font-size: 1rem;
+  color: var(--text-color-light);
+  line-height: 1.6;
+}
+
+/* ======================================================= */
+/* STYLE UNTUK NAVIGASI HALAMAN (PREV/NEXT) */
+/* ======================================================= */
+.page-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.page-navigation a {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text-color-light);
+  transition: all 0.2s ease;
+  max-width: 48%; /* Agar tidak terlalu lebar di mobile */
+}
+
+.page-navigation a:hover {
+  background-color: var(--link-hover-bg);
+  color: var(--link-hover-text);
+  border-color: var(--note-border);
+  transform: translateY(-2px);
+}
+
+.page-navigation .prev-page {
+  text-align: left;
+}
+
+.page-navigation .next-page {
+  text-align: right;
+  /* Jika hanya ada tombol next, paskan ke kanan */
+  margin-left: auto; 
+}
+
+/* ======================================================= */
+/* Responsif (DIPERBARUI) */
+/* ======================================================= */
+@media (max-width: 768px) {
+  /* Pengaturan untuk Halaman Materi di mobile */
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    overflow-y: hidden;
+  }
+
+  .content {
+    height: auto;
+    overflow-y: hidden;
+    padding: 20px;
+  }
+
+  #sidebar-toggle {
+    display: none;
+  }
+
+  article h1 {
+    font-size: 2em;
+  }
+
+  article h2 {
+    font-size: 1.5em;
+  }
+
+  /* Pengaturan untuk Homepage di mobile */
+  .homepage-container {
+    padding: 20px;
+  }
+
+  .homepage-container h1 {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+  }
+
+  .homepage-container header p {
+    font-size: 1.1rem;
+  }
+
+  .card-list {
+    gap: 20px;
+  }
+}
+
+
+  /* ======================================================= */
+  /* STYLE UNTUK TOMBOL & BLOK DUKUNGAN */
+  /* ======================================================= */
+
+  /* Tombol utama di Homepage */
+  .homepage-container .support-button {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--link-active-text);
+    background-color: var(
+      --note-alt-border
+    ); /* Warna oranye/kuning yang 'hangat' */
+    padding: 12px 24px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px -1px rgba(255, 153, 0, 0.2);
+  }
+
+  .homepage-container .support-button:hover {
+    transform: translateY(-2px);
+    background-color: #ffaa33; /* Sedikit lebih cerah saat hover */
+    box-shadow: 0 6px 15px -1px rgba(255, 153, 0, 0.3);
+  }
+
+  /* Blok dukungan di akhir artikel */
+  .support-block {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid var(--border-color);
+    text-align: center;
+  }
+
+  .support-block h3 {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: var(--header-color);
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  .support-block p {
+    font-size: 1.1em;
+    color: var(--text-color-light);
+    max-width: 600px;
+    margin: 0 auto 25px auto;
+  }
+
+  /* Tombol di dalam blok dukungan */
+  .support-block .support-button {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--link-active-text);
+    background-color: var(--note-border); /* Warna hijau n8n */
+    padding: 12px 30px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px -1px rgba(0, 169, 143, 0.2);
+  }
+
+  .support-block .support-button:hover {
+    transform: translateY(-2px);
+    background-color: #00c7a5; /* Versi lebih cerah */
+    box-shadow: 0 6px 15px -1px rgba(0, 169, 143, 0.3);
+  }
