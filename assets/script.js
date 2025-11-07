@@ -4,79 +4,67 @@ document.addEventListener("DOMContentLoaded", () => {
   // =======================================================
   // FITUR-FITUR DIMUAT DI SINI
   // =======================================================
-  
-  // 1. Muat sidebar (jika ada)
+
+  // Jalankan fungsi-fungsi ini HANYA jika placeholder-nya ada
+  // (Ini tidak akan berjalan di homepage, yang mana itu bagus)
   loadSidebar();
-  
-  // 2. Muat blok dukungan (jika ada)
   loadSupportBlock();
-  
-  // 3. (BARU) Buat navigasi halaman (jika ada)
   setupPageNavigation();
-  
-  // 4. Setup tombol minimize (jika ada)
   setupSidebarToggle();
   
-  // 5. Setup tombol tema (dijalankan dari dalam loadSidebar atau di homepage)
-  // (Tidak perlu dipanggil di sini, dipanggil oleh loadSidebar)
-  
+  // Tombol tema ini ada di SEMUA halaman (termasuk homepage)
+  setupThemeToggle();
+
   // =======================================================
   // Definisi Fungsi
   // =======================================================
 
   function loadSidebar() {
     const sidebarPlaceholder = document.getElementById("sidebar-placeholder");
+    if (!sidebarPlaceholder) return; // Berhenti jika tidak ada placeholder
 
-    if (sidebarPlaceholder) {
-      fetch("../assets/sidebar.html")
-        .then((response) => response.text())
-        .then((html) => {
-          sidebarPlaceholder.innerHTML = html;
-          setupActiveLink();
-          setupThemeToggle(); // Panggil setup tema SETELAH sidebar dimuat
-        })
-        .catch((error) => console.error("Gagal memuat sidebar:", error));
-    } else {
-      // Jika kita di homepage, panggil setup tema langsung
-      setupThemeToggle();
-    }
+    // Path relatif dari folder 'materi-X'
+    fetch("../assets/sidebar.html")
+      .then((response) => response.text())
+      .then((html) => {
+        sidebarPlaceholder.innerHTML = html;
+        setupActiveLink();
+        // Setup tombol tema sidebar SETELAH dimuat
+        setupThemeToggle(false); // 'false' berarti ini bukan tombol floating
+      })
+      .catch((error) => console.error("Gagal memuat sidebar:", error));
   }
 
   function loadSupportBlock() {
-    const supportPlaceholder = document.getElementById("support-block-placeholder");
+    const supportPlaceholder = document.getElementById(
+      "support-block-placeholder"
+    );
+    if (!supportPlaceholder) return; // Berhenti jika tidak ada placeholder
 
-    if (supportPlaceholder) {
-      fetch("../assets/support-block.html")
-        .then((response) => response.text())
-        .then((html) => {
-          supportPlaceholder.innerHTML = html;
-        })
-        .catch((error) =>
-          console.error("Gagal memuat blok dukungan:", error)
-        );
-    }
+    // Path relatif dari folder 'materi-X'
+    fetch("../assets/support-block.html")
+      .then((response) => response.text())
+      .then((html) => {
+        supportPlaceholder.innerHTML = html;
+      })
+      .catch((error) =>
+        console.error("Gagal memuat blok dukungan:", error)
+      );
   }
 
-  // =======================================================
-  // BARU: Fitur 4: Membuat Navigasi Halaman (Prev/Next)
-  // =======================================================
   function setupPageNavigation() {
     const navPlaceholder = document.getElementById("page-nav-placeholder");
-    
-    // Jika placeholder tidak ada di halaman ini, berhenti
-    if (!navPlaceholder) return;
+    if (!navPlaceholder) return; // Berhenti jika tidak ada placeholder
 
-    // Baca data dari atribut data-* di placeholder HTML
     const prevUrl = navPlaceholder.dataset.prevUrl;
     const prevTitle = navPlaceholder.dataset.prevTitle;
     const nextUrl = navPlaceholder.dataset.nextUrl;
     const nextTitle = navPlaceholder.dataset.nextTitle;
 
-    let html = '';
-
-    // Membuat HTML (a11y: pakai <nav> dan aria-label)
+    let html = "";
     html += '<nav class="page-navigation" aria-label="Navigasi Materi">';
 
+    // Path sekarang sederhana, tanpa prefix
     if (prevUrl && prevTitle) {
       html += `
         <a href="${prevUrl}" class="prev-page">
@@ -91,57 +79,57 @@ document.addEventListener("DOMContentLoaded", () => {
         </a>`;
     }
 
-    html += '</nav>';
-
-    // Masukkan HTML yang sudah jadi ke placeholder
+    html += "</nav>";
     navPlaceholder.innerHTML = html;
   }
-  // =======================================================
-  // AKHIR FITUR BARU
-  // =======================================================
-
 
   function setupActiveLink() {
-    const currentURL = window.location.href;
     const sidebarPlaceholder = document.getElementById("sidebar-placeholder");
     if (!sidebarPlaceholder) return;
 
     const sidebarLinks = sidebarPlaceholder.querySelectorAll("nav.sidebar a");
 
     sidebarLinks.forEach((link) => {
-      if (link.href === currentURL) {
+      // Cek jika path link berakhir dengan path halaman saat ini
+      // Ini lebih robust daripada '=='
+      if (
+        window.location.pathname.endsWith(link.getAttribute("href"))
+      ) {
         link.classList.add("active");
       }
     });
   }
 
-  function setupThemeToggle() {
-    const themeToggle = document.getElementById("theme-toggle");
+  function setupThemeToggle(isFloating = true) {
+    // Tombol di sidebar punya ID 'theme-toggle'
+    // Tombol di homepage punya ID 'theme-toggle-floating'
+    // Kita cari keduanya
+    const themeToggle =
+      document.getElementById("theme-toggle") ||
+      document.getElementById("theme-toggle-floating");
+      
     const body = document.body;
 
     if (themeToggle) {
       const savedTheme = localStorage.getItem("theme");
-      
-      // Atur ikon saat halaman dimuat
+
       if (savedTheme === "dark") {
         body.classList.add("dark-mode");
-        themeToggle.innerHTML = "☀️"; // Tampilkan ikon matahari di dark mode
+        themeToggle.innerHTML = "☀️";
       } else {
         body.classList.remove("dark-mode");
-        themeToggle.innerHTML = "🌙"; // Tampilkan ikon bulan di light mode
+        themeToggle.innerHTML = "🌙";
       }
 
-      // Tambahkan event listener untuk klik
       themeToggle.addEventListener("click", () => {
         body.classList.toggle("dark-mode");
 
-        // Atur ikon dan simpan preferensi saat diklik
         if (body.classList.contains("dark-mode")) {
           localStorage.setItem("theme", "dark");
-          themeToggle.innerHTML = "☀️"; // Tampilkan ikon matahari
+          themeToggle.innerHTML = "☀️";
         } else {
           localStorage.setItem("theme", "light");
-          themeToggle.innerHTML = "🌙"; // Tampilkan ikon bulan
+          themeToggle.innerHTML = "🌙";
         }
       });
     }
@@ -164,4 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
+  
+  // Panggil setup tombol tema homepage secara eksplisit
+  setupThemeToggle(true);
+
 });

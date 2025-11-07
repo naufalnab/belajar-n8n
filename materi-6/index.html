@@ -1,485 +1,530 @@
----
-layout: base.html
-title: "Materi 6: Memasukkan Data ke Airtable"
----
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 6: Memasukkan Data ke Airtable</title>
 
-<article>
-  <h1>Materi 6: Memasukkan Data ke Airtable</h1>
-  <p class="intro">
-    Di langkah ini, Kita akan belajar cara mengambil data yang Kita terima dari
-    node <strong>HTTP Request</strong> dan memasukkannya ke Airtable menggunakan
-    node <strong>Airtable</strong>.
-  </p>
-  <div class="note">
-    <strong>Node Spreadsheet Lainnya</strong><br />
-    Tentu saja, Kita bisa mengganti node Airtable dengan aplikasi spreadsheet
-    lain. n8n juga memiliki node yang sangat bagus untuk
-    <strong>Google Sheets</strong>. Konsepnya akan sangat mirip.
-  </div>
-  <p>Setelah langkah ini, alur kerja Kita akan terlihat seperti ini:</p>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-workflow-diagram.png"
-      alt="Diagram alur kerja: Schedule Trigger -> HTTP Request -> Airtable."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Alur kerja Kita sekarang memiliki langkah "Ambil Data" dan "Simpan Data".
-    </p>
-  </div>
+    <link rel="stylesheet" href="/assets/style.css" />
 
-  <h2>Langkah 1: Menyiapkan Tabel "Tujuan" di Airtable</h2>
-  <p>
-    Sebelum kita bisa mengirim data <strong>ke</strong> Airtable, kita perlu
-    menyiapkan "wadah" atau "tabel" untuk menerimanya. Ini adalah langkah yang
-    sangat penting.
-  </p>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+      <main class="content">
+        <article>
+          <h1>Materi 6: Memasukkan Data ke Airtable</h1>
+          <p class="intro">
+            Di langkah ini, Kita akan belajar cara mengambil data yang Kita
+            terima dari node <strong>HTTP Request</strong> dan memasukkannya ke
+            Airtable menggunakan node <strong>Airtable</strong>.
+          </p>
+          <div class="note">
+            <strong>Node Spreadsheet Lainnya</strong><br />
+            Tentu saja, Kita bisa mengganti node Airtable dengan aplikasi
+            spreadsheet lain. n8n juga memiliki node yang sangat bagus untuk
+            <strong>Google Sheets</strong>. Konsepnya akan sangat mirip.
+          </div>
+          <p>Setelah langkah ini, alur kerja Kita akan terlihat seperti ini:</p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-workflow-diagram.png"
+              alt="Diagram alur kerja: Schedule Trigger -> HTTP Request -> Airtable."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Alur kerja Kita sekarang memiliki langkah "Ambil Data" dan "Simpan
+              Data".
+            </p>
+          </div>
 
-  <h3>1.1: Buat Akun & Base Baru</h3>
-  <p>
-    Jika Kita belum punya, buat akun gratis di
-    <a href="https://airtable.com/" target="_blank">situs web Airtable</a>.
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-airtable-1-homepage.png"
-      alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru."
-      loading="lazy"
-    />
-    <p class="image-caption">Tampilan homepage Airtable.</p>
-  </div>
-  <p>
-    Setelah klik Sign up for free, saya memilih untuk masuk dengan akun Google
-    saya.
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-airtable-2-google-sso.png"
-      alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Tampilan login, saya memilih Google SSO untuk kemudahan.
-    </p>
-  </div>
-  <p>
-    Setelah masuk ke workspace Kita, tambahkan "Base" baru dari awal (from
-    scratch).
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-airtable-3-create-base.png"
-      alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru."
-      loading="lazy"
-    />
-    <img
-      src="../assets/images/materi-6-airtable-4-create-base-2.png"
-      alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru 2."
-      loading="lazy"
-    />
-    <img
-      src="../assets/images/materi-6-airtable-5-create-base-3.png"
-      alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru 3."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Membuat 'Base' baru di dalam workspace Airtable Kita.
-    </p>
-  </div>
-  <p>
-    Beri nama Base tersebut, misalnya,
-    <strong>"beginner course"</strong>.
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-airtable-6-rename-base.png"
-      alt="Mengganti nama Base baru menjadi 'beginner course'."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Memberi nama Base Kita agar mudah diidentifikasi.
-    </p>
-  </div>
+          <h2>Langkah 1: Menyiapkan Tabel "Tujuan" di Airtable</h2>
+          <p>
+            Sebelum kita bisa mengirim data <strong>ke</strong> Airtable, kita
+            perlu menyiapkan "wadah" atau "tabel" untuk menerimanya. Ini adalah
+            langkah yang sangat penting.
+          </p>
 
-  <h3>1.2: Siapkan Tabel</h3>
-  <p>
-    Secara default, Airtable membuat tabel bernama "Table 1" dengan beberapa
-    kolom (fields) bawaan seperti "Name", "Notes", "Assignee", dan "Status".
-    Kolom-kolom ini tidak relevan dengan data penjualan kita.
-  </p>
-  <p>
-    Kita perlu menyiapkan tabel ini agar <strong>persis</strong> cocok dengan
-    data dari n8n:
-  </p>
-  <ol>
-    <li>
-      Ganti nama tabel dari "Table 1" menjadi <strong>"orders"</strong>.
+          <h3>1.1: Buat Akun & Base Baru</h3>
+          <p>
+            Jika Kita belum punya, buat akun gratis di
+            <a href="https://airtable.com/" target="_blank"
+              >situs web Airtable</a
+            >.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-airtable-1-homepage.png"
+              alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru."
+              loading="lazy"
+            />
+            <p class="image-caption">Tampilan homepage Airtable.</p>
+          </div>
+          <p>
+            Setelah klik Sign up for free, saya memilih untuk masuk dengan akun
+            Google saya.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-airtable-2-google-sso.png"
+              alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Tampilan login, saya memilih Google SSO untuk kemudahan.
+            </p>
+          </div>
+          <p>
+            Setelah masuk ke workspace Kita, tambahkan "Base" baru dari awal
+            (from scratch).
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-airtable-3-create-base.png"
+              alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru."
+              loading="lazy"
+            />
+            <img
+              src="../assets/images/materi-6-airtable-4-create-base-2.png"
+              alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru 2."
+              loading="lazy"
+            />
+            <img
+              src="../assets/images/materi-6-airtable-5-create-base-3.png"
+              alt="Antarmuka Airtable menampilkan tombol untuk membuat 'Base' baru 3."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Membuat 'Base' baru di dalam workspace Airtable Kita.
+            </p>
+          </div>
+          <p>
+            Beri nama Base tersebut, misalnya,
+            <strong>"beginner course"</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-airtable-6-rename-base.png"
+              alt="Mengganti nama Base baru menjadi 'beginner course'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Memberi nama Base Kita agar mudah diidentifikasi.
+            </p>
+          </div>
 
-      <div class="image-wrapper">
-        <img
-          src="../assets/images/materi-6-airtable-7-order.png"
-          alt="Tabel Airtable yang sudah bersih, siap untuk kolom baru."
-          loading="lazy"
-        />
-        <p class="image-caption">
-          Tabel 'orders' Kita setelah dibersihkan dari kolom dan data default.
-        </p>
-      </div>
-    </li>
-    <li>
-      Hapus 3 record kosong yang dibuat secara default.
-      <div class="image-wrapper">
-        <img
-          src="../assets/images/materi-6-airtable-8-hapus.png"
-          alt="Hapus record."
-          loading="lazy"
-        />
-        <p class="image-caption">
-          Tabel 'orders' Kita setelah dibersihkan dari kolom dan data default.
-        </p>
-      </div>
-    </li>
-    <li>Hapus kolom-kolom default: "Notes", "Assignee", dan "Status".</li>
-  </ol>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-airtable-9-bersih.png"
-      alt="Tabel Airtable yang sudah bersih, siap untuk kolom baru."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Tabel 'orders' Kita setelah dibersihkan dari kolom dan data default.
-    </p>
-  </div>
+          <h3>1.2: Siapkan Tabel</h3>
+          <p>
+            Secara default, Airtable membuat tabel bernama "Table 1" dengan
+            beberapa kolom (fields) bawaan seperti "Name", "Notes", "Assignee",
+            dan "Status". Kolom-kolom ini tidak relevan dengan data penjualan
+            kita.
+          </p>
+          <p>
+            Kita perlu menyiapkan tabel ini agar <strong>persis</strong> cocok
+            dengan data dari n8n:
+          </p>
+          <ol>
+            <li>
+              Ganti nama tabel dari "Table 1" menjadi <strong>"orders"</strong>.
 
-  <h3>1.3: Buat Kolom (Fields) Baru</h3>
-  <p>
-    Ini adalah bagian terpenting. Nama-nama kolom di Airtable harus sesuai
-    dengan nama kolom dari data kita. Data kita memiliki 5 kolom (orderID,
-    customerID, employeeName, orderPrice, orderStatus).
-  </p>
-  <ol>
-    <li>
-      Edit kolom "Name" (kolom utama): ganti namanya menjadi
-      <strong><code>orderID</code></strong> dan ubah tipe field-nya menjadi
-      <strong><code>Number</code></strong
-      >.
-    </li>
-    <div class="image-wrapper">
-      <img
-        src="../assets/images/materi-6-airtable-10-field-orderID.png"
-        alt="Mengedit kolom utama menjadi 'orderID' dengan tipe 'Number'."
-        loading="lazy"
-      />
-      <p class="image-caption">
-        Kolom 'orderID' (Tipe: Number) sebagai Primary Field.
-      </p>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-6-airtable-7-order.png"
+                  alt="Tabel Airtable yang sudah bersih, siap untuk kolom baru."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Tabel 'orders' Kita setelah dibersihkan dari kolom dan data
+                  default.
+                </p>
+              </div>
+            </li>
+            <li>
+              Hapus 3 record kosong yang dibuat secara default.
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-6-airtable-8-hapus.png"
+                  alt="Hapus record."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Tabel 'orders' Kita setelah dibersihkan dari kolom dan data
+                  default.
+                </p>
+              </div>
+            </li>
+            <li>
+              Hapus kolom-kolom default: "Notes", "Assignee", dan "Status".
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-airtable-9-bersih.png"
+              alt="Tabel Airtable yang sudah bersih, siap untuk kolom baru."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Tabel 'orders' Kita setelah dibersihkan dari kolom dan data
+              default.
+            </p>
+          </div>
+
+          <h3>1.3: Buat Kolom (Fields) Baru</h3>
+          <p>
+            Ini adalah bagian terpenting. Nama-nama kolom di Airtable harus
+            sesuai dengan nama kolom dari data kita. Data kita memiliki 5 kolom
+            (orderID, customerID, employeeName, orderPrice, orderStatus).
+          </p>
+          <ol>
+            <li>
+              Edit kolom "Name" (kolom utama): ganti namanya menjadi
+              <strong><code>orderID</code></strong> dan ubah tipe field-nya
+              menjadi <strong><code>Number</code></strong
+              >.
+            </li>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-airtable-10-field-orderID.png"
+                alt="Mengedit kolom utama menjadi 'orderID' dengan tipe 'Number'."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Kolom 'orderID' (Tipe: Number) sebagai Primary Field.
+              </p>
+            </div>
+            <li>
+              Tambahkan field baru: Nama <strong><code>customerID</code></strong
+              >, Tipe <strong><code>Number</code></strong
+              >.
+            </li>
+            <li>
+              Tambahkan field baru: Nama
+              <strong><code>employeeName</code></strong
+              >, Tipe <strong><code>Single line text</code></strong
+              >.
+            </li>
+            <li>
+              Tambahkan field baru: Nama <strong><code>orderPrice</code></strong
+              >, Tipe <strong><code>Number</code></strong> (Kita juga bisa
+              mengubah formatnya menjadi 'Currency' di Airtable).
+            </li>
+            <li>
+              Tambahkan field baru: Nama
+              <strong><code>orderStatus</code></strong
+              >, Tipe <strong><code>Single line text</code></strong
+              >.
+            </li>
+          </ol>
+          <p>
+            Sekarang, tabel Kita di Airtable sudah siap 100%. Tampilannya akan
+            terlihat seperti ini:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-airtable-11-final-table.png"
+              alt="Tabel 'orders' di Airtable yang sudah jadi dengan 5 kolom yang benar."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Tabel 'orders' Kita sudah siap menerima data dari n8n.
+            </p>
+          </div>
+
+          <h2>Langkah 2: Menambahkan Node Airtable di n8n</h2>
+          <p>
+            Oke, "wadah" kita sudah siap. Mari kembali ke alur kerja Kita di
+            n8n.
+          </p>
+          <p>
+            Klik ikon <strong>+</strong> di sebelah kanan node
+            <strong>HTTP Request</strong>.
+          </p>
+          <p>Di panel node:</p>
+          <ol>
+            <li>Cari <strong>Airtable</strong>.</li>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-n8n-1-cari-airtable.png"
+                alt="Mencari Airtable dan memilih aksi 'Create a record'."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Kita memilih aksi 'Create' karena kita ingin membuat record
+                baru.
+              </p>
+            </div>
+            <li>
+              Di bawah "Record Actions", pilih
+              <strong>Create a record</strong>.
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-n8n-2-create-a-record.png"
+              alt="Mencari Airtable dan memilih aksi 'Create a record'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita memilih aksi 'Create' karena kita ingin membuat record baru.
+            </p>
+          </div>
+          <p>
+            Node Airtable akan ditambahkan ke kanvas dan jendela konfigurasinya
+            akan terbuka.
+          </p>
+
+          <h2>Langkah 3: Mengonfigurasi Node Airtable</h2>
+          <p>
+            Di jendela node Airtable, kita perlu mengonfigurasi beberapa
+            parameter:
+          </p>
+          <ul>
+            <li>
+              <strong>Credential to connect with:</strong> Pilih
+              <strong>Create new credential</strong>.
+            </li>
+            <li>
+              Biarkan opsi default <strong>Connect using: Access Token</strong>
+              terpilih.
+            </li>
+          </ul>
+
+          <div class="note alt">
+            <strong>Cara Membuat Access Token di Airtable</strong><br />
+            Untuk mendapatkan <strong>Access Token</strong>, Kita perlu
+            membuatnya di dalam akun Airtable Kita. Berikut adalah
+            langkah-langkah visualnya:
+            <ol>
+              <li>
+                Di Airtable, navigasi ke
+                <a
+                  href="https://airtable.com/developers/web/api/introduction"
+                  target="_blank"
+                  >Builder Hub</a
+                >
+                (atau Akun > Developer hub) dan pilih
+                <strong>Personal access tokens</strong>.
+              </li>
+              <li>Klik <strong>"Create token"</strong>.</li>
+            </ol>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-airtable-token-1-start.png"
+                alt="Halaman 'Personal access tokens' di Airtable dengan tombol 'Create token'."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Halaman awal untuk membuat personal access token Kita.
+              </p>
+            </div>
+            <p style="margin-top: 20px">
+              Selanjutnya, kita perlu mengonfigurasi Token tersebut:
+            </p>
+            <ul>
+              <li>
+                <strong>Name:</strong> Beri nama yang deskriptif, misal
+                <strong><code>n8n-belajar</code></strong
+                >.
+              </li>
+              <li>
+                <strong>Scopes:</strong> Ini adalah izin. Kita perlu menambahkan
+                (<code>+ Add a scope</code>) setidaknya:
+                <ul>
+                  <li><code>data.records:read</code></li>
+                  <li><code>data.records:write</code></li>
+                  <li><code>schema.bases:read</code></li>
+                </ul>
+              </li>
+              <li>
+                <strong>Access:</strong> Pilih 'Base' mana yang boleh diakses
+                oleh token ini. Kita pilih <strong>"beginner course"</strong>.
+              </li>
+            </ul>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-airtable-token-2-scopes.png"
+                alt="Formulir 'Create new token' diisi dengan Nama, Scopes, dan Access."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Mengisi Nama, Scopes (izin), dan Access (database) untuk token
+                Kita.
+              </p>
+            </div>
+            <p style="margin-top: 20px">
+              Terakhir, klik <strong>"Create token"</strong>. Airtable akan
+              menampilkan token Anda <strong>satu kali saja</strong>.
+            </p>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-airtable-token-3-created.png"
+                alt="Popup 'Your token has been created' dengan token rahasia."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Token Kita sudah jadi! Salin (copy) kode rahasia ini.
+              </p>
+            </div>
+          </div>
+
+          <p style="margin-top: 30px">
+            Sekarang, kembali ke n8n dan klik
+            <strong>+ Create new credential</strong> lagi (jika tertutup) atau
+            isi popup yang sudah ada:
+          </p>
+
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-n8n-2-create-creds.png"
+              alt="Jendela popup 'Create new credential' untuk Airtable."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Tempelkan token yang baru Kita salin dari Airtable ke bidang
+              'Access Token' di n8n.
+            </p>
+          </div>
+          <p>
+            Setelah kredensial Kita disimpan, kembali ke jendela node Airtable
+            dan isi sisanya:
+          </p>
+          <ul>
+            <li>
+              <strong>Resource:</strong> Pastikan
+              <strong><code>Record</code></strong> terpilih.
+            </li>
+            <li>
+              <strong>Operation:</strong> Pastikan
+              <strong><code>Create</code></strong> terpilih.
+            </li>
+            <li>
+              <strong>Base:</strong> Klik di sini dan pilih 'Base' Kita dari
+              daftar (contoh: <strong>beginner course</strong>).
+            </li>
+            <li>
+              <strong>Table:</strong> Pilih tabel Kita dari daftar
+              (<strong>orders</strong>).
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-n8n-3-select-base-table.png"
+              alt="Memilih 'Base' dan 'Table' dari daftar dropdown di node Airtable."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Memilih Base dan Table yang sudah Kita siapkan.
+            </p>
+          </div>
+          <ul>
+            <li>
+              <strong>Mapping Column Mode:</strong> Pilih
+              <strong><code>Map automatically</code></strong
+              >.
+            </li>
+          </ul>
+          <div class="note">
+            <strong>Apa itu 'Map automatically'?</strong><br />
+            Ini adalah fitur yang sangat hebat. Karena kita sudah bersusah payah
+            membuat nama kolom di Airtable (<code>orderID</code>)
+            <strong>sama persis</strong> dengan nama kolom di data n8n kita
+            (<code>orderID</code>), n8n bisa secara otomatis memetakannya. Kita
+            tidak perlu menghubungkannya satu per satu.
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-6-n8n-4-output.png"
+                alt="Tampilan output node Airtable di n8n dengan kolom yang terpetakan otomatis dan 30 record berhasil dibuat."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Tampilan output node Airtable di n8n setelah fitur
+                <em>Map automatically</em> digunakan
+              </p>
+            </div>
+          </div>
+
+          <h2>Langkah 4: Menguji Node Airtable</h2>
+          <p>
+            Setelah selesai konfigurasi, klik
+            <strong>Execute step</strong>. Ini mungkin butuh beberapa saat
+            karena n8n harus mengirim 30 item (record) ke Airtable satu per
+            satu.
+          </p>
+          <p>
+            Hasil di n8n akan terlihat seperti ini, menunjukkan bahwa 30 data
+            telah berhasil dibuat:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-n8n-5-output.png"
+              alt="Output node Airtable di n8n, menunjukkan 30 item berhasil dibuat."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Hasil eksekusi di n8n menunjukkan 30 record berhasil dibuat.
+            </p>
+          </div>
+          <p>
+            Sekarang, buka kembali tab Airtable Anda... dan lihat keajaibannya!
+            Semua 30 data dari node HTTP Request sekarang akan muncul di tabel
+            "orders" Kita.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-6-airtable-12-final-data.png"
+              alt="Tabel 'orders' di Airtable sekarang terisi penuh dengan 30 record data."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Data Kita telah berhasil diimpor ke Airtable!
+            </p>
+          </div>
+
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Kita sudah berhasil mengambil data dan menyimpannya. Tapi, Kita
+            belum selesai...
+          </p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Wow, ini sudah sangat berguna! Tapi ini memasukkan
+              <strong>semua</strong> data yang dikumpulkan dari node HTTP
+              Request ke Airtable. Ingat, saya sebenarnya hanya perlu memasukkan
+              pesanan yang statusnya "Processing" ke tabel, dan menghitung total
+              harga dari pesanan "Booked"?
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Tentu, tidak masalah. Kita baru saja membuat 'pipa' datanya.
+              Sebagai langkah selanjutnya, saya akan menggunakan node baru untuk
+              <strong>memfilter</strong> pesanan berdasarkan statusnya.
+            </p>
+          </blockquote>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-5/index.html"
+            data-prev-title="Materi 5: Mengambil Data (HTTP)"
+            data-next-url="../materi-7/index.html"
+            data-next-title="Materi 7: Memfilter Data (IF Node)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
     </div>
-    <li>
-      Tambahkan field baru: Nama <strong><code>customerID</code></strong
-      >, Tipe <strong><code>Number</code></strong
-      >.
-    </li>
-    <li>
-      Tambahkan field baru: Nama
-      <strong><code>employeeName</code></strong
-      >, Tipe <strong><code>Single line text</code></strong
-      >.
-    </li>
-    <li>
-      Tambahkan field baru: Nama <strong><code>orderPrice</code></strong
-      >, Tipe <strong><code>Number</code></strong> (Kita juga bisa mengubah
-      formatnya menjadi 'Currency' di Airtable).
-    </li>
-    <li>
-      Tambahkan field baru: Nama
-      <strong><code>orderStatus</code></strong
-      >, Tipe <strong><code>Single line text</code></strong
-      >.
-    </li>
-  </ol>
-  <p>
-    Sekarang, tabel Kita di Airtable sudah siap 100%. Tampilannya akan terlihat
-    seperti ini:
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-airtable-11-final-table.png"
-      alt="Tabel 'orders' di Airtable yang sudah jadi dengan 5 kolom yang benar."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Tabel 'orders' Kita sudah siap menerima data dari n8n.
-    </p>
-  </div>
 
-  <h2>Langkah 2: Menambahkan Node Airtable di n8n</h2>
-  <p>Oke, "wadah" kita sudah siap. Mari kembali ke alur kerja Kita di n8n.</p>
-  <p>
-    Klik ikon <strong>+</strong> di sebelah kanan node
-    <strong>HTTP Request</strong>.
-  </p>
-  <p>Di panel node:</p>
-  <ol>
-    <li>Cari <strong>Airtable</strong>.</li>
-    <div class="image-wrapper">
-      <img
-        src="../assets/images/materi-6-n8n-1-cari-airtable.png"
-        alt="Mencari Airtable dan memilih aksi 'Create a record'."
-        loading="lazy"
-      />
-      <p class="image-caption">
-        Kita memilih aksi 'Create' karena kita ingin membuat record baru.
-      </p>
-    </div>
-    <li>
-      Di bawah "Record Actions", pilih
-      <strong>Create a record</strong>.
-    </li>
-  </ol>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-n8n-2-create-a-record.png"
-      alt="Mencari Airtable dan memilih aksi 'Create a record'."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Kita memilih aksi 'Create' karena kita ingin membuat record baru.
-    </p>
-  </div>
-  <p>
-    Node Airtable akan ditambahkan ke kanvas dan jendela konfigurasinya akan
-    terbuka.
-  </p>
-
-  <h2>Langkah 3: Mengonfigurasi Node Airtable</h2>
-  <p>Di jendela node Airtable, kita perlu mengonfigurasi beberapa parameter:</p>
-  <ul>
-    <li>
-      <strong>Credential to connect with:</strong> Pilih
-      <strong>Create new credential</strong>.
-    </li>
-    <li>
-      Biarkan opsi default <strong>Connect using: Access Token</strong>
-      terpilih.
-    </li>
-  </ul>
-
-  <div class="note alt">
-    <strong>Cara Membuat Access Token di Airtable</strong><br />
-    Untuk mendapatkan <strong>Access Token</strong>, Kita perlu membuatnya di
-    dalam akun Airtable Kita. Berikut adalah langkah-langkah visualnya:
-    <ol>
-      <li>
-        Di Airtable, navigasi ke
-        <a
-          href="https://airtable.com/developers/web/api/introduction"
-          target="_blank"
-          >Builder Hub</a
-        >
-        (atau Akun > Developer hub) dan pilih
-        <strong>Personal access tokens</strong>.
-      </li>
-      <li>Klik <strong>"Create token"</strong>.</li>
-    </ol>
-    <div class="image-wrapper">
-      <img
-        src="../assets/images/materi-6-airtable-token-1-start.png"
-        alt="Halaman 'Personal access tokens' di Airtable dengan tombol 'Create token'."
-        loading="lazy"
-      />
-      <p class="image-caption">
-        Halaman awal untuk membuat personal access token Kita.
-      </p>
-    </div>
-    <p style="margin-top: 20px">
-      Selanjutnya, kita perlu mengonfigurasi Token tersebut:
-    </p>
-    <ul>
-      <li>
-        <strong>Name:</strong> Beri nama yang deskriptif, misal
-        <strong><code>n8n-belajar</code></strong
-        >.
-      </li>
-      <li>
-        <strong>Scopes:</strong> Ini adalah izin. Kita perlu menambahkan (<code
-          >+ Add a scope</code
-        >) setidaknya:
-        <ul>
-          <li><code>data.records:read</code></li>
-          <li><code>data.records:write</code></li>
-          <li><code>schema.bases:read</code></li>
-        </ul>
-      </li>
-      <li>
-        <strong>Access:</strong> Pilih 'Base' mana yang boleh diakses oleh token
-        ini. Kita pilih <strong>"beginner course"</strong>.
-      </li>
-    </ul>
-    <div class="image-wrapper">
-      <img
-        src="../assets/images/materi-6-airtable-token-2-scopes.png"
-        alt="Formulir 'Create new token' diisi dengan Nama, Scopes, dan Access."
-        loading="lazy"
-      />
-      <p class="image-caption">
-        Mengisi Nama, Scopes (izin), dan Access (database) untuk token Kita.
-      </p>
-    </div>
-    <p style="margin-top: 20px">
-      Terakhir, klik <strong>"Create token"</strong>. Airtable akan menampilkan
-      token Anda <strong>satu kali saja</strong>.
-    </p>
-    <div class="image-wrapper">
-      <img
-        src="../assets/images/materi-6-airtable-token-3-created.png"
-        alt="Popup 'Your token has been created' dengan token rahasia."
-        loading="lazy"
-      />
-      <p class="image-caption">
-        Token Kita sudah jadi! Salin (copy) kode rahasia ini.
-      </p>
-    </div>
-  </div>
-
-  <p style="margin-top: 30px">
-    Sekarang, kembali ke n8n dan klik
-    <strong>+ Create new credential</strong> lagi (jika tertutup) atau isi popup
-    yang sudah ada:
-  </p>
-
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-n8n-2-create-creds.png"
-      alt="Jendela popup 'Create new credential' untuk Airtable."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Tempelkan token yang baru Kita salin dari Airtable ke bidang 'Access
-      Token' di n8n.
-    </p>
-  </div>
-  <p>
-    Setelah kredensial Kita disimpan, kembali ke jendela node Airtable dan isi
-    sisanya:
-  </p>
-  <ul>
-    <li>
-      <strong>Resource:</strong> Pastikan
-      <strong><code>Record</code></strong> terpilih.
-    </li>
-    <li>
-      <strong>Operation:</strong> Pastikan
-      <strong><code>Create</code></strong> terpilih.
-    </li>
-    <li>
-      <strong>Base:</strong> Klik di sini dan pilih 'Base' Kita dari daftar
-      (contoh: <strong>beginner course</strong>).
-    </li>
-    <li>
-      <strong>Table:</strong> Pilih tabel Kita dari daftar
-      (<strong>orders</strong>).
-    </li>
-  </ul>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-n8n-3-select-base-table.png"
-      alt="Memilih 'Base' dan 'Table' dari daftar dropdown di node Airtable."
-      loading="lazy"
-    />
-    <p class="image-caption">Memilih Base dan Table yang sudah Kita siapkan.</p>
-  </div>
-  <ul>
-    <li>
-      <strong>Mapping Column Mode:</strong> Pilih
-      <strong><code>Map automatically</code></strong
-      >.
-    </li>
-  </ul>
-  <div class="note">
-    <strong>Apa itu 'Map automatically'?</strong><br />
-    Ini adalah fitur yang sangat hebat. Karena kita sudah bersusah payah membuat
-    nama kolom di Airtable (<code>orderID</code>)
-    <strong>sama persis</strong> dengan nama kolom di data n8n kita
-    (<code>orderID</code>), n8n bisa secara otomatis memetakannya. Kita tidak
-    perlu menghubungkannya satu per satu.
-    <div class="image-wrapper">
-      <img
-        src="../assets/images/materi-6-n8n-4-output.png"
-        alt="Tampilan output node Airtable di n8n dengan kolom yang terpetakan otomatis dan 30 record berhasil dibuat."
-        loading="lazy"
-      />
-      <p class="image-caption">
-        Tampilan output node Airtable di n8n setelah fitur
-        <em>Map automatically</em> digunakan
-      </p>
-    </div>
-  </div>
-
-  <h2>Langkah 4: Menguji Node Airtable</h2>
-  <p>
-    Setelah selesai konfigurasi, klik
-    <strong>Execute step</strong>. Ini mungkin butuh beberapa saat karena n8n
-    harus mengirim 30 item (record) ke Airtable satu per satu.
-  </p>
-  <p>
-    Hasil di n8n akan terlihat seperti ini, menunjukkan bahwa 30 data telah
-    berhasil dibuat:
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-n8n-5-output.png"
-      alt="Output node Airtable di n8n, menunjukkan 30 item berhasil dibuat."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Hasil eksekusi di n8n menunjukkan 30 record berhasil dibuat.
-    </p>
-  </div>
-  <p>
-    Sekarang, buka kembali tab Airtable Anda... dan lihat keajaibannya! Semua 30
-    data dari node HTTP Request sekarang akan muncul di tabel "orders" Kita.
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="../assets/images/materi-6-airtable-12-final-data.png"
-      alt="Tabel 'orders' di Airtable sekarang terisi penuh dengan 30 record data."
-      loading="lazy"
-    />
-    <p class="image-caption">Data Kita telah berhasil diimpor ke Airtable!</p>
-  </div>
-
-  <h2>Langkah Selanjutnya</h2>
-  <p>
-    Kita sudah berhasil mengambil data dan menyimpannya. Tapi, Kita belum
-    selesai...
-  </p>
-  <blockquote class="dialogue">
-    <strong>Nathan 🙋:</strong>
-    <p>
-      Wow, ini sudah sangat berguna! Tapi ini memasukkan
-      <strong>semua</strong> data yang dikumpulkan dari node HTTP Request ke
-      Airtable. Ingat, saya sebenarnya hanya perlu memasukkan pesanan yang
-      statusnya "Processing" ke tabel, dan menghitung total harga dari pesanan
-      "Booked"?
-    </p>
-  </blockquote>
-  <blockquote class="dialogue">
-    <strong>Kita 🤵🏻:</strong>
-    <p>
-      Tentu, tidak masalah. Kita baru saja membuat 'pipa' datanya. Sebagai
-      langkah selanjutnya, saya akan menggunakan node baru untuk
-      <strong>memfilter</strong> pesanan berdasarkan statusnya.
-    </p>
-  </blockquote>
-
-  <div
-    id="page-nav-placeholder"
-    data-prev-url="../materi-5/"
-    data-prev-title="Materi 5: Mengambil Data (HTTP)"
-    data-next-url="../materi-7/"
-    data-next-title="Materi 7: Memfilter Data (IF Node)"
-  ></div>
-
-  <div id="support-block-placeholder"></div>
-</article>
+    <script src="/assets/script.js"></script>
+  </body>
+</html>
