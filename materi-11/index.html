@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 11: Menjadwalkan Alur Kerja (Schedule Trigger)</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 11: Menjadwalkan Alur Kerja (Schedule Trigger)</h1>
+          <p class="intro">
+            Di langkah ini, Kita akan belajar cara menjadwalkan alur kerja Kita
+            agar berjalan secara otomatis pada waktu/interval yang ditentukan
+            menggunakan node <strong>Schedule Trigger</strong>.
+          </p>
+          <p>
+            Alur kerja yang sudah Kita bangun sejauh ini hanya berjalan ketika
+            Kita mengklik "Execute Workflow". Tapi Nathan ingin ini berjalan
+            secara otomatis setiap Senin pagi.
+          </p>
+          <p>
+            Untuk melakukan ini, kita akan mengganti node
+            <strong>"Start" (Manual Trigger)</strong> di paling awal alur
+            kerja kita dengan node <strong>"Schedule Trigger"</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-workflow-diagram.png"
+              alt="Diagram alur kerja: Node 'Start' diganti dengan node 'Schedule Trigger'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Alur kerja terakhir Kita, sekarang dimulai dengan pemicu
+              berbasis jadwal.
+            </p>
+          </div>
+
+          <h2>Langkah 1: Menghapus Node "Start" (Manual Trigger)</h2>
+          <p>
+            Pertama, mari kita hapus node pemicu yang ada saat ini.
+          </p>
+          <ol>
+            <li>
+              Di kanvas n8n Kita, klik node <strong>"Start"</strong> (atau
+              apa pun nama node pertama Anda).
+            </li>
+            <li>
+              Klik ikon <strong>tempat sampah</strong> (Delete) yang muncul
+              di atasnya.
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-delete-start-node.png"
+              alt="Menghapus node 'Start' dari kanvas n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Menghapus node pemicu manual yang lama.
+            </p>
+          </div>
+          <p>
+            Ini akan menghapus node tersebut dan Kita akan melihat tombol "Add
+            first step" (Tambahkan langkah pertama) yang kosong.
+          </p>
+
+          <h2>Langkah 2: Menambahkan Node "Schedule Trigger"</h2>
+          <p>
+            Klik pada "Add first step" (atau buka panel node seperti biasa) dan
+            cari <strong>Schedule Trigger</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-search-schedule-node.png"
+              alt="Mencari 'Schedule Trigger' di panel node n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">Mencari dan memilih node Schedule Trigger.</p>
+          </div>
+          <p>
+            Pilih node tersebut. Jendela konfigurasi "Schedule Trigger" akan
+            terbuka.
+          </p>
+
+          <h2>Langkah 3: Mengonfigurasi Jadwal</h2>
+          <p>
+            Ini adalah bagian di mana kita mengatur "kapan" alur kerja ini
+            harus berjalan. Untuk kasus Nathan, dia ingin
+            <strong>setiap hari Senin, jam 9:00 pagi</strong>.
+          </p>
+          <ul>
+            <li>
+              <strong>Trigger Interval:</strong> Ganti dari "Hours" (default)
+              menjadi <strong><code>Weeks</code></strong
+              >.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-schedule-interval-weeks.png"
+              alt="Memilih 'Weeks' dari dropdown Trigger Interval."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita memilih 'Weeks' karena pemicunya mingguan.
+            </p>
+          </div>
+          <ul>
+            <li>
+              <strong>Weeks Between Triggers:</strong> Biarkan
+              <strong><code>1</code></strong
+              >. (Artinya "setiap 1 minggu").
+            </li>
+            <li>
+              <strong>Trigger on weekdays:</strong> Klik
+              <strong><code>Monday</code></strong> (Senin). Pastikan untuk
+              menghapus (klik lagi) <strong><code>Sunday</code></strong>
+              (Minggu) jika itu terpilih secara default.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-schedule-day-monday.png"
+              alt="Memilih 'Monday' dan menghapus pilihan 'Sunday'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Mengatur agar hanya berjalan di hari Senin.
+            </p>
+          </div>
+          <ul>
+            <li>
+              <strong>Trigger at Hour:</strong> Scroll dan pilih
+              <strong><code>9am</code></strong
+              >.
+            </li>
+            <li>
+              <strong>Trigger at Minute:</strong> Masukkan
+              <strong><code>0</code></strong
+              >.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-schedule-time.png"
+              alt="Mengatur 'Trigger at Hour' ke 9am dan 'Minute' ke 0."
+              loading="lazy"
+            />
+            <p class="image-caption">Mengatur waktu eksekusi tepat jam 9:00.</p>
+          </div>
+          <p>
+            Node "Schedule Trigger" Kita sekarang sudah dikonfigurasi dengan
+            lengkap!
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-schedule-final-config.png"
+              alt="Konfigurasi lengkap node Schedule Trigger."
+              loading="lazy"
+            />
+            <p class="image-caption">Konfigurasi akhir node Schedule Trigger.</p>
+          </div>
+
+          <div class="note alt">
+            <strong>Sangat Penting: Zona Waktu (Timezone)</strong><br />
+            Jadwal "9am" ini berjalan berdasarkan zona waktu apa? Jawabannya:
+            Ia menggunakan zona waktu <strong>instansi n8n</strong> Anda.<br /><br />
+            Jika Anda <i>Self-Hosting</i> (seperti kita), pastikan zona waktu
+            server Anda (VPS) diatur dengan benar (misal: "Asia/Jakarta").
+            Jika tidak, jam 9:00 pagi server Anda mungkin berarti jam 4:00 sore
+            waktu Kita.
+          </div>
+
+          <h2>Langkah 4: Menyambungkan Kembali Alur Kerja</h2>
+          <p>
+            Tutup jendela "Schedule Trigger". Kembali ke kanvas, sekarang Kita
+            memiliki node <strong>Schedule Trigger</strong> yang terputus dan
+            sisa alur kerja Kita (dimulai dari <strong>HTTP Request</strong>).
+          </p>
+          <p>
+            Tarik konektor output (titik di sebelah kanan) dari node
+            <strong>Schedule Trigger</strong> dan sambungkan ke input node
+            <strong>HTTP Request</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-connect-schedule-node.png"
+              alt="Menyambungkan output Schedule Trigger ke input HTTP Request."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Menyambungkan kembali pemicu baru Kita ke sisa alur kerja.
+            </p>
+          </div>
+          <p>
+            Seluruh alur kerja Kita sekarang sudah selesai dibangun dari awal
+            sampai akhir!
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-11-workflow-final-diagram.png"
+              alt="Diagram alur kerja n8n yang lengkap dan sudah jadi."
+              loading="lazy"
+            />
+            <p class="image-caption">Alur kerja Nathan yang lengkap!</p>
+          </div>
+
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Alur kerja Kita sudah selesai *dibangun*. Tapi ada satu langkah
+            krusial terakhir.
+          </p>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Itu dia! Saya sudah menambahkan dan mengonfigurasi semua node
+              yang diperlukan.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Ini persis seperti yang saya butuhkan! Berarti alur kerja saya
+              akan berjalan otomatis setiap Senin pagi jam 9, kan?
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Belum. Agar bisa berjalan otomatis sesuai jadwal, Kita perlu
+              <strong>mengaktifkan</strong> alur kerja Kita. Saya akan
+              melakukannya di langkah terakhir dan menunjukkan cara membaca log
+              eksekusinya.
+            </p>
+          </blockquote>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-10/"
+            data-prev-title="Materi 10: Notifikasi (Discord)"
+            data-next-url="../materi-12/"
+            data-next-title="Materi 12: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
