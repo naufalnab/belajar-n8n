@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 10: Notifikasi ke Tim (Discord Node)</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 10: Memberi Notifikasi ke Tim (Discord Node)</h1>
+          <p class="intro">
+            Di langkah ini, Kita akan belajar cara mengirim pesan ke channel
+            Discord menggunakan <strong>Discord Node</strong>. Ini akan
+            menyelesaikan cabang "false" (pesanan 'booked') dari alur kerja
+            Nathan.
+          </p>
+          <p>
+            Setelah langkah ini, alur kerja Kita akan memiliki node baru di
+            akhir cabang "false":
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-workflow-diagram.png"
+              alt="Diagram alur kerja: Cabang 'false' sekarang mengarah ke Code Node, lalu ke Discord Node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Cabang "false" (booked) sekarang terhubung ke Discord.
+            </p>
+          </div>
+          <div class="note">
+            <strong>Node Komunikasi Lainnya</strong><br />
+            Tentu saja, Kita bisa mengganti node Discord dengan aplikasi
+            komunikasi lain. n8n juga memiliki node yang hebat untuk
+            <strong>Slack</strong> dan <strong>Mattermost</strong>. Konsepnya
+            akan sangat mirip.
+          </div>
+
+          <h2>Langkah 1: Prasyarat - Bergabung dengan Discord n8n</h2>
+          <p>
+            Untuk alur kerja ini, kita akan mengirim pesan ke server Discord n8n
+            resmi, di channel khusus kursus.
+          </p>
+          <p>
+            Sebelum melanjutkan, pastikan Kita telah
+            <a href="https://discord.com/invite/G98WXzsjky" target="_blank"
+              >bergabung dengan server Discord n8n</a
+            >
+            dan bisa mengakses channel
+            <strong><code>#course-level-1</code></strong
+            >.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-discord-channel.png"
+              alt="Channel #course-level-1 di dalam server Discord n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Pastikan Kita bisa melihat dan mengirim pesan di channel ini.
+            </p>
+          </div>
+
+          <h2>Langkah 2: Menambahkan Node Discord</h2>
+          <p>
+            Kembali ke alur kerja n8n Kita. Kita akan menyambungkan node baru ke
+            output dari <strong>Code Node</strong>.
+          </p>
+          <ol>
+            <li>
+              Klik ikon <strong>+</strong> pada output dari
+              <strong>Code Node</strong>.
+            </li>
+            <li>Cari node <strong>Discord</strong>.</li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-search-discord.png"
+              alt="Mencari 'Discord' di panel pencarian node n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">Mencari node Discord.</p>
+          </div>
+          <p>
+            Di bawah "Message Actions", pilih <strong>Send a message</strong>.
+            Node Discord akan ditambahkan dan jendela konfigurasinya akan
+            terbuka.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-discord-action.png"
+              alt="Memilih aksi 'Send a message' dari node Discord."
+              loading="lazy"
+            />
+            <p class="image-caption">Kita memilih aksi 'Send a message'.</p>
+          </div>
+
+          <h2>Langkah 3: Mengonfigurasi Node Discord</h2>
+          <p>
+            Di jendela node Discord, kita perlu mengonfigurasi beberapa
+            parameter:
+          </p>
+
+          <h3>3.1: Connection Type & Kredensial</h3>
+          <ul>
+            <li>
+              <strong>Connection Type:</strong> Pilih
+              <strong><code>Webhook</code></strong
+              >.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-discord-webhook.png"
+              alt="Memilih 'Webhook' sebagai Connection Type."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita akan terhubung menggunakan Webhook URL, bukan akun Bot.
+            </p>
+          </div>
+          <ul>
+            <li>
+              <strong>Credential for Discord Webhook:</strong> Pilih
+              <strong>- Create New Credential -</strong>.
+            </li>
+            <li>
+              Sebuah popup akan muncul. Di sini kita membutuhkan
+              <strong>Webhook URL</strong> dari email yang Kita dapatkan di
+              <strong>Materi 5</strong>.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-5-signup-10-email-content.png"
+              alt="Email dari n8n yang menunjukkan Webhook URL."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Salin 'Webhook URL' dari email kredensial Kita.
+            </p>
+          </div>
+          <ul>
+            <li>
+              <strong>Webhook URL:</strong> Tempelkan (paste) URL tersebut ke
+              bidang ini.
+            </li>
+            <li>
+              <strong>Name:</strong> Beri nama kredensial ini, misal:
+              <strong><code>Discord Webhook Kursus</code></strong
+              >.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-discord-creds.png"
+              alt="Jendela popup kredensial Discord Webhook di n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Membuat kredensial baru dengan menempelkan Webhook URL.
+            </p>
+          </div>
+          <p>Klik <strong>Save</strong> untuk menyimpan kredensial.</p>
+
+          <h3>3.2: Operation & Message (Expression)</h3>
+          <ul>
+            <li>
+              <strong>Operation:</strong> Pastikan
+              <strong><code>Send a Message</code></strong> terpilih.
+            </li>
+            <li>
+              <strong>Message:</strong> Ini adalah bagian terpenting. Kita perlu
+              menggunakan <strong>Expression</strong> untuk menggabungkan teks
+              statis dengan data dinamis.
+            </li>
+          </ul>
+          <p>
+            Klik tab <strong>Expression</strong> di sebelah kanan bidang
+            "Message", lalu buka <strong>Expression Editor</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-discord-expression-editor.png"
+              alt="Membuka Expression Editor untuk bidang Message."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita akan menggunakan Expression Editor untuk membuat pesan
+              kustom.
+            </p>
+          </div>
+          <p>Salin dan tempel teks di bawah ini ke dalam Expression Editor:</p>
+          <pre><code>This week we've {{$json["totalBooked"]}} booked orders with a total value of {{$json["bookedSum"]}}. My Unique ID: {{ $('HTTP Request').params["headerParameters"]["parameters"][0]["value"] }}</code></pre>
+
+          <div class="note">
+            <strong>Menganalisis Expression Ini:</strong><br />
+            Perhatikan betapa kuatnya ini!
+            <ul>
+              <li>
+                <strong><code>{{$json["totalBooked"]}}</code></strong
+                ><br />Mengambil data <code>totalBooked</code> dari node
+                <strong>sebelumnya</strong> (Code Node).
+              </li>
+              <li>
+                <strong><code>{{$json["bookedSum"]}}</code></strong
+                ><br />Mengambil data <code>bookedSum</code> dari node
+                <strong>sebelumnya</strong> (Code Node).
+              </li>
+              <li>
+                <strong><code>{{ $('HTTP Request')...["value"] }}</code></strong
+                ><br />Ini adalah sulapnya! Kita menggunakan sintaks
+                <code>$('NAMA_NODE')</code> untuk "melompat mundur" melewati
+                Code Node dan IF Node, dan mengambil data
+                <code>unique_id</code> Kita langsung dari
+                <strong>HTTP Request Node</strong> di awal alur kerja.
+              </li>
+            </ul>
+          </div>
+
+          <h2>Langkah 4: Mengeksekusi & Memverifikasi</h2>
+          <p>
+            Tutup Expression Editor. Sekarang, klik
+            <strong>Execute step</strong> di node Discord.
+          </p>
+          <p>
+            Jika semua berfungsi dengan baik, n8n akan menunjukkan output yang
+            berhasil:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-discord-output-n8n.png"
+              alt="Output node Discord di n8n, menunjukkan eksekusi berhasil."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Output di n8n menunjukkan "Execute success".
+            </p>
+          </div>
+          <p>
+            Sekarang, periksa channel
+            <strong><code>#course-level-1</code></strong> di Discord. Pesan Kita
+            akan muncul di sana, lengkap dengan data yang sudah dihitung!
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-10-discord-output-message.png"
+              alt="Pesan yang sudah jadi muncul di channel Discord."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Sukses! Pesan kita, lengkap dengan data dinamis, terkirim ke
+              Discord.
+            </p>
+          </div>
+
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Kedua cabang alur kerja Kita (Processing dan Booked) sekarang sudah
+            selesai!
+          </p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Luar biasa, Kita telah menghemat waktu saya berjam-jam! Sekarang
+              saya bisa menjalankan alur kerja ini kapan pun saya
+              membutuhkannya. Saya hanya perlu ingat untuk menjalankannya setiap
+              Senin pagi jam 9.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Jangan khawatir tentang itu, Kita sebenarnya bisa menjadwalkan
+              alur kerja ini untuk berjalan pada hari, waktu, atau interval
+              tertentu secara otomatis. Saya akan mengaturnya di langkah
+              selanjutnya.
+            </p>
+          </blockquote>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-9/"
+            data-prev-title="Materi 9: Menghitung (Code Node)"
+            data-next-url="../materi-11/"
+            data-next-title="Materi 11: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
