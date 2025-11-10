@@ -3,10 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Materi 8: Mengatur Nilai untuk Pesanan "Processing"</title>
-
+    <title>Materi 8: Memilih Data (Edit Fields Node)</title>
     <link rel="stylesheet" href="../assets/style.css" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,347 +15,400 @@
   <body>
     <div class="container">
       <div id="sidebar-placeholder"></div>
+
       <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
       <main class="content">
+        <article>
+          <h1>Materi 8: Mengatur Nilai untuk Pesanan "Processing"</h1>
+          <p class="intro">
+            Di langkah ini, Kita akan belajar cara memilih dan mengatur data
+            secara spesifik sebelum mentransfernya ke Airtable menggunakan node
+            <strong>Edit Fields (Set)</strong>.
+          </p>
+          <p>
+            Setelah langkah ini, alur kerja Kita akan memiliki node baru di
+            cabang "true" (benar):
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-workflow-diagram.png"
+              alt="Diagram alur kerja: IF Node bercabang ke Edit Fields, lalu ke Airtable."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Alur kerja Kita, sekarang dengan node 'Edit Fields' di tengah.
+            </p>
+          </div>
 
-<article>
-  <h1>Materi 8: Mengatur Nilai untuk Pesanan "Processing"</h1>
-  <p class="intro">
-    Di langkah ini, Kita akan belajar cara memilih dan mengatur data secara
-    spesifik sebelum mentransfernya ke Airtable menggunakan node
-    <strong>Edit Fields (Set)</strong>.
-  </p>
-  <p>
-    Setelah langkah ini, alur kerja Kita akan memiliki node baru di cabang
-    "true" (benar):
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-workflow-diagram.png"
-      alt="Diagram alur kerja: IF Node bercabang ke Edit Fields, lalu ke Airtable."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Alur kerja Kita, sekarang dengan node 'Edit Fields' di tengah.
-    </p>
-  </div>
+          <h2>Permintaan Baru Nathan</h2>
+          <p>
+            Di akhir materi terakhir, Kita berhasil memfilter data. Tapi Nathan
+            memberi Kita masukan baru:
+          </p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Node IF ini sangat berguna untuk memfilter data! Sekarang saya
+              punya semua informasi tentang pesanan "processing". Sebenarnya
+              saya hanya butuh <strong>employeeName</strong> dan
+              <strong>orderID</strong>, tapi saya rasa tidak apa-apa menyimpan
+              semua kolom lainnya.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Sebenarnya, saya tidak merekomendasikan itu. Memasukkan lebih
+              banyak data (5 kolom padahal butuh 2) akan memperlambat transfer
+              data dan memakan lebih banyak sumber daya penyimpanan. Jika
+              datanya ribuan, ini akan sangat memengaruhi kinerja.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Oh, poin yang bagus. Bisakah Kita memilih hanya dua kolom itu saja
+              dari pesanan "processing"?
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>Tentu saja! Kita akan lakukan itu sekarang.</p>
+          </blockquote>
 
-  <h2>Permintaan Baru Nathan</h2>
-  <p>
-    Di akhir materi terakhir, Kita berhasil memfilter data. Tapi Nathan
-    memberi Kita masukan baru:
-  </p>
-  <blockquote class="dialogue">
-    <strong>Nathan 🙋:</strong>
-    <p>
-      Node IF ini sangat berguna untuk memfilter data! Sekarang saya punya semua
-      informasi tentang pesanan "processing". Sebenarnya saya hanya butuh
-      <strong>employeeName</strong> dan <strong>orderID</strong>, tapi saya rasa
-      tidak apa-apa menyimpan semua kolom lainnya.
-    </p>
-  </blockquote>
-  <blockquote class="dialogue">
-    <strong>Kita 🤵🏻:</strong>
-    <p>
-      Sebenarnya, saya tidak merekomendasikan itu. Memasukkan lebih banyak data
-      (5 kolom padahal butuh 2) akan memperlambat transfer data dan memakan
-      lebih banyak sumber daya penyimpanan. Jika datanya ribuan, ini akan
-      sangat memengaruhi kinerja.
-    </p>
-  </blockquote>
-  <blockquote class="dialogue">
-    <strong>Nathan 🙋:</strong>
-    <p>
-      Oh, poin yang bagus. Bisakah Kita memilih hanya dua kolom itu saja dari
-      pesanan "processing"?
-    </p>
-  </blockquote>
-  <blockquote class="dialogue">
-    <strong>Kita 🤵🏻:</strong>
-    <p>Tentu saja! Kita akan lakukan itu sekarang.</p>
-  </blockquote>
+          <h2>Node "Edit Fields (Set)"</h2>
+          <p>
+            Untuk tugas ini, kita akan menggunakan node
+            <strong>Edit Fields (Set)</strong>. Anggap saja node ini sebagai
+            "penjaga gerbang" data. Node ini bisa memilih data mana yang boleh
+            lewat, memodifikasi data, atau bahkan membuat data baru.
+          </p>
 
-  <h2>Node "Edit Fields (Set)"</h2>
-  <p>
-    Untuk tugas ini, kita akan menggunakan node
-    <strong>Edit Fields (Set)</strong>. Anggap saja node ini sebagai "penjaga
-    gerbang" data. Node ini bisa memilih data mana yang boleh lewat,
-    memodifikasi data, atau bahkan membuat data baru.
-  </p>
+          <h2>Langkah 1: Menyisipkan Node "Edit Fields"</h2>
+          <p>
+            Kita perlu menambahkan node ini di antara
+            <strong>IF Node</strong> dan <strong>Airtable Node</strong>.
+          </p>
+          <ol>
+            <li>
+              Hapus koneksi (panah) antara <strong>IF (true)</strong> dan
+              <strong>Airtable</strong> (klik ikon tempat sampah di panah).
+            </li>
+            <li>
+              Seret (drag) node Airtable Kita sedikit ke kanan di kanvas agar
+              ada ruang.
+            </li>
+            <li>
+              Klik ikon <strong>+</strong> pada output <strong>"true"</strong>
+              dari IF Node.
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-insert-node.png"
+              alt="Menambahkan node baru dari output 'true' IF Node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita akan menyisipkan node baru di jalur 'true'.
+            </p>
+          </div>
+          <p>
+            Sekarang cari node <strong>Edit Fields (Set)</strong> dan pilih.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-search-edit-fields.png"
+              alt="Mencari node 'Edit Fields (Set)' di panel node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Node 'Edit Fields (Set)' adalah yang kita butuhkan.
+            </p>
+          </div>
 
-  <h2>Langkah 1: Menyisipkan Node "Edit Fields"</h2>
-  <p>
-    Kita perlu menambahkan node ini di antara <strong>IF Node</strong> dan
-    <strong>Airtable Node</strong>.
-  </p>
-  <ol>
-    <li>
-      Hapus koneksi (panah) antara <strong>IF (true)</strong> dan
-      <strong>Airtable</strong> (klik ikon tempat sampah di panah).
-    </li>
-    <li>
-      Seret (drag) node Airtable Kita sedikit ke kanan di kanvas agar ada ruang.
-    </li>
-    <li>
-      Klik ikon <strong>+</strong> pada output <strong>"true"</strong> dari
-      IF Node.
-    </li>
-  </ol>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-insert-node.png"
-      alt="Menambahkan node baru dari output 'true' IF Node."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Kita akan menyisipkan node baru di jalur 'true'.
-    </p>
-  </div>
-  <p>
-    Sekarang cari node <strong>Edit Fields (Set)</strong> dan pilih.
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-search-edit-fields.png"
-      alt="Mencari node 'Edit Fields (Set)' di panel node."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Node 'Edit Fields (Set)' adalah yang kita butuhkan.
-    </p>
-  </div>
+          <h2>Langkah 2: Mengonfigurasi Node "Edit Fields"</h2>
+          <p>
+            Dengan jendela "Edit Fields" terbuka, konfigurasikan parameter
+            berikut:
+          </p>
+          <ul>
+            <li>
+              <strong>Mode:</strong> Pastikan diatur ke
+              <strong><code>Manual Mapping</code></strong
+              >.
+            </li>
+            <li>
+              <strong>Fields to Set:</strong> Di sinilah kita memilih data Kita.
+              Kita bisa menggunakan <strong>Expression Editor</strong> seperti
+              di Materi 7, tapi ayo kita coba cara
+              <strong>drag-and-drop</strong>:
+              <ol>
+                <li>
+                  Di panel "INPUT" di sebelah kiri, cari
+                  <strong>orderID</strong> (dari node IF) dan seret (drag) ke
+                  kotak <strong>Name</strong> di sebelah kanan.
+                </li>
+                <li>
+                  Lakukan hal yang sama untuk <strong>employeeName</strong>.
+                </li>
+              </ol>
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-drag-fields.png"
+              alt="Men-drag 'orderID' dan 'employeeName' dari panel Input ke 'Fields to Set'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Cara mudah memilih kolom: cukup seret dari kiri ke kanan.
+            </p>
+          </div>
+          <ul>
+            <li>
+              <strong>Include Other Input Fields:</strong> Ini adalah langkah
+              paling penting. <strong>Matikan (geser ke false)</strong>.
+            </li>
+          </ul>
+          <div class="note">
+            <strong>Sangat Penting: "Include Other Input Fields"</strong><br />
+            Jika tombol ini <strong>AKTIF</strong>, n8n akan mengambil
+            <strong>orderID</strong>, <strong>employeeName</strong>, DAN SEMUA
+            KOLOM LAINNYA (customerID, orderPrice, dll.).<br />
+            Dengan <strong>MEMATIKANNYA</strong>, kita memberi tahu n8n: "Saya
+            HANYA ingin kolom yang saya pilih secara manual di atas."
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-toggle-off.png"
+              alt="Toggle 'Include Other Input Fields' diatur ke posisi false (mati)."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Pastikan tombol ini MATI untuk memfilter kolom Kita.
+            </p>
+          </div>
 
-  <h2>Langkah 2: Mengonfigurasi Node "Edit Fields"</h2>
-  <p>
-    Dengan jendela "Edit Fields" terbuka, konfigurasikan parameter berikut:
-  </p>
-  <ul>
-    <li>
-      <strong>Mode:</strong> Pastikan diatur ke
-      <strong><code>Manual Mapping</code></strong
-      >.
-    </li>
-    <li>
-      <strong>Fields to Set:</strong> Di sinilah kita memilih data Kita. Kita
-      bisa menggunakan <strong> Expression Editor</strong>  seperti di Materi 7, tapi ayo kita
-      coba cara <strong> drag-and-drop*:
-      <ol>
-        <li>
-          Di panel "INPUT" di sebelah kiri, cari
-          <strong>orderID</strong> (dari node IF) dan seret (drag) ke kotak
-          <strong>Name</strong> di sebelah kanan.
-        </li>
-        <li>
-          Lakukan hal yang sama untuk <strong>employeeName</strong>.
-        </li>
-      </ol>
-    </li>
-  </ul>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-drag-fields.png"
-      alt="Men-drag 'orderID' dan 'employeeName' dari panel Input ke 'Fields to Set'."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Cara mudah memilih kolom: cukup seret dari kiri ke kanan.
-    </p>
-  </div>
-  <ul>
-    <li>
-      <strong>Include Other Input Fields:</strong> Ini adalah langkah paling
-      penting. <strong>Matikan (geser ke false)</strong>.
-    </li>
-  </ul>
-  <div class="note">
-    <strong>Sangat Penting: "Include Other Input Fields"</strong><br />
-    Jika tombol ini <strong>AKTIF</strong>, n8n akan mengambil
-    <strong>orderID</strong>, <strong>employeeName</strong>, DAN SEMUA KOLOM
-    LAINNYA (customerID, orderPrice, dll.).<br />
-    Dengan <strong>MEMATIKANNYA</strong>, kita memberi tahu n8n: "Saya HANYA
-    ingin kolom yang saya pilih secara manual di atas."
-  </div>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-toggle-off.png"
-      alt="Toggle 'Include Other Input Fields' diatur ke posisi false (mati)."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Pastikan tombol ini MATI untuk memfilter kolom Kita.
-    </p>
-  </div>
+          <h2>Langkah 3: Menguji Node "Edit Fields"</h2>
+          <p>
+            Klik <strong>Execute step</strong>. Anda akan melihat hasilnya.
+            Perhatikan: Input memiliki 5 kolom, tetapi Output sekarang hanya
+            memiliki 2 kolom!
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-edit-fields-output.png"
+              alt="Output dari node Edit Fields, hanya menampilkan 2 kolom: orderID dan employeeName."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita berhasil memangkas data Kita! Hanya 2 kolom yang lolos.
+            </p>
+          </div>
+          <p>Tutup jendela node "Edit Fields".</p>
 
-  <h2>Langkah 3: Menguji Node "Edit Fields"</h2>
-  <p>
-    Klik <strong>Execute step</strong>. Anda akan melihat hasilnya. Perhatikan:
-    Input memiliki 5 kolom, tetapi Output sekarang hanya memiliki 2 kolom!
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-edit-fields-output.png"
-      alt="Output dari node Edit Fields, hanya menampilkan 2 kolom: orderID dan employeeName."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Kita berhasil memangkas data Kita! Hanya 2 kolom yang lolos.
-    </p>
-  </div>
-  <p>Tutup jendela node "Edit Fields".</p>
+          <h2>Langkah 4: Menyiapkan Tabel Airtable Baru</h2>
+          <p>
+            Data kita sekarang hanya memiliki 2 kolom, tetapi tabel "orders"
+            lama kita di Airtable memiliki 5 kolom. Ini bisa menyebabkan error.
+          </p>
+          <p>
+            Praktik terbaiknya adalah membuat tabel baru yang bersih khusus
+            untuk data ini.
+          </p>
+          <ol>
+            <li>Buka 'Base' "beginner course" Kita di Airtable.</li>
+            <li>
+              Klik tanda <strong>+</strong> untuk "Add or import" dan pilih "Add
+              a blank table - Start from scratch".
+            </li>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-8-airtable-1-start-from-scratch.png"
+                alt="Memilih 'Start from scratch' untuk membuat tabel baru di Airtable."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Kita akan membuat tabel kosong baru, bukan mengimpor data.
+              </p>
+            </div>
+            <li>
+              Beri nama tabel baru ini
+              <strong><code>processingOrders</code></strong
+              >.
+            </li>
+            <div class="image-wrapper">
+              <img
+                src="../assets/images/materi-8-airtable-2-rename-table.png"
+                alt="Memberi nama tabel baru 'processingOrders' di Airtable."
+                loading="lazy"
+              />
+              <p class="image-caption">
+                Memberi nama tabel baru Kita agar sesuai dengan tujuannya.
+              </p>
+            </div>
+            <li>
+              Hapus kolom default ("Notes", "Assignee", "Status") dan data
+              contoh.
+            </li>
+            <li>
+              Atur kolom-kolomnya agar <strong>persis</strong> cocok dengan
+              output n8n Kita:
+              <ul>
+                <li>
+                  Ganti nama "Name" menjadi
+                  <strong><code>orderID</code></strong> (Tipe: Number).
+                </li>
+                <div class="image-wrapper">
+                  <img
+                    src="../assets/images/materi-8-airtable-3-field-orderid.png"
+                    alt="Mengonfigurasi kolom utama 'orderID' sebagai Tipe Number."
+                    loading="lazy"
+                  />
+                  <p class="image-caption">
+                    Mengatur kolom 'orderID' sebagai Primary Field dengan tipe
+                    Number.
+                  </p>
+                </div>
+                <li>
+                  Tambahkan kolom baru
+                  <strong><code>employeeName</code></strong> (Tipe: Single line
+                  text).
+                </li>
+                <div class="image-wrapper">
+                  <img
+                    src="../assets/images/materi-8-airtable-4-field-employeename.png"
+                    alt="Membuat kolom baru 'employeeName' sebagai Tipe Single line text."
+                    loading="lazy"
+                  />
+                  <p class="image-caption">
+                    Menambahkan kolom kedua Kita, 'employeeName'.
+                  </p>
+                </div>
+              </ul>
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-airtable-new-table.png"
+              alt="Tabel 'processingOrders' baru di Airtable dengan 2 kolom: orderID dan employeeName."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Tabel tujuan baru kita yang bersih, siap menerima data yang sudah
+              difilter.
+            </p>
+          </div>
 
-  <h2>Langkah 4: Menyiapkan Tabel Airtable Baru</h2>
-  <p>
-    Data kita sekarang hanya memiliki 2 kolom, tetapi tabel "orders" lama kita
-    di Airtable memiliki 5 kolom. Ini bisa menyebabkan error.
-  </p>
-  <p>
-    Praktik terbaiknya adalah membuat tabel baru yang bersih khusus untuk data
-    ini.
-  </p>
-  <ol>
-    <li>Buka 'Base' "beginner course" Kita di Airtable.</li>
-    <li>
-      Klik tanda <strong>+</strong> untuk "Add or import" dan pilih "Create a
-      blank table".
-    </li>
-    <li>
-      Beri nama tabel baru ini <strong><code>processingOrders</code></strong
-      >.
-    </li>
-    <li>
-      Hapus kolom default ("Notes", "Assignee", "Status") dan data contoh.
-    </li>
-    <li>
-      Atur kolom-kolomnya agar <strong>persis</strong> cocok dengan output
-      n8n Kita:
-      <ul>
-        <li>
-          Ganti nama "Name" menjadi <strong><code>orderID</code></strong>
-          (Tipe: Number).
-        </li>
-        <li>
-          Tambahkan kolom baru <strong><code>employeeName</code></strong>
-          (Tipe: Single line text).
-        </li>
-      </ul>
-    </li>
-  </ol>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-airtable-new-table.png"
-      alt="Tabel 'processingOrders' baru di Airtable dengan 2 kolom: orderID dan employeeName."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Tabel tujuan baru kita yang bersih, siap menerima data yang sudah
-      difilter.
-    </p>
-  </div>
+          <h2>Langkah 5: Menyambungkan & Mengonfigurasi Ulang Airtable</h2>
+          <p>Kembali ke n8n. Sekarang kita selesaikan alur barunya.</p>
+          <ol>
+            <li>
+              Hubungkan output node <strong>Edit Fields</strong> ke input node
+              <strong>Airtable</strong>.
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-connect-edit-to-airtable.png"
+              alt="Menghubungkan output node 'Edit Fields' ke input node 'Airtable'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Menyambungkan node yang sudah difilter ke Airtable.
+            </p>
+          </div>
+          <ol start="2">
+            <li>Buka node <strong>Airtable</strong>.</li>
+            <li>
+              Ubah parameter <strong>Table</strong>: ganti dari "orders" menjadi
+              <strong>"processingOrders"</strong>. (Kita mungkin perlu mengklik
+              ikon 'Refresh List').
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-airtable-reconfig.png"
+              alt="Konfigurasi node Airtable, parameter 'Table' diubah ke 'processingOrders'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Mengarahkan node Airtable untuk mengirim data ke tabel baru Kita.
+            </p>
+          </div>
+          <p>
+            Pastikan <strong>Mapping Column Mode</strong> masih diatur ke
+            <strong><code>Map automatically</code></strong
+            >. Ini akan tetap berfungsi karena nama kolom Kita (orderID,
+            employeeName) sama persis.
+          </p>
 
-  <h2>Langkah 5: Menyambungkan & Mengonfigurasi Ulang Airtable</h2>
-  <p>
-    Kembali ke n8n. Sekarang kita selesaikan alur barunya.
-  </p>
-  <ol>
-    <li>
-      Hubungkan output node <strong>Edit Fields</strong> ke input node
-      <strong>Airtable</strong>.
-    </li>
-  </ol>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-connect-edit-to-airtable.png"
-      alt="Menghubungkan output node 'Edit Fields' ke input node 'Airtable'."
-      loading="lazy"
-    />
-    <p class="image-caption">Menyambungkan node yang sudah difilter ke Airtable.</p>
-  </div>
-  <ol start="2">
-    <li>Buka node <strong>Airtable</strong>.</li>
-    <li>
-      Ubah parameter <strong>Table</strong>: ganti dari "orders" menjadi
-      <strong>"processingOrders"</strong>. (Anda mungkin perlu mengklik ikon
-      'Refresh List').
-    </li>
-  </ol>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-airtable-reconfig.png"
-      alt="Konfigurasi node Airtable, parameter 'Table' diubah ke 'processingOrders'."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Mengarahkan node Airtable untuk mengirim data ke tabel baru Kita.
-    </p>
-  </div>
-  <p>
-    Pastikan <strong>Mapping Column Mode</strong> masih diatur ke
-    <strong><code>Map automatically</code></strong
-    >. Ini akan tetap berfungsi karena nama kolom Kita (orderID,
-    employeeName) sama persis.
-  </p>
+          <h2>Langkah 6: Uji Coba Terakhir</h2>
+          <p>
+            Saatnya menguji! Klik <strong>Execute step</strong> pada node
+            Airtable.
+          </p>
+          <p>
+            Buka tabel "processingOrders" Anda di Airtable. Anda akan melihat 14
+            baris data baru telah masuk, dan <strong>hanya</strong> 2 kolom yang
+            terisi!
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-airtable-final-data.png"
+              alt="Tabel 'processingOrders' di Airtable terisi dengan 14 baris data."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Sukses! Data yang bersih dan efisien telah disimpan.
+            </p>
+          </div>
+          <p>Alur kerja Kita di n8n sekarang akan terlihat seperti ini:</p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-8-workflow-final-diagram.png"
+              alt="Alur kerja n8n yang lengkap: HTTP -> IF -> (true) -> Edit Fields -> Airtable."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Alur kerja Kita untuk cabang 'true' (processing) sudah selesai!
+            </p>
+          </div>
 
-  <h2>Langkah 6: Uji Coba Terakhir</h2>
-  <p>
-    Saatnya menguji! Klik <strong>Execute step</strong> pada node Airtable.
-  </p>
-  <p>
-    Buka tabel "processingOrders" Anda di Airtable. Anda akan melihat 14 baris
-    data baru telah masuk, dan <strong> hanya</strong>  2 kolom yang terisi!
-  </p>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-airtable-final-data.png"
-      alt="Tabel 'processingOrders' di Airtable terisi dengan 14 baris data."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Sukses! Data yang bersih dan efisien telah disimpan.
-    </p>
-  </div>
-  <p>Alur kerja Kita di n8n sekarang akan terlihat seperti ini:</p>
-  <div class="image-wrapper">
-    <img
-      src="/assets/images/materi-8-workflow-final-diagram.png"
-      alt="Alur kerja n8n yang lengkap: HTTP -> IF -> (true) -> Edit Fields -> Airtable."
-      loading="lazy"
-    />
-    <p class="image-caption">
-      Alur kerja Kita untuk cabang 'true' (processing) sudah selesai!
-    </p>
-  </div>
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Kita sudah menyelesaikan setengah dari permintaan Nathan! Tapi
+            bagaimana dengan cabang "false" dari node IF?
+          </p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Anda telah mengotomatiskan setengah dari pekerjaan saya! Sekarang
+              saya masih perlu menghitung pesanan "booked" untuk rekan-rekan
+              saya. Bisakah kita mengotomatiskan itu juga?
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Ya! Di langkah selanjutnya, saya akan menggunakan sedikit kode
+              JavaScript di sebuah node untuk menghitung pesanan "booked"
+              tersebut.
+            </p>
+          </blockquote>
 
-  <h2>Langkah Selanjutnya</h2>
-  <p>
-    Kita sudah menyelesaikan setengah dari permintaan Nathan! Tapi bagaimana
-    dengan cabang "false" dari node IF?
-  </p>
-  <blockquote class="dialogue">
-    <strong>Nathan 🙋:</strong>
-    <p>
-      Anda telah mengotomatiskan setengah dari pekerjaan saya! Sekarang saya
-      masih perlu menghitung pesanan "booked" untuk rekan-rekan saya.
-      Bisakah kita mengotomatiskan itu juga?
-    </p>
-  </blockquote>
-  <blockquote class="dialogue">
-    <strong>Kita 🤵🏻:</strong>
-    <p>
-      Ya! Di langkah selanjutnya, saya akan menggunakan sedikit kode
-      JavaScript di sebuah node untuk menghitung pesanan "booked" tersebut.
-    </p>
-  </blockquote>
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-7/index.html"
+            data-prev-title="Materi 7: Memfilter (IF Node)"
+            data-next-url="../materi-9/index.html"
+            data-next-title="Materi 9: (Segera Hadir)"
+          ></div>
 
-  <div
-    id="page-nav-placeholder"
-    data-prev-url="/materi-7/"
-    data-prev-title="Materi 7: Memfilter (IF Node)"
-    data-next-url="/materi-9/"
-    data-next-title="Materi 9: (Segera Hadir)"
-  ></div>
-
-  <div id="support-block-placeholder"></div>
-</article>
+          <div id="support-block-placeholder"></div>
+        </article>
       </main>
     </div>
     <script src="../assets/script.js"></script>
