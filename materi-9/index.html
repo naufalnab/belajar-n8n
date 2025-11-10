@@ -124,7 +124,7 @@
               <li>
                 <strong>Run Once for All Items:</strong> (Yang kita pilih)
                 Kode ini berjalan <strong>satu kali</strong>. Ia menerima
-                *semua* 16 item 'booked' sekaligus sebagai sebuah grup. Ini
+                <strong>semua</strong> 16 item 'booked' sekaligus sebagai sebuah grup. Ini
                 sempurna untuk membuat ringkasan/perhitungan total.
               </li>
               <li>
@@ -148,9 +148,9 @@
 
           <h2>Langkah 3: Memahami Struktur Data n8n</h2>
           <p>
-            Sebelum kita menulis kode, kita *harus* tahu format data n8n.
-            Data yang mengalir antar node *selalu* berupa **Array** (daftar).
-            Di dalam array itu ada **Objek** yang berisi data Kita.
+            Sebelum kita menulis kode, kita <strong>harus</strong> tahu format data n8n.
+            Data yang mengalir antar node <strong>selalu</strong> berupa <strong>Array</strong> (daftar).
+            Di dalam array itu ada <strong>Objek</strong> yang berisi data Kita.
           </p>
           <p>Struktur sederhananya seperti ini:</p>
           <pre><code>[
@@ -171,7 +171,7 @@
 ]</code></pre>
           <p>
             Perhatikan bahwa data kita (<code>orderPrice</code>, dll.) ada di
-            dalam *key* yang disebut <strong><code>json</code></strong
+            dalam <strong>key</strong> yang disebut <strong><code>json</code></strong
             >. Ini sangat penting.
           </p>
 
@@ -206,7 +206,7 @@ return [{ json: {totalBooked, bookedSum} }];</code></pre>
           <ul>
             <li>
               <strong><code>let items = $input.all();</code></strong
-              ><br />Mengambil *semua* (16) item yang masuk dari cabang "false"
+              ><br />Mengambil <strong>semua</strong> (16) item yang masuk dari cabang "false"
               dan menyimpannya dalam variabel bernama <code>items</code>.
             </li>
             <li>
@@ -222,7 +222,7 @@ return [{ json: {totalBooked, bookedSum} }];</code></pre>
             <li>
               <strong><code>for (let i=0; i < items.length; i++) { ...
                 }</code></strong
-              ><br />Ini adalah *loop* (perulangan). Ini akan "mengulangi"
+              ><br />Ini adalah <strong>loop</strong> (perulangan). Ini akan "mengulangi"
               kode di dalamnya sebanyak 16 kali (satu kali untuk setiap item).
             </li>
             <li>
@@ -248,14 +248,14 @@ return [{ json: {totalBooked, bookedSum} }];</code></pre>
             <strong>Struktur Data Sangat Penting!</strong><br />
             Jika Anda hanya menulis <code>return {totalBooked, bookedSum}</code>
             (tanpa <code>[{ json: ... }]</code>), n8n akan error. Outputnya
-            harus *selalu* berupa Array Objek.
+            harus <strong>selalu</strong> berupa Array Objek.
           </div>
 
           <h2>Langkah 5: Mengeksekusi & Melihat Hasil</h2>
           <p>Sekarang, klik <strong>Execute step</strong>.</p>
           <p>
             Perhatikan outputnya. Inputnya adalah 16 item, tetapi outputnya
-            sekarang hanya **1 item**!
+            sekarang hanya <strong>1 item</strong>!
           </p>
           <div class="image-wrapper">
             <img
@@ -289,7 +289,7 @@ return [{ json: {totalBooked, bookedSum} }];</code></pre>
           <blockquote class="dialogue">
             <strong>Kita 🤵🏻:</strong>
             <p>
-              Tepat sekali! Kita bisa beralih dari *no-code* ke *low-code*
+              Tepat sekali! Kita bisa beralih dari <strong>no-code</strong> ke <strong>low-code</strong>
               kapanpun kita butuh.
             </p>
           </blockquote>
