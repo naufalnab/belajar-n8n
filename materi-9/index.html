@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 9: Menghitung Data (Code Node)</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 9: Menghitung Pesanan "Booked" (Code Node)</h1>
+          <p class="intro">
+            Di materi ini, Kita akan belajar bagaimana n8n menyusun data dan
+            bagaimana menambahkan kode JavaScript kustom untuk melakukan
+            perhitungan menggunakan <strong>Code Node</strong>.
+          </p>
+          <p>
+            Alur kerja Kita di Materi 8 sudah menyelesaikan cabang
+            <strong>"true"</strong> (data <i>processing</i>). Sekarang, Kita
+            akan fokus pada cabang <strong>"false"</strong> (data
+            <i>booked</i>).
+          </p>
+          <p>
+            Setelah langkah ini, alur kerja Kita akan memiliki node baru yang
+            terhubung ke output "false":
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-9-workflow-diagram.png"
+              alt="Diagram alur kerja: IF Node bercabang dua. Cabang 'true' ke Edit Fields, cabang 'false' ke Code Node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Alur kerja Kita sekarang memiliki node di kedua cabang IF.
+            </p>
+          </div>
+
+          <h2>Permintaan Nathan (Bagian 2)</h2>
+          <p>
+            Langkah selanjutnya dalam alur kerja Nathan adalah menghitung dua
+            nilai dari pesanan "booked":
+          </p>
+          <ol>
+            <li>
+              <strong>Jumlah total</strong> pesanan "booked" (misal: 16
+              pesanan).
+            </li>
+            <li>
+              <strong>Nilai total (jumlah uang)</strong> dari semua pesanan
+              "booked" tersebut.
+            </li>
+          </ol>
+          <p>
+            Untuk melakukan perhitungan khusus seperti ini, kita bisa
+            menggunakan <strong>Code Node</strong>, yang memungkinkan kita
+            menulis kode JavaScript kustom.
+          </p>
+
+          <h2>Langkah 1: Menambahkan Node "Code"</h2>
+          <p>
+            Kembali ke kanvas n8n Kita. Di Materi 7, node IF Kita
+            mengeluarkan 16 item di cabang "false". Mari kita hubungkan node
+            baru ke sana.
+          </p>
+          <ol>
+            <li>
+              Klik ikon <strong>+</strong> pada output
+              <strong>"false"</strong> dari <strong>IF Node</strong>.
+            </li>
+            <li>
+              Cari node <strong>Code</strong> dan pilih.
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-9-add-from-false-branch.png"
+              alt="Menambahkan node baru dari output 'false' IF Node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita sekarang akan bekerja pada cabang 'false' (data 'booked').
+            </p>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-9-search-code-node.png"
+              alt="Mencari node 'Code' di panel node."
+              loading="lazy"
+            />
+            <p class="image-caption">Node 'Code' adalah node yang sangat kuat.</p>
+          </div>
+
+          <h2>Langkah 2: Mengonfigurasi Node "Code"</h2>
+          <p>
+            Dengan jendela "Code" node terbuka, konfigurasikan parameter ini:
+          </p>
+          <ul>
+            <li>
+              <strong>Mode:</strong> Pilih
+              <strong><code>Run Once for All Items</code></strong
+              >.
+            </li>
+            <li>
+              <strong>Language:</strong> Pastikan
+              <strong><code>JavaScript</code></strong> terpilih.
+            </li>
+          </ul>
+          <div class="note">
+            <strong>Mode Node Code</strong><br />
+            Node Code memiliki dua mode.
+            <ul>
+              <li>
+                <strong>Run Once for All Items:</strong> (Yang kita pilih)
+                Kode ini berjalan <strong>satu kali</strong>. Ia menerima
+                *semua* 16 item 'booked' sekaligus sebagai sebuah grup. Ini
+                sempurna untuk membuat ringkasan/perhitungan total.
+              </li>
+              <li>
+                <strong>Run Once for Each Item:</strong> Kode ini akan
+                berjalan <strong>16 kali</strong> (satu kali untuk setiap item
+                'booked'). Ini berguna jika Kita ingin memodifikasi setiap item
+                secara individual.
+              </li>
+            </ul>
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-9-code-node-params.png"
+              alt="Mengonfigurasi Mode 'Run Once for All Items' dan Bahasa 'JavaScript'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Mengatur mode agar kode kita berjalan satu kali untuk semua item.
+            </p>
+          </div>
+
+          <h2>Langkah 3: Memahami Struktur Data n8n</h2>
+          <p>
+            Sebelum kita menulis kode, kita *harus* tahu format data n8n.
+            Data yang mengalir antar node *selalu* berupa **Array** (daftar).
+            Di dalam array itu ada **Objek** yang berisi data Kita.
+          </p>
+          <p>Struktur sederhananya seperti ini:</p>
+          <pre><code>[
+  {
+    "json": {
+      "orderID": 1,
+      "orderPrice": 100,
+      "orderStatus": "booked"
+    }
+  },
+  {
+    "json": {
+      "orderID": 2,
+      "orderPrice": 150,
+      "orderStatus": "booked"
+    }
+  }
+]</code></pre>
+          <p>
+            Perhatikan bahwa data kita (<code>orderPrice</code>, dll.) ada di
+            dalam *key* yang disebut <strong><code>json</code></strong
+            >. Ini sangat penting.
+          </p>
+
+          <h2>Langkah 4: Menulis Kode JavaScript</h2>
+          <p>
+            Salin kode di bawah ini dan tempelkan ke kotak
+            <strong>Code</strong> di n8n, ganti semua kode yang ada di sana.
+          </p>
+          <pre><code>
+let items = $input.all();
+let totalBooked = items.length;
+let bookedSum = 0;
+
+for (let i=0; i < items.length; i++) {
+  bookedSum = bookedSum + items[i].json.orderPrice;
+}
+
+return [{ json: {totalBooked, bookedSum} }];</code></pre>
+
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-9-code-in-editor.png"
+              alt="Kode JavaScript disalin ke dalam editor Code Node."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kode Kita, siap untuk mengeksekusi perhitungan.
+            </p>
+          </div>
+
+          <h3>Penjelasan Kode Baris per Baris:</h3>
+          <ul>
+            <li>
+              <strong><code>let items = $input.all();</code></strong
+              ><br />Mengambil *semua* (16) item yang masuk dari cabang "false"
+              dan menyimpannya dalam variabel bernama <code>items</code>.
+            </li>
+            <li>
+              <strong><code>let totalBooked = items.length;</code></strong
+              ><br />Menghitung jumlah total item dalam array.
+              <code>items.length</code> akan bernilai 16.
+            </li>
+            <li>
+              <strong><code>let bookedSum = 0;</code></strong
+              ><br />Membuat "wadah" (variabel) baru untuk menyimpan total
+              nilai penjualan, dimulai dari 0.
+            </li>
+            <li>
+              <strong><code>for (let i=0; i < items.length; i++) { ...
+                }</code></strong
+              ><br />Ini adalah *loop* (perulangan). Ini akan "mengulangi"
+              kode di dalamnya sebanyak 16 kali (satu kali untuk setiap item).
+            </li>
+            <li>
+              <strong><code>bookedSum = bookedSum +
+                items[i].json.orderPrice;</code></strong
+              ><br />Bagian terpenting. Untuk setiap item, kita mengambil
+              <code>orderPrice</code>-nya (ingat, datanya ada di dalam
+              <code>.json</code>!) dan menambahkannya ke total
+              <code>bookedSum</code>.
+            </li>
+            <li>
+              <strong><code>return [{ json: {totalBooked, bookedSum}
+                }];</code></strong
+              ><br />Kita mengembalikan data dalam format yang dimengerti n8n:
+              Sebuah <strong>Array</strong> <code>[]</code>, berisi satu
+              <strong>Objek</strong> <code>{}</code>, dengan <strong>key
+              <code>json</code></strong
+              >, yang berisi hasil Kita: <code>totalBooked</code> (16) dan
+              <code>bookedSum</code> (nilai total).
+            </li>
+          </ul>
+          <div class="note alt">
+            <strong>Struktur Data Sangat Penting!</strong><br />
+            Jika Anda hanya menulis <code>return {totalBooked, bookedSum}</code>
+            (tanpa <code>[{ json: ... }]</code>), n8n akan error. Outputnya
+            harus *selalu* berupa Array Objek.
+          </div>
+
+          <h2>Langkah 5: Mengeksekusi & Melihat Hasil</h2>
+          <p>Sekarang, klik <strong>Execute step</strong>.</p>
+          <p>
+            Perhatikan outputnya. Inputnya adalah 16 item, tetapi outputnya
+            sekarang hanya **1 item**!
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-9-code-output.png"
+              alt="Output dari Code Node, menampilkan 1 item dengan 'totalBooked' dan 'bookedSum'."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Node ini 'menyerap' 16 item dan 'mengeluarkan' 1 item baru yang
+              berisi ringkasan Kita.
+            </p>
+          </div>
+          <p>
+            Kita telah berhasil mengubah 16 baris data menjadi 1 baris
+            ringkasan yang berisi angka yang dibutuhkan Nathan!
+          </p>
+
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Cabang "false" kita sekarang sudah memiliki data ringkasan yang
+            kita inginkan.
+          </p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Wow, Code Node ini sangat kuat! Ini berarti jika saya punya
+              sedikit kemampuan JavaScript, saya bisa memperkuat alur kerja
+              saya.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Tepat sekali! Kita bisa beralih dari *no-code* ke *low-code*
+              kapanpun kita butuh.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Sekarang, bagaimana cara saya mengirim hasil perhitungan
+              (<code>totalBooked</code> dan <code>bookedSum</code>) ini ke
+              channel Discord tim saya?
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Ada node n8n untuk itu. Saya akan mengaturnya di langkah
+              selanjutnya.
+            </p>
+          </blockquote>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-8/index.html"
+            data-prev-title="Materi 8: Memilih Data (Edit Fields)"
+            data-next-url="../materi-10/index.html"
+            data-next-title="Materi 10: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
