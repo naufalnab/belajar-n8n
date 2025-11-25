@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi Bonus: Export & Import Workflow</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi Bonus: Export & Import Workflow</h1>
+          <p class="intro">
+            Selamat! Kita telah menyelesaikan Level 1. Sebagai bonus, Kita akan
+            belajar cara menyimpan hasil kerja keras Kita ke dalam komputer
+            (Export) atau memuat alur kerja milik orang lain (Import).
+          </p>
+          <p>
+            Di n8n, alur kerja disimpan sebagai file <strong>JSON</strong>. Ini
+            sangat berguna jika Kita ingin:
+          </p>
+          <ul>
+            <li>Membuat cadangan (backup) alur kerja Kita.</li>
+            <li>Berbagi alur kerja dengan teman atau komunitas.</li>
+            <li>
+              Memindahkan alur kerja dari satu server n8n ke server lain.
+            </li>
+          </ul>
+
+          <div class="note alt">
+            <strong>Peringatan Keamanan: Berbagi Kredensial</strong><br />
+            File JSON hasil ekspor n8n akan menyertakan <strong>Nama</strong> dan
+            <strong>ID</strong> kredensial Kita. Meskipun *isi* password/API Key
+            biasanya tidak disertakan, nama kredensial Kita mungkin mengandung
+            informasi sensitif.
+            <br /><br />
+            Selain itu, node <strong>HTTP Request</strong> yang diimpor dari
+            cURL mungkin berisi header otentikasi. Selalu periksa dan bersihkan
+            file JSON sebelum membagikannya secara publik!
+          </div>
+
+          <h2>Cara 1: Menggunakan Menu Editor UI (Resmi)</h2>
+          <p>
+            Ini adalah cara standar untuk menyimpan atau memuat satu alur kerja
+            penuh.
+          </p>
+
+          <h3>Melakukan Export (Download)</h3>
+          <p>
+            Untuk menyimpan alur kerja "Nathan" Kita ke komputer:
+          </p>
+          <ol>
+            <li>
+              Di pojok kanan atas Editor UI, klik ikon
+              <strong>tiga titik (...)</strong>.
+            </li>
+            <li>
+              Pilih <strong>Download</strong>.
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-13-menu-export.png"
+              alt="Menu tiga titik di pojok kanan atas n8n, menampilkan opsi Download."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Mengunduh alur kerja sebagai file .json.
+            </p>
+          </div>
+          <p>
+            File <code>.json</code> akan terunduh ke komputer Kita. Kita bisa
+            menyimpannya di Google Drive atau GitHub sebagai backup.
+          </p>
+
+          <h3>Melakukan Import</h3>
+          <p>
+            Jika Kita ingin memuat alur kerja dari file:
+          </p>
+          <ol>
+            <li>
+              Klik ikon <strong>tiga titik (...)</strong> lagi.
+            </li>
+            <li>
+              Pilih <strong>Import from File</strong> (untuk mengupload file
+              JSON) atau <strong>Import from URL</strong> (jika Kita punya link
+              ke file JSON raw).
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-13-menu-import.png"
+              alt="Menu tiga titik menampilkan opsi Import from File dan Import from URL."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Cara mudah memasukkan alur kerja orang lain ke n8n Kita.
+            </p>
+          </div>
+
+          <h2>Cara 2: Copy-Paste Langsung (Cara Cepat)</h2>
+          <p>
+            Ini adalah fitur "rahasia" n8n yang sangat disukai para developer.
+            Kita bisa menganggap node di kanvas sebagai teks biasa!
+          </p>
+
+          <h3>Export via Copy</h3>
+          <ol>
+            <li>
+              Pilih node di kanvas (bisa satu node, beberapa, atau tekan
+              <strong>Ctrl+A</strong> untuk memilih semua).
+            </li>
+            <li>
+              Tekan <strong>Ctrl+C</strong> (Copy) di keyboard Kita.
+            </li>
+            <li>
+              Buka teks editor (seperti Notepad atau VS Code) dan tekan
+              <strong>Ctrl+V</strong> (Paste).
+            </li>
+          </ol>
+          <p>
+            Ajaib! Node Kita berubah menjadi kode JSON. Kita bisa mengirim kode
+            teks ini lewat chat Discord atau WhatsApp ke teman Kita.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-13-copy-json.png"
+              alt="Tampilan kode JSON hasil copy-paste node n8n di teks editor."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Di balik layar, node n8n hanyalah teks JSON.
+            </p>
+          </div>
+
+          <h3>Import via Paste</h3>
+          <p>
+            Kebalikannya juga berlaku. Jika seseorang memberi Kita kode JSON
+            n8n:
+          </p>
+          <ol>
+            <li>Salin (Copy) kode JSON tersebut.</li>
+            <li>Buka kanvas n8n Kita.</li>
+            <li>
+              Klik di area kosong dan tekan <strong>Ctrl+V</strong> (Paste).
+            </li>
+          </ol>
+          <p>
+            Teks JSON tersebut akan secara ajaib berubah kembali menjadi node
+            visual di kanvas Kita!
+          </p>
+
+          <h2>Ringkasan Level 1</h2>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Sekarang saya tidak hanya bisa membuat otomatisasi, tapi juga bisa
+              mengamankannya (backup) dan membagikannya ke dunia. Ini menutup
+              perjalanan Level 1 saya dengan sempurna.
+            </p>
+          </blockquote>
+          <p>
+            Kita telah menyelesaikan semua materi dasar. Sekarang Kita siap
+            untuk tantangan yang lebih besar di Level 2, di mana kita akan
+            membahas teknik manipulasi data tingkat lanjut, error handling, dan
+            sub-workflows.
+          </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-12/"
+            data-prev-title="Materi 12: Mengaktifkan Workflow"
+            data-next-url="../materi-14/"
+            data-next-title="Materi 14: Pengantar Level 2"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
