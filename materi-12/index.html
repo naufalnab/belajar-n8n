@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 12: Mengaktifkan & Memeriksa Alur Kerja</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 12: Mengaktifkan & Memeriksa Alur Kerja</h1>
+          <p class="intro">
+            Ini adalah langkah terakhir dan paling penting. Alur kerja Kita
+            sudah selesai dirancang, tapi saat ini masih dalam keadaan "mati".
+            Di langkah ini, Kita akan belajar cara
+            <strong>mengaktifkan</strong> alur kerja Kita dan cara memeriksa
+            riwayat eksekusinya.
+          </p>
+
+          <h2>Langkah 1: Mengaktifkan Alur Kerja</h2>
+          <p>
+            Secara default, semua alur kerja baru yang Kita buat dimulai dalam
+            keadaan <strong>Inactive</strong> (Nonaktif). Ini adalah fitur
+            keamanan agar alur kerja yang belum selesai tidak berjalan secara
+            tidak sengaja.
+          </p>
+          <p>
+            <strong>Mengaktifkan</strong> alur kerja berarti ia akan berjalan
+            secara otomatis setiap kali pemicu (Trigger) menerima input atau
+            memenuhi kondisi. Dalam kasus Kita, ini berarti
+            <strong>Schedule Trigger</strong> (Materi 11) sekarang akan
+            benar-benar berjalan setiap Senin jam 9 pagi.
+          </p>
+          <p>Untuk mengaktifkan alur kerja Kita:</p>
+          <ol>
+            <li>Buka alur kerja "Workflow Nathan" Kita.</li>
+            <li>
+              Di bilah navigasi atas, cari tombol
+              <strong>Inactive</strong> (Nonaktif).
+            </li>
+            <li>
+              Klik tombol itu untuk mengubahnya menjadi
+              <strong>Activated</strong> (Aktif).
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-12-activate-toggle-1.png"
+              alt="Tombol toggle di bilah atas n8n, diubah dari 'Inactive' menjadi 'Activated' 1."
+              loading="lazy"
+            />
+            <img
+              src="../assets/images/materi-12-activate-toggle-2.png"
+              alt="Tombol toggle di bilah atas n8n, diubah dari 'Inactive' menjadi 'Activated' 2."
+              loading="lazy"
+            />
+            <img
+              src="../assets/images/materi-12-activate-toggle-3.png"
+              alt="Tombol toggle di bilah atas n8n, diubah dari 'Inactive' menjadi 'Activated' 3."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Mengklik tombol 'Inactive' untuk mengaktifkan alur kerja Kita.
+            </p>
+          </div>
+          <p>
+            Itu saja! Alur kerja Nathan sekarang "live" dan akan dieksekusi
+            secara otomatis setiap Senin jam 9 pagi.
+          </p>
+
+          <h2>Langkah 2: Memeriksa Riwayat Eksekusi</h2>
+          <p>
+            Sebuah <strong>eksekusi</strong> mewakili satu kali jalannya alur
+            kerja, dari node pertama hingga node terakhir. n8n mencatat (logs)
+            semua eksekusi ini, memungkinkan Kita untuk melihat apakah alur
+            kerja berhasil atau gagal.
+          </p>
+          <p>
+            Log eksekusi ini sangat penting untuk
+            <strong> debugging</strong> (mencari kesalahan) dan melihat di tahap
+            mana alur kerja Kita mengalami masalah.
+          </p>
+          <p>Ada dua cara untuk melihat log eksekusi:</p>
+
+          <h3>Cara 1: Tab "Executions" di Alur Kerja</h3>
+          <p>
+            Saat Kita sedang membuka alur kerja, Kita bisa beralih dari tab
+            <strong>Editor</strong> ke tab <strong>Executions</strong> untuk
+            melihat riwayat
+            <strong>hanya untuk alur kerja yang sedang dibuka ini</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-12-executions-tab.png"
+              alt="Tab 'Editor' dan 'Executions' di dalam kanvas n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Beralih ke tab 'Executions' untuk melihat riwayat alur kerja ini.
+            </p>
+          </div>
+
+          <h3>Cara 2: Log Eksekusi Global</h3>
+          <p>
+            Untuk melihat log <strong> semua</strong> alur kerja di instansi n8n
+            Kita, Kita bisa memilih <strong>Overview</strong> dari menu utama di
+            sebelah kiri, lalu pilih tab <strong>Executions</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-12-global-executions.png"
+              alt="Menu 'Overview' dan tab 'Executions' di panel utama n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Melihat semua eksekusi dari semua alur kerja Kita.
+            </p>
+          </div>
+          <p>
+            Jendela <strong>Executions</strong> akan menampilkan tabel dengan
+            informasi berikut:
+          </p>
+          <ul>
+            <li><strong>Name:</strong> Nama alur kerja.</li>
+            <li>
+              <strong>Started At:</strong> Tanggal dan waktu alur kerja dimulai.
+            </li>
+            <li>
+              <strong>Status:</strong> Status alur kerja (Waiting, Running,
+              Succeeded, Cancelled, atau Failed).
+            </li>
+            <li>
+              <strong>Execution ID:</strong> ID unik untuk eksekusi tersebut.
+            </li>
+          </ul>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-12-execution-list.png"
+              alt="Daftar tabel log eksekusi n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Tabel riwayat eksekusi, berguna untuk melacak status.
+            </p>
+          </div>
+
+          <h2>Langkah 3: Pengaturan Alur Kerja (Opsional tapi Penting)</h2>
+          <p>
+            Kita dapat menyesuaikan alur kerja Kita lebih lanjut di
+            <strong>Workflow Settings</strong>.
+          </p>
+          <p>
+            Akses pengaturan ini dengan memilih
+            <strong>tiga titik (...)</strong> di sudut kanan atas Editor UI,
+            lalu pilih <strong>Settings</strong>.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-12-settings-menu-1.png"
+              alt="Menu tiga titik di n8n, dengan pilihan 'Settings' disorot."
+              loading="lazy"
+            />
+            <img
+              src="../assets/images/materi-12-settings-menu-2.png"
+              alt="Menu tiga titik di n8n, dengan pilihan 'Settings' disorot."
+              loading="lazy"
+            />
+            <p class="image-caption">Mengakses Pengaturan Alur Kerja.</p>
+          </div>
+          <p>
+            Di jendela <strong>Workflow Settings</strong>, Kita dapat
+            mengonfigurasi banyak hal. Berikut adalah yang paling penting:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-12-settings-window.png"
+              alt="Jendela popup Workflow Settings di n8n."
+              loading="lazy"
+            />
+            <p class="image-caption">Jendela Workflow Settings.</p>
+          </div>
+          <ul>
+            <li>
+              <strong>Timezone:</strong> Sangat penting untuk
+              <strong>Schedule Trigger</strong> Kita! Jika tidak diatur, ia akan
+              menggunakan zona waktu global instansi n8n Kita. Pastikan ini
+              diatur ke "Asia/Jakarta" (atau zona waktu Kita) agar jam 9 pagi
+              berarti jam 9 pagi waktu Kita.
+            </li>
+            <li>
+              <strong>Save failed production executions:</strong> Apakah n8n
+              harus menyimpan log jika alur kerja gagal? (Default: Ya).
+            </li>
+            <li>
+              <strong>Save successful production executions:</strong> Apakah n8n
+              harus menyimpan log jika alur kerja berhasil? (Default: Ya).
+            </li>
+            <li>
+              <strong>Save manual executions:</strong> Apakah n8n harus
+              menyimpan log jika alur kerja dijalankan dari Editor UI (manual)?
+              (Default: Ya).
+            </li>
+            <li>
+              <strong>Save execution progress:</strong> Apakah n8n harus
+              menyimpan data di <strong> setiap</strong> node? Ini memungkinkan
+              Kita melanjutkan alur kerja yang gagal dari tengah jalan, tetapi
+              bisa membuat eksekusi lebih lambat. (Default: Tidak).
+            </li>
+          </ul>
+
+          <h2>Kesimpulan Level 1</h2>
+          <p>
+            Dan... selesai! Kita telah berhasil membangun alur kerja yang
+            lengkap dari awal sampai akhir.
+          </p>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Itu dia! Sekarang Kita punya alur kerja 7-node yang akan berjalan
+              otomatis setiap Senin pagi. Kita tidak perlu lagi khawatir
+              mengingat untuk mengolah data secara manual.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Alur kerja ini sangat membantu, terima kasih banyak! Nah, apa
+              rencana Kita selanjutnya?
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Saya ingin membangun lebih banyak alur kerja, membagikannya dengan
+              orang lain, dan mungkin menggunakan alur kerja yang sudah dibuat
+              oleh komunitas! (Lanjut ke Level 2...)
+            </p>
+          </blockquote>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-11/"
+            data-prev-title="Materi 11: Menjadwalkan (Schedule)"
+            data-next-url="../materi-13/"
+            data-next-title="Materi 13: (Bonus) Export & Import"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
