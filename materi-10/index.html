@@ -28,8 +28,8 @@
             Nathan.
           </p>
           <p>
-            Setelah langkah ini, alur kerja Kita akan memiliki node baru di
-            akhir cabang "false":
+            Setelah langkah ini, alur kerja Kita akan memiliki node baru di akhir
+            cabang "false":
           </p>
           <div class="image-wrapper">
             <img
@@ -56,11 +56,10 @@
           </p>
           <p>
             Sebelum melanjutkan, pastikan Kita telah
-            <a href="https://discord.com/invite/G98WXzsjky" target="_blank"
+            <a href="https://n8n.io/discord" target="_blank"
               >bergabung dengan server Discord n8n</a
             >
-            dan bisa mengakses channel
-            <strong><code>#course-level-1</code></strong
+            dan bisa mengakses channel <strong><code>#course-level-1</code></strong
             >.
           </p>
           <div class="image-wrapper">
@@ -199,11 +198,12 @@
               loading="lazy"
             />
             <p class="image-caption">
-              Kita akan menggunakan Expression Editor untuk membuat pesan
-              kustom.
+              Kita akan menggunakan Expression Editor untuk membuat pesan kustom.
             </p>
           </div>
-          <p>Salin dan tempel teks di bawah ini ke dalam Expression Editor:</p>
+          <p>
+            Salin dan tempel teks di bawah ini ke dalam Expression Editor:
+          </p>
           <pre><code>This week we've {{$json["totalBooked"]}} booked orders with a total value of {{$json["bookedSum"]}}. My Unique ID: {{ $('HTTP Request').params["headerParameters"]["parameters"][0]["value"] }}</code></pre>
 
           <div class="note">
@@ -213,15 +213,19 @@
               <li>
                 <strong><code>{{$json["totalBooked"]}}</code></strong
                 ><br />Mengambil data <code>totalBooked</code> dari node
-                <strong>sebelumnya</strong> (Code Node).
+                *sebelumnya* (Code Node).
               </li>
               <li>
-                <strong><code>{{$json["bookedSum"]}}</code></strong
+                <strong
+                  ><code>{{$json["bookedSum"]}}</code></strong
                 ><br />Mengambil data <code>bookedSum</code> dari node
-                <strong>sebelumnya</strong> (Code Node).
+                *sebelumnya* (Code Node).
               </li>
               <li>
-                <strong><code>{{ $('HTTP Request')...["value"] }}</code></strong
+                <strong
+                  ><code
+                    >{{ $('HTTP Request')...["value"] }}</code
+                  ></strong
                 ><br />Ini adalah sulapnya! Kita menggunakan sintaks
                 <code>$('NAMA_NODE')</code> untuk "melompat mundur" melewati
                 Code Node dan IF Node, dan mengambil data
@@ -251,9 +255,9 @@
             </p>
           </div>
           <p>
-            Sekarang, periksa channel
-            <strong><code>#course-level-1</code></strong> di Discord. Pesan Kita
-            akan muncul di sana, lengkap dengan data yang sudah dihitung!
+            Sekarang, periksa channel <strong><code>#course-level-1</code></strong> di
+            Discord. Pesan Kita akan muncul di sana, lengkap dengan data yang
+            sudah dihitung!
           </p>
           <div class="image-wrapper">
             <img
@@ -296,7 +300,7 @@
             data-prev-url="../materi-9/"
             data-prev-title="Materi 9: Menghitung (Code Node)"
             data-next-url="../materi-11/"
-            data-next-title="Materi 11: (Segera Hadir)"
+            data-next-title="Materi 11: Menjadwalkan (Schedule)"
           ></div>
 
           <div id="support-block-placeholder"></div>
