@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 15: Memahami Struktur Data</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 15: Memahami Struktur Data n8n</h1>
+          <p class="intro">
+            Di bab ini, Kita akan mempelajari "bahasa" yang digunakan n8n untuk
+            berbicara antar node. Kita akan membedah struktur data n8n dan
+            belajar menggunakan <strong>Code Node</strong> untuk memanipulasi
+            data tersebut.
+          </p>
+
+          <h2>Konsep Dasar: ETL</h2>
+          <p>
+            Secara mendasar, node n8n berfungsi sebagai alat
+            <strong>ETL</strong>:
+          </p>
+          <ul>
+            <li><strong>Extract (Ekstrak):</strong> Mengambil data dari sumber.</li>
+            <li><strong>Transform (Ubah):</strong> Memodifikasi data tersebut.</li>
+            <li>
+              <strong>Load (Muat):</strong> Mengirimkannya ke tempat yang
+              dibutuhkan.
+            </li>
+          </ul>
+          <p>
+            Agar data bisa bergerak mulus dari satu node ke node lain, data
+            tersebut harus dalam format yang dimengerti oleh n8n. Format wajib
+            itu adalah: <strong>Array of Objects</strong> (Daftar Objek).
+          </p>
+
+          <h3>Apa itu Array of Objects?</h3>
+          <div class="note">
+            <strong>Array (Daftar):</strong> Kumpulan nilai yang berurutan.
+            Contoh: <code>["Merah", "Kuning", "Hijau"]</code>.<br /><br />
+            <strong>Object (Benda):</strong> Kumpulan pasangan kunci-nilai.
+            Contoh: <code>{ "nama": "Naufal", "role": "Developer" }</code>.
+          </div>
+          <p>
+            Di n8n, data yang dikirim antar node selalu berupa
+            <strong>Array</strong> yang berisi <strong>Objek</strong>. Dan
+            setiap objek tersebut harus dibungkus dalam kunci (key) bernama
+            <strong><code>json</code></strong
+            >.
+          </p>
+          <p>Contoh struktur data n8n yang valid:</p>
+          <pre><code>[
+  {
+    "json": {
+      "name": "Michelangelo",
+      "color": "orange"
+    }
+  },
+  {
+    "json": {
+      "name": "Donatello",
+      "color": "purple"
+    }
+  }
+]</code></pre>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-15-data-structure.png"
+              alt="Ilustrasi struktur data n8n: Array berisi objek dengan properti json."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Setiap item data dibungkus dalam properti 'json'.
+            </p>
+          </div>
+
+          <h2>Latihan 1: Membuat Data Set dengan Code Node</h2>
+          <p>
+            Mari kita praktikkan! Kita bisa menggunakan
+            <strong>Code Node</strong> untuk membuat data buatan (dummy) untuk
+            simulasi.
+          </p>
+          <p>
+            Tambahkan <strong>Code Node</strong> ke kanvas Kita dan masukkan
+            kode JavaScript berikut untuk membuat daftar kontak:
+          </p>
+          <pre><code>var myContacts = [
+  {
+    json: {
+      name: 'Alice',
+      email: {
+        personal: 'alice@home.com',
+        work: 'alice@wonderland.org'
+      },
+    }
+  },
+  {
+    json: {
+      name: 'Bob',
+      email: {
+        personal: 'bob@mail.com',
+        work: 'contact@thebuilder.com'
+      },
+    }
+  },
+];
+
+return myContacts;</code></pre>
+          <p>
+            Klik <strong>Execute Node</strong>. Hasilnya akan terlihat seperti
+            ini:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-15-code-output-contacts.png"
+              alt="Output Code Node menampilkan array berisi dua objek kontak."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Kita berhasil membuat struktur data n8n secara manual.
+            </p>
+          </div>
+
+          <h2>Latihan 2: Mereferensikan Data Node</h2>
+          <p>
+            Sama seperti kita menggunakan <em>Expression</em> di Level 1, kita
+            juga bisa mengakses data menggunakan JavaScript di Code Node.
+          </p>
+          <p>
+            Sambungkan Code Node <strong>kedua</strong> setelah Code Node
+            pertama tadi. Masukkan kode berikut untuk mengambil email kerja
+            (work email) dari item pertama:
+          </p>
+          <pre><code>let items = $input.all();
+
+// Menambahkan properti baru 'workEmail' ke item pertama
+items[0].json.workEmail = items[0].json.email['work'];
+
+return items;</code></pre>
+          <p>
+            Kode ini mengakses <code>json.email.work</code> dan menyimpannya ke
+            kolom baru.
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-15-code-reference-output.png"
+              alt="Output Code Node kedua menunjukkan properti workEmail baru."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Memanipulasi data menggunakan JavaScript dot notation.
+            </p>
+          </div>
+
+          <h2>Transformasi Data (Kasus Nyata: PokéAPI)</h2>
+          <p>
+            Seringkali, API mengembalikan data dalam format yang "salah" untuk
+            n8n (misalnya: satu objek besar berisi array, bukan array of
+            objects). Kita perlu <strong>mentransformasi</strong> data tersebut
+            agar setiap item bisa diproses secara individual.
+          </p>
+          <p>Mari kita coba dengan <strong>PokéAPI</strong>.</p>
+
+          <h3>Langkah 1: Mengambil Data</h3>
+          <ol>
+            <li>Tambahkan node <strong>HTTP Request</strong>.</li>
+            <li>Metode: <strong>GET</strong>.</li>
+            <li>URL: <code>https://pokeapi.co/api/v2/pokemon</code></li>
+            <li>Jalankan node.</li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-15-pokeapi-raw.png"
+              alt="Output mentah dari PokéAPI: satu item dengan properti results berisi array."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Perhatikan: n8n hanya melihat <strong>1 item</strong>. Padahal di
+              dalam 'results' ada 20 Pokemon. Ini masalah!
+            </p>
+          </div>
+
+          <h3>Solusi A: Menggunakan Node "Split Out" (No-Code)</h3>
+          <p>
+            Cara termudah untuk memecah 1 item menjadi banyak item adalah
+            menggunakan node <strong>Split Out</strong>.
+          </p>
+          <ol>
+            <li>
+              Tambahkan node <strong>Split Out</strong> setelah HTTP Request.
+            </li>
+            <li>
+              Field to split out: <code>results</code> (seret dari panel input).
+            </li>
+            <li>Jalankan node.</li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-15-split-out-output.png"
+              alt="Output dari node Split Out: sekarang ada 20 item terpisah."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Sekarang kita punya 20 item! Setiap Pokemon adalah item sendiri
+              yang bisa diproses.
+            </p>
+          </div>
+
+          <h3>Solusi B: Menggunakan Code Node (Low-Code)</h3>
+          <p>
+            Kita juga bisa melakukan hal yang sama dengan JavaScript menggunakan
+            fungsi <code>.map()</code>. Ini berguna untuk transformasi yang
+            lebih kompleks.
+          </p>
+          <pre><code>// Mengambil array 'results' dari item pertama
+const results = $input.first().json.results;
+
+// Memetakan ulang (map) menjadi format n8n yang benar
+return results.map(pokemon => {
+  return {
+    json: pokemon
+  }
+});</code></pre>
+
+          <h2>Ringkasan</h2>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Sekarang saya mengerti kenapa struktur data itu penting. Jika
+              formatnya salah (seperti 1 item berisi array), node selanjutnya
+              tidak akan memprosesnya dengan benar (looping).
+            </p>
+          </blockquote>
+          <p>
+            Di materi selanjutnya, kita akan belajar cara menangani tipe data
+            yang lebih spesifik seperti HTML, XML, dan data biner (file).
+          </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-14/"
+            data-prev-title="Materi 14: Pengantar Level 2"
+            data-next-url="../materi-16/"
+            data-next-title="Materi 16: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
