@@ -980,12 +980,31 @@ body.dark-mode .sun-icon {
   max-height: 90%;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
+  
+  /* Transisi default untuk efek pop-up */
   transform: scale(0.9);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  
+  /* Cursor default saat belum di-zoom */
+  cursor: zoom-in; 
 }
 
+/* Saat modal aktif, gambar muncul normal */
 .lightbox-modal.active .lightbox-content {
   transform: scale(1);
+  opacity: 1;
+}
+
+/* STATE BARU: Saat gambar di-zoom */
+.lightbox-content.is-zoomed {
+  /* Perbesar gambar 2.5 kali lipat */
+  transform: scale(2.5); 
+  cursor: zoom-out; /* Ubah kursor jadi minus */
+  
+  /* PENTING: Hapus transisi transform-origin agar gerakan mouse responsif/instan */
+  /* Kita tetap biarkan transisi transform agar zoom-in/out halus */
+  transition: transform 0.3s ease; 
 }
 
 /* 4. Tombol Tutup (X) */
