@@ -146,8 +146,10 @@ return myContacts;</code></pre>
           </p>
           <pre><code>let items = $input.all();
 
-// Menambahkan properti baru 'workEmail' ke item pertama
-items[0].json.workEmail = items[0].json.email['work'];
+// Untuk setiap item, ambil email kerja dan simpan ke kolom baru workEmail
+items.forEach(item => {
+  item.json.workEmail = item.json.email?.work || null;
+});
 
 return items;</code></pre>
           <p>
