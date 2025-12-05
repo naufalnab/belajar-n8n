@@ -1021,3 +1021,52 @@ body.dark-mode .sun-icon {
   text-align: center;
   max-width: 80%;
 }
+
+/* ======================================================= */
+/* STYLE UNTUK KUNCI JAWABAN (DETAILS/SUMMARY) */
+/* ======================================================= */
+details.solution-box {
+  background-color: var(--container-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin: 20px 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+details.solution-box summary {
+  padding: 15px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--link-color);
+  background-color: var(--note-bg);
+  list-style: none; /* Hilangkan panah default browser */
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+details.solution-box summary:hover {
+  background-color: var(--link-hover-bg);
+}
+
+/* Hilangkan panah default di Webkit */
+details.solution-box summary::-webkit-details-marker {
+  display: none;
+}
+
+details.solution-box[open] summary {
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0;
+}
+
+.solution-content {
+  padding: 20px;
+  background-color: var(--container-bg);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

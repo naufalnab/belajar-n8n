@@ -94,10 +94,18 @@
             simulasi.
           </p>
           <p>
-            Tambahkan <strong>Code Node</strong> ke kanvas Kita dan masukkan
-            kode JavaScript berikut untuk membuat daftar kontak:
+            Tambahkan <strong>Code Node</strong> ke kanvas Kita dan coba buat
+            struktur data kontak (nama dan email) menggunakan JavaScript.
           </p>
-          <pre><code>var myContacts = [
+
+          <details class="solution-box">
+            <summary>👉 Lihat Kunci Jawaban & Cara Mengerjakan</summary>
+            <div class="solution-content">
+              <p>
+                Di dalam <strong>Code Node</strong>, masukkan kode JavaScript
+                berikut:
+              </p>
+              <pre><code>var myContacts = [
   {
     json: {
       name: 'Alice',
@@ -119,20 +127,22 @@
 ];
 
 return myContacts;</code></pre>
-          <p>
-            Klik <strong>Execute Node</strong>. Hasilnya akan terlihat seperti
-            ini:
-          </p>
-          <div class="image-wrapper">
-            <img
-              src="../assets/images/materi-15-code-output-contacts.png"
-              alt="Output Code Node menampilkan array berisi dua objek kontak."
-              loading="lazy"
-            />
-            <p class="image-caption">
-              Kita berhasil membuat struktur data n8n secara manual.
-            </p>
-          </div>
+              <p>
+                Klik <strong>Execute Node</strong>. Hasilnya akan terlihat
+                seperti ini:
+              </p>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-15-code-output-contacts.png"
+                  alt="Output Code Node menampilkan array berisi dua objek kontak."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Kita berhasil membuat struktur data n8n secara manual.
+                </p>
+              </div>
+            </div>
+          </details>
 
           <h2>Latihan 2: Mereferensikan Data Node</h2>
           <p>
@@ -141,33 +151,36 @@ return myContacts;</code></pre>
           </p>
           <p>
             Sambungkan Code Node <strong>kedua</strong> setelah Code Node
-            pertama tadi. Masukkan kode berikut untuk mengambil email kerja
-            (work email) dari item pertama:
+            pertama tadi. Cobalah tulis kode untuk mengambil email kerja (work
+            email) dari item pertama dan menyimpannya di kolom baru
+            <code>workEmail</code>.
           </p>
-          <pre><code>let items = $input.all();
 
-// Untuk setiap item, ambil email kerja dan simpan ke kolom baru workEmail
-items.forEach(item => {
-  item.json.workEmail = item.json.email?.work || null;
-});
+          <details class="solution-box">
+            <summary>👉 Lihat Kunci Jawaban & Cara Mengerjakan</summary>
+            <div class="solution-content">
+              <p>Masukkan kode berikut di Code Node kedua:</p>
+              <pre><code>let items = $input.all();
+
+// Menambahkan properti baru 'workEmail' ke item pertama
+// Menggunakan dot notation untuk mengakses nested object
+items[0].json.workEmail = items[0].json.email['work'];
 
 return items;</code></pre>
-          <p>
-            Kode ini mengakses <code>json.email.work</code> dan menyimpannya ke
-            kolom baru.
-          </p>
-          <div class="image-wrapper">
-            <img
-              src="../assets/images/materi-15-code-reference-output.png"
-              alt="Output Code Node kedua menunjukkan properti workEmail baru."
-              loading="lazy"
-            />
-            <p class="image-caption">
-              Memanipulasi data menggunakan JavaScript dot notation.
-            </p>
-          </div>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-15-code-reference-output.png"
+                  alt="Output Code Node kedua menunjukkan properti workEmail baru."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Memanipulasi data menggunakan JavaScript dot notation.
+                </p>
+              </div>
+            </div>
+          </details>
 
-          <h2>Transformasi Data (Kasus Nyata: PokéAPI)</h2>
+          <h2>Latihan 3: Transformasi Data (Kasus Nyata: PokéAPI)</h2>
           <p>
             Seringkali, API mengembalikan data dalam format yang "salah" untuk
             n8n (misalnya: satu objek besar berisi array, bukan array of
@@ -176,58 +189,64 @@ return items;</code></pre>
           </p>
           <p>Mari kita coba dengan <strong>PokéAPI</strong>.</p>
 
-          <h3>Langkah 1: Mengambil Data</h3>
-          <ol>
-            <li>Tambahkan node <strong>HTTP Request</strong>.</li>
-            <li>Metode: <strong>GET</strong>.</li>
-            <li>URL: <code>https://pokeapi.co/api/v2/pokemon</code></li>
-            <li>Jalankan node.</li>
-          </ol>
-          <div class="image-wrapper">
-            <img
-              src="../assets/images/materi-15-pokeapi-raw.png"
-              alt="Output mentah dari PokéAPI: satu item dengan properti results berisi array."
-              loading="lazy"
-            />
-            <p class="image-caption">
-              Perhatikan: n8n hanya melihat <strong>1 item</strong>. Padahal di
-              dalam 'results' ada 20 Pokemon. Ini masalah!
-            </p>
-          </div>
-
-          <h3>Solusi A: Menggunakan Node "Split Out" (No-Code)</h3>
-          <p>
-            Cara termudah untuk memecah 1 item menjadi banyak item adalah
-            menggunakan node <strong>Split Out</strong>.
-          </p>
+          <h3>Tantangan:</h3>
           <ol>
             <li>
-              Tambahkan node <strong>Split Out</strong> setelah HTTP Request.
+              Gunakan node <strong>HTTP Request</strong> untuk mengambil data
+              dari <code>https://pokeapi.co/api/v2/pokemon</code>.
             </li>
             <li>
-              Field to split out: <code>results</code> (seret dari panel input).
+              Perhatikan outputnya (hanya 1 item dengan array 'results').
             </li>
-            <li>Jalankan node.</li>
+            <li>
+              Gunakan node <strong>Split Out</strong> ATAU
+              <strong>Code Node</strong> untuk memecahnya menjadi 20 item
+              terpisah.
+            </li>
           </ol>
-          <div class="image-wrapper">
-            <img
-              src="../assets/images/materi-15-split-out-output.png"
-              alt="Output dari node Split Out: sekarang ada 20 item terpisah."
-              loading="lazy"
-            />
-            <p class="image-caption">
-              Sekarang kita punya 20 item! Setiap Pokemon adalah item sendiri
-              yang bisa diproses.
-            </p>
-          </div>
 
-          <h3>Solusi B: Menggunakan Code Node (Low-Code)</h3>
-          <p>
-            Kita juga bisa melakukan hal yang sama dengan JavaScript menggunakan
-            fungsi <code>.map()</code>. Ini berguna untuk transformasi yang
-            lebih kompleks.
-          </p>
-          <pre><code>// Mengambil array 'results' dari item pertama
+          <details class="solution-box">
+            <summary>👉 Lihat Kunci Jawaban & Cara Mengerjakan</summary>
+            <div class="solution-content">
+              <h4>Langkah 1: Mengambil Data</h4>
+              <p>Konfigurasi HTTP Request:</p>
+              <ul>
+                <li>Metode: <strong>GET</strong></li>
+                <li>URL: <code>https://pokeapi.co/api/v2/pokemon</code></li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-15-pokeapi-raw.png"
+                  alt="Output mentah dari PokéAPI."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Masalah: n8n hanya melihat 1 item berisi array.
+                </p>
+              </div>
+
+              <h4>Solusi A: Node "Split Out" (No-Code)</h4>
+              <p>Tambahkan node <strong>Split Out</strong>:</p>
+              <ul>
+                <li>
+                  Field to split out: <code>results</code> (seret dari panel
+                  input).
+                </li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-15-split-out-output.png"
+                  alt="Output dari node Split Out."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Solusi: Data terpecah menjadi 20 item individual.
+                </p>
+              </div>
+
+              <h4>Solusi B: Code Node (Low-Code)</h4>
+              <p>Gunakan JavaScript <code>.map()</code>:</p>
+              <pre><code>// Mengambil array 'results' dari item pertama
 const results = $input.first().json.results;
 
 // Memetakan ulang (map) menjadi format n8n yang benar
@@ -236,6 +255,8 @@ return results.map(pokemon => {
     json: pokemon
   }
 });</code></pre>
+            </div>
+          </details>
 
           <h2>Ringkasan</h2>
           <blockquote class="dialogue">
