@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // LOGIKA GLOBAL (Berjalan di SEMUA Halaman)
   // =======================================================
   setupRippleEffect();
+  setupImageZoom();
 
   // =======================================================
   // DEFINISI FUNGSI
@@ -318,4 +319,57 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
   }
+
+  function setupImageZoom() {
+    // 1. Buat elemen Modal secara dinamis (hanya sekali)
+    const modalHTML = `
+      <div id="lightbox-modal" class="lightbox-modal">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Ambil referensi elemen
+    const modal = document.getElementById('lightbox-modal');
+    const modalImg = document.getElementById('lightbox-img');
+    const captionText = document.getElementById('lightbox-caption');
+    const closeBtn = document.querySelector('.lightbox-close');
+
+    // 2. Tambahkan event listener ke SEMUA gambar di dalam artikel
+    // Kita targetkan gambar di dalam .image-wrapper agar logo/icon tidak ikut kena
+    const images = document.querySelectorAll('.image-wrapper img');
+
+    images.forEach(img => {
+      img.addEventListener('click', function() {
+        modal.classList.add('active');
+        modalImg.src = this.src;
+        // Ambil caption dari alt text atau elemen caption di bawahnya
+        const caption = this.nextElementSibling ? this.nextElementSibling.innerText : this.alt;
+        captionText.innerText = caption || "";
+      });
+    });
+
+    // 3. Logika Menutup Modal
+    // Tutup saat tombol X diklik
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    // Tutup saat area gelap di luar gambar diklik
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    // Tutup saat tombol ESC ditekan
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+      }
+    });
+  }
 });
+
