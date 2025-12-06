@@ -320,8 +320,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  /**
+   * Fitur Image Zoom (Lightbox) dengan Pan & Zoom
+   */
   function setupImageZoom() {
-    // 1. Buat elemen Modal secara dinamis (hanya sekali)
+    // 1. Buat elemen Modal secara dinamis
     const modalHTML = `
       <div id="lightbox-modal" class="lightbox-modal">
         <span class="lightbox-close">&times;</span>
@@ -336,38 +339,95 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalImg = document.getElementById('lightbox-img');
     const captionText = document.getElementById('lightbox-caption');
     const closeBtn = document.querySelector('.lightbox-close');
+    
+    let isZoomed = false;
 
-    // 2. Tambahkan event listener ke SEMUA gambar di dalam artikel
-    // Kita targetkan gambar di dalam .image-wrapper agar logo/icon tidak ikut kena
+    // Fungsi Reset Zoom (kembali ke normal)
+    const resetZoom = () => {
+      isZoomed = false;
+      modalImg.classList.remove('is-zoomed');
+      // Reset posisi origin ke tengah setelah delay transisi
+      setTimeout(() => {
+        if (!isZoomed) modalImg.style.transformOrigin = "center center";
+      }, 300);
+    };
+
+    // 2. Event Listener untuk membuka modal
     const images = document.querySelectorAll('.image-wrapper img');
-
     images.forEach(img => {
       img.addEventListener('click', function() {
         modal.classList.add('active');
         modalImg.src = this.src;
-        // Ambil caption dari alt text atau elemen caption di bawahnya
         const caption = this.nextElementSibling ? this.nextElementSibling.innerText : this.alt;
         captionText.innerText = caption || "";
+        resetZoom(); // Pastikan mulai dari keadaan normal
       });
     });
 
-    // 3. Logika Menutup Modal
-    // Tutup saat tombol X diklik
-    closeBtn.addEventListener('click', () => {
-      modal.classList.remove('active');
-    });
-
-    // Tutup saat area gelap di luar gambar diklik
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
+    // 3. LOGIKA ZOOM & PANNING (Mengikuti Mouse)
+    
+    // Klik gambar untuk Toggle Zoom
+    modalImg.addEventListener('click', function(e) {
+      e.stopPropagation(); // Mencegah modal tertutup saat gambar diklik
+      
+      if (isZoomed) {
+        // Jika sedang zoom, matikan (zoom out)
+        resetZoom();
+      } else {
+        // Jika normal, aktifkan zoom (zoom in)
+        isZoomed = true;
+        this.classList.add('is-zoomed');
+        
+        // Set posisi awal zoom di titik klik mouse
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        this.style.transformOrigin = `${x}px ${y}px`;
       }
     });
 
-    // Tutup saat tombol ESC ditekan
+    // Gerakkan mouse untuk Pan (Hanya saat isZoomed = true)
+    modalImg.addEventListener('mousemove', function(e) {
+      if (!isZoomed) return;
+
+      // Hitung posisi mouse relatif terhadap gambar
+      const rect = this.getBoundingClientRect();
+      
+      // Kita gunakan clientX/Y langsung untuk responsivitas yang lebih baik pada posisi fixed
+      // Tapi karena kita memanipulasi transform-origin, kita butuh koordinat relatif dalam elemen
+      // Triknya: Kita ubah origin berdasarkan persentase posisi mouse di layar
+      
+      const x = e.clientX;
+      const y = e.clientY;
+      
+      // Hitung persentase posisi mouse di layar (viewport)
+      const xPercent = (x / window.innerWidth) * 100;
+      const yPercent = (y / window.innerHeight) * 100;
+
+      // Update transform-origin. 
+      // Ini membuat bagian gambar yang berada di bawah kursor mouse menjadi titik pusat zoom
+      this.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+    });
+
+    // 4. Logika Menutup Modal
+    const closeModal = () => {
+      modal.classList.remove('active');
+      resetZoom();
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    
+    // Klik area gelap untuk tutup
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Tombol ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('active')) {
-        modal.classList.remove('active');
+        closeModal();
       }
     });
   }

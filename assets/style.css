@@ -980,12 +980,31 @@ body.dark-mode .sun-icon {
   max-height: 90%;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
+  
+  /* Transisi default untuk efek pop-up */
   transform: scale(0.9);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  
+  /* Cursor default saat belum di-zoom */
+  cursor: zoom-in; 
 }
 
+/* Saat modal aktif, gambar muncul normal */
 .lightbox-modal.active .lightbox-content {
   transform: scale(1);
+  opacity: 1;
+}
+
+/* STATE BARU: Saat gambar di-zoom */
+.lightbox-content.is-zoomed {
+  /* Perbesar gambar 2.5 kali lipat */
+  transform: scale(2.5); 
+  cursor: zoom-out; /* Ubah kursor jadi minus */
+  
+  /* PENTING: Hapus transisi transform-origin agar gerakan mouse responsif/instan */
+  /* Kita tetap biarkan transisi transform agar zoom-in/out halus */
+  transition: transform 0.3s ease; 
 }
 
 /* 4. Tombol Tutup (X) */
@@ -1020,4 +1039,53 @@ body.dark-mode .sun-icon {
   font-size: 0.9rem;
   text-align: center;
   max-width: 80%;
+}
+
+/* ======================================================= */
+/* STYLE UNTUK KUNCI JAWABAN (DETAILS/SUMMARY) */
+/* ======================================================= */
+details.solution-box {
+  background-color: var(--container-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin: 20px 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+details.solution-box summary {
+  padding: 15px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--link-color);
+  background-color: var(--note-bg);
+  list-style: none; /* Hilangkan panah default browser */
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+details.solution-box summary:hover {
+  background-color: var(--link-hover-bg);
+}
+
+/* Hilangkan panah default di Webkit */
+details.solution-box summary::-webkit-details-marker {
+  display: none;
+}
+
+details.solution-box[open] summary {
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0;
+}
+
+.solution-content {
+  padding: 20px;
+  background-color: var(--container-bg);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
