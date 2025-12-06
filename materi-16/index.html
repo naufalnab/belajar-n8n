@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 16: Memproses Berbagai Tipe Data</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 16: Memproses Berbagai Tipe Data</h1>
+          <p class="intro">
+            Di bab ini, Kita akan belajar cara menangani tipe data yang lebih
+            spesifik: <strong>HTML</strong>, <strong>XML</strong>,
+            <strong>Tanggal & Waktu</strong>, dan
+            <strong>Data Biner</strong> (file). Ini adalah kemampuan penting
+            untuk menghubungkan sistem yang berbeda.
+          </p>
+
+          <h2>Bagian 1: HTML dan XML</h2>
+          <p>
+            Seringkali kita perlu mengambil data dari website (HTML) atau
+            layanan lama yang menggunakan XML. n8n memiliki node khusus untuk
+            ini.
+          </p>
+
+          <h3>Latihan 1: Web Scraping Lanjutan (HTML)</h3>
+          <p>
+            Mari kita coba mengambil data dari blog n8n. Tidak hanya satu, tapi
+            <strong>semua</strong> artikel di halaman depan, dan kita ingin
+            mengambil <strong>Judul</strong> beserta <strong>Link</strong>-nya.
+          </p>
+          <p><strong>Tantangan:</strong></p>
+          <ol>
+            <li>
+              Gunakan <strong>HTTP Request</strong> untuk mengambil
+              <code>https://blog.n8n.io/</code>.
+            </li>
+            <li>Gunakan node <strong>HTML</strong> untuk mengekstrak data.</li>
+            <li>
+              Pastikan Kita mendapatkan <strong>Judul</strong> DAN
+              <strong>Link URL</strong> untuk setiap artikel.
+            </li>
+          </ol>
+
+          <div class="note">
+            <strong>Tips:</strong>
+            <ul>
+              <li>
+                Gunakan opsi <strong>Return Array</strong> untuk mengambil
+                banyak item.
+              </li>
+              <li>
+                Kita bisa menambahkan lebih dari satu "Value" di bagian
+                <strong>Extraction Values</strong>.
+              </li>
+              <li>
+                Untuk mengambil Link, ubah <em>Return Value</em> menjadi
+                <strong>Attribute</strong> dan nama atributnya adalah
+                <code>href</code>.
+              </li>
+            </ul>
+          </div>
+
+          <details class="solution-box">
+            <summary>👉 Lihat Solusi HTML (Multi-Data)</summary>
+            <div class="solution-content">
+              <p><strong>Langkah 1: HTTP Request</strong></p>
+              <ul>
+                <li>Method: <strong>GET</strong></li>
+                <li>URL: <code>https://blog.n8n.io/</code></li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-16-html-http.png"
+                  alt="Konfigurasi HTTP Request ke blog n8n."
+                  loading="lazy"
+                />
+                <p class="image-caption">HTTP Request ke blog n8n.</p>
+              </div>
+
+              <p><strong>Langkah 2: HTML Node (Konfigurasi)</strong></p>
+              <ul>
+                <li>Operation: <strong>Extract HTML Content</strong></li>
+                <li>Source Data: <strong>JSON</strong></li>
+                <li>Property: <code>data</code></li>
+                <li><strong>Return Array:</strong> Aktifkan (ON) ✅</li>
+              </ul>
+
+              <p><strong>Konfigurasi Extraction Values:</strong></p>
+              <p><em>Value 1 (Judul):</em></p>
+              <ul>
+                <li>Key: <code>title</code></li>
+                <li>CSS Selector: <code>.post .item-title a</code></li>
+                <li>Return Value: <strong>HTML</strong> (atau Text)</li>
+              </ul>
+
+              <p><em>Value 2 (Link) - Klik 'Add Value':</em></p>
+              <ul>
+                <li>Key: <code>link</code></li>
+                <li>CSS Selector: <code>.post .item-title a</code></li>
+                <li>Return Value: <strong>Attribute</strong></li>
+                <li>Attribute: <code>href</code></li>
+              </ul>
+
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-16-html-multi-extract.png"
+                  alt="Konfigurasi HTML Node dengan dua extraction values: title dan link."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Konfigurasi untuk mengambil Judul (Text) dan Link (Attribute
+                  href).
+                </p>
+              </div>
+
+              <p><strong>Hasilnya:</strong></p>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-16-html-extract-result-multi.png"
+                  alt="Hasil output HTML Node menampilkan array artikel dengan judul dan link."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Sekarang kita punya daftar artikel lengkap dengan judul dan
+                  link-nya!
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <h3>Latihan 2: Konversi XML</h3>
+          <p>
+            Mari kembali ke PokéAPI, tapi kali ini kita ubah output JSON-nya
+            menjadi XML.
+          </p>
+          <p><strong>Tantangan:</strong></p>
+          <ol>
+            <li>
+              Ambil data dari <code>https://pokeapi.co/api/v2/pokemon</code>.
+            </li>
+            <li>
+              Gunakan node <strong>XML</strong> untuk mengubah JSON menjadi XML.
+            </li>
+          </ol>
+
+          <details class="solution-box">
+            <summary>👉 Lihat Solusi XML</summary>
+            <div class="solution-content">
+              <p>
+                <strong>Langkah 1: HTTP Request</strong> (Sama seperti
+                sebelumnya).
+              </p>
+              <p><strong>Langkah 2: XML Node</strong></p>
+              <ul>
+                <li>Mode: <strong>JSON to XML</strong></li>
+                <li>Property Name: <code>data</code></li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-16-xml-convert.png"
+                  alt="Hasil konversi JSON ke XML."
+                  loading="lazy"
+                />
+                <p class="image-caption">Data Pokemon dalam format XML.</p>
+              </div>
+            </div>
+          </details>
+
+          <h2>Bagian 2: Tanggal, Waktu, dan Penundaan</h2>
+          <p>
+            Bekerja dengan tanggal seringkali membingungkan karena banyaknya
+            format (<code>DD-MM-YYYY</code>, ISO, Unix Timestamp, dll).
+          </p>
+          <p>
+            n8n menyediakan node <strong>Date & Time</strong> untuk mempermudah
+            konversi dan kalkulasi tanggal. Selain itu, ada node
+            <strong>Wait</strong> untuk menunda eksekusi (misal: menunggu API
+            lain selesai memproses).
+          </p>
+
+          <h3>Latihan 3: Manipulasi Tanggal & Wait Node</h3>
+          <p>Skenario latihan yang cukup kompleks:</p>
+          <ol>
+            <li>Ambil data pelanggan dari node Customer Datastore.</li>
+            <li>
+              Bulatkan tanggal pembuatan (created date) ke
+              <strong>Akhir Bulan</strong>.
+            </li>
+            <li>
+              <strong>JIKA</strong> tanggal baru tersebut setelah tahun 1960:
+              <ul>
+                <li>Tunggu selama <strong>1 menit</strong>.</li>
+                <li>Set field baru <code>outputValue</code>.</li>
+              </ul>
+            </li>
+          </ol>
+
+          <details class="solution-box">
+            <summary>👉 Lihat Solusi Date & Time</summary>
+            <div class="solution-content">
+
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-16-flow-solusi.png"
+                  alt="Full Flow untuk solusinya."
+                  loading="lazy"
+                />
+                <p class="image-caption">Full Flow</p>
+              </div>
+
+              <p><strong>1. Customer Datastore:</strong> Get All People.</p>
+              <p><strong>2. Date & Time Node:</strong></p>
+              <ul>
+                <li>Operation: <strong>Round a Date</strong></li>
+                <li>Date: <code>{{ $json.created }}</code></li>
+                <li>
+                  Mode: <strong>Round Up</strong> to
+                  <strong>End of Month</strong>
+                </li>
+                <li>Output Field Name: <code>new-date</code></li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-16-date-config.png"
+                  alt="Konfigurasi Date & Time Node."
+                  loading="lazy"
+                />
+                <p class="image-caption">Membulatkan tanggal ke akhir bulan.</p>
+              </div>
+
+              <p><strong>3. IF Node:</strong></p>
+              <ul>
+                <li>Value 1: <code>{{ $json['new-date'] }}</code></li>
+                <li>Operator: <strong>Date & Time > is after</strong></li>
+                <li>Value 2: <code>1960-01-01 00:00:00</code></li>
+              </ul>
+
+              <p><strong>4. Wait Node (di True Branch):</strong></p>
+              <ul>
+                <li>Resume: <strong>After Time Interval</strong></li>
+                <li>Wait Amount: <strong>1</strong> Minute</li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-16-wait-node.png"
+                  alt="Konfigurasi Wait Node."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Workflow akan berhenti sejenak di sini.
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <h2>Bagian 3: Data Biner (File)</h2>
+          <p>
+            Sejauh ini kita hanya bekerja dengan teks (JSON). Tapi bagaimana
+            dengan gambar, PDF, atau file Excel? Di n8n, ini disebut
+            <strong>Binary Data</strong>.
+          </p>
+          <p>Node-node penting untuk file:</p>
+          <ul>
+            <li>
+              <strong>HTTP Request:</strong> Bisa mendownload file dari
+              internet.
+            </li>
+            <li>
+              <strong>Read/Write Files from Disk:</strong> Membaca/menulis file
+              di server lokal (Hanya Self-Hosted).
+            </li>
+            <li>
+              <strong>Extract From File:</strong> Membaca isi file (misal teks
+              dari PDF).
+            </li>
+          </ul>
+
+          <h3>Latihan 4: PDF ke JSON</h3>
+          <p><strong>Tantangan:</strong></p>
+          <ol>
+            <li>
+              Download file PDF dari URL:
+              <code
+                >https://media.kaspersky.com/pdf/Kaspersky_Lab_Whitepaper_Anti_blocker.pdf</code
+              >
+            </li>
+            <li>Ekstrak teks dari PDF tersebut menjadi JSON.</li>
+          </ol>
+
+          <details class="solution-box">
+            <summary>👉 Lihat Solusi Binary</summary>
+            <div class="solution-content">
+              <p><strong>1. HTTP Request:</strong></p>
+              <ul>
+                <li>URL: (Link PDF di atas)</li>
+                <li>
+                  Perhatikan di Output, sekarang ada tab
+                  <strong>Binary</strong>.
+                </li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-16-binary-tab.png"
+                  alt="Tab Binary di output node."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  File PDF muncul di tab Binary, bukan JSON.
+                </p>
+              </div>
+
+              <p><strong>2. Extract From File:</strong></p>
+              <ul>
+                <li>Operation: <strong>PDF</strong></li>
+              </ul>
+              <p>
+                Hasilnya adalah teks isi PDF yang sudah diubah menjadi JSON yang
+                bisa dibaca!
+              </p>
+            </div>
+          </details>
+
+          <h2>Ringkasan</h2>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Ternyata n8n bisa menangani hampir semua jenis data. Dari scraping
+              website, mengubah format tanggal yang rumit, hingga membaca isi
+              file PDF. Ini membuka banyak kemungkinan baru!
+            </p>
+          </blockquote>
+          <p>
+            Di materi selanjutnya, kita akan membahas topik yang sangat penting
+            untuk menjaga alur kerja tetap bersih:
+            <strong>Menggabungkan (Merge) dan Memisahkan Data</strong>.
+          </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-15/"
+            data-prev-title="Materi 15: Struktur Data"
+            data-next-url="../materi-17/"
+            data-next-title="Materi 17: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
