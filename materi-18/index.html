@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 18: Menangani Error (Error Handling)</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 18: Menangani Error dalam Workflow</h1>
+          <p class="intro">
+            Terkadang, alur kerja yang sudah kita bangun dengan rapi bisa gagal
+            saat dijalankan. Penyebabnya beragam: konfigurasi node yang salah,
+            layanan pihak ketiga mati, atau data yang tidak sesuai.
+          </p>
+          <p>
+            Jangan panik! Di materi ini, Kita akan belajar cara melakukan
+            <em>troubleshooting</em> dan membuat sistem "Jaring Pengaman" (Error
+            Workflow) untuk menangani kegagalan tersebut secara otomatis.
+          </p>
+
+          <h2>1. Memeriksa Workflow yang Gagal</h2>
+          <p>
+            n8n mencatat setiap eksekusi alur kerja Kita. Jika ada yang gagal,
+            tempat pertama untuk memeriksa adalah <strong>Executions Log</strong>.
+          </p>
+          <ol>
+            <li>Klik menu <strong>Executions</strong> di panel sebelah kiri.</li>
+            <li>
+              Cari baris yang statusnya <strong>Error</strong> (biasanya berwarna
+              merah).
+            </li>
+            <li>Klik baris tersebut untuk membuka detailnya.</li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-18-executions-list.png"
+              alt="Daftar riwayat eksekusi di n8n, menunjukkan status sukses dan gagal."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Daftar Eksekusi membantu kita melacak kapan dan kenapa error terjadi.
+            </p>
+          </div>
+          <p>
+            Ini akan membuka alur kerja dalam "Read-only mode". Kita bisa melihat
+            node mana yang berhenti dan membaca pesan error-nya secara detail.
+          </p>
+
+          <h2>2. Membuat "Error Workflow" (Jaring Pengaman)</h2>
+          <p>
+            Bagaimana jika alur kerja gagal saat kita tidur? Kita butuh notifikasi.
+            Untuk itu, kita bisa membuat <strong>Error Workflow</strong>.
+          </p>
+          <p>
+            Ini adalah alur kerja terpisah yang <strong>HANYA</strong> berjalan
+            jika alur kerja utama mengalami kegagalan.
+          </p>
+
+          <h3>Komponen Utama: Error Trigger Node</h3>
+          <p>
+            Satu-satunya perbedaan antara workflow biasa dan Error Workflow adalah
+            penggunaan node <strong>Error Trigger</strong> sebagai pemicunya.
+          </p>
+
+          <div class="note alt">
+            <strong>⚠️ PENTING: Aturan Testing Error Workflow</strong><br />
+            Banyak pemula bingung di sini: Node Error Trigger <strong>TIDAK AKAN BERJALAN</strong> jika Anda menjalankan workflow utama secara manual (mengklik tombol "Execute Workflow").
+            <br /><br />
+            Error Trigger hanya aktif untuk <strong>Production Executions</strong> (Eksekusi Otomatis).
+            <br /><br />
+            <strong>Cara Mengetesnya:</strong>
+            <ol style="margin-top: 10px; margin-bottom: 0;">
+                <li>Pastikan workflow utama memiliki Trigger otomatis (seperti Schedule Trigger).</li>
+                <li><strong>Aktifkan (Activate)</strong> workflow utama tersebut.</li>
+                <li>Tunggu sampai jadwal berjalan otomatis dan gagal.</li>
+                <li>Barulah Error Workflow akan terpanggil.</li>
+            </ol>
+          </div>
+
+          <h3>Latihan: Membuat Sistem Notifikasi Error</h3>
+          <p>
+            Mari kita buat workflow sederhana yang akan mengirim pesan ke Discord
+            (atau Slack/Email) jika ada workflow lain yang gagal.
+          </p>
+          <p><strong>Langkah-langkah:</strong></p>
+          <ol>
+            <li>Buat Workflow baru bernama "Global Error Handler".</li>
+            <li>Tambahkan node <strong>Error Trigger</strong>.</li>
+            <li>
+              Tambahkan node komunikasi (misal: <strong>Discord</strong>, seperti
+              di Materi 10).
+            </li>
+            <li>
+              Hubungkan Error Trigger ke Discord untuk mengirim pesan berisi detail
+              error.
+            </li>
+            <li>
+              Buka workflow utama (misal: Workflow Nathan), buka
+              <strong>Settings</strong>, dan pilih "Global Error Handler" di bagian
+              <strong>Error Workflow</strong>.
+            </li>
+          </ol>
+
+          <details class="solution-box">
+            <summary>👉 Lihat Solusi Error Workflow</summary>
+            <div class="solution-content">
+              <p><strong>Konfigurasi Node:</strong></p>
+              <ul>
+                <li>
+                  <strong>Error Trigger:</strong> Tidak ada konfigurasi khusus,
+                  cukup tambahkan ke kanvas.
+                </li>
+                <li>
+                  <strong>Discord / Slack:</strong> Gunakan Expression untuk
+                  mengambil detail error.
+                  <br /><br />
+                  Contoh Pesan:
+                  <pre><code>Workflow: {{ $node["Error Trigger"].json.workflow.name }} GAGAL.
+Lihat di sini: {{ $node["Error Trigger"].json.execution.url }}</code></pre>
+                </li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-18-error-workflow.png"
+                  alt="Susunan Error Workflow: Error Trigger terhubung ke node notifikasi."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Desain sederhana Error Workflow.
+                </p>
+              </div>
+              <p><strong>Menghubungkan ke Workflow Utama:</strong></p>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-18-workflow-settings.png"
+                  alt="Menu Settings di workflow utama untuk memilih Error Workflow."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Jangan lupa memilih Error Workflow di menu Settings workflow
+                  utama Kita.
+                </p>
+              </div>
+              <p><strong>Whatsapp mendapatkan notifikasi error:</strong></p>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-18-whatsapp.png"
+                  alt="Menu Settings di workflow utama untuk memilih Error Workflow."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Jangan lupa memilih Error Workflow di menu Settings workflow
+                  utama Kita.
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <h2>3. Melempar Error Secara Manual (Stop and Error Node)</h2>
+          <p>
+            Terkadang, data yang masuk tidak menyebabkan sistem *crash*, tapi
+            sebenarnya "salah" (misal: format JSON salah, nilai kosong, atau tipe
+            data tidak sesuai).
+          </p>
+          <p>
+            Dalam kasus ini, kita ingin <strong>memaksa</strong> alur kerja berhenti
+            dan melaporkan error. Kita bisa menggunakan node
+            <strong>Stop and Error</strong>.
+          </p>
+          <ul>
+            <li>
+              <strong>Error Message:</strong> Mengembalikan pesan kustom tentang
+              apa yang salah.
+            </li>
+          </ul>
+          <div class="note">
+            <strong>Kapan Menggunakannya?</strong><br />
+            Gunakan node ini setelah node <strong>IF</strong>. Misalnya: JIKA data
+            kosong -> MAKA masuk ke cabang True -> Masuk ke node
+            <strong>Stop and Error</strong> untuk memberi tahu kita bahwa ada data
+            yang hilang.
+          </div>
+
+          <h2>Ringkasan</h2>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Dengan adanya Error Workflow, saya bisa tenang. Saya akan langsung
+              tahu jika ada otomatisasi yang macet tanpa harus mengeceknya setiap
+              jam. Ini adalah standar sistem yang profesional.
+            </p>
+          </blockquote>
+          <p>
+            Kita sudah belajar cara menangani data, mengubahnya, dan menangani
+            kesalahan. Di materi selanjutnya, kita akan membahas cara membuat
+            <strong>Sub-workflows</strong> untuk memecah alur kerja yang sangat
+            besar menjadi bagian-bagian kecil yang dapat digunakan kembali.
+          </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-17/"
+            data-prev-title="Materi 17: Merge & Loop Data"
+            data-next-url="../materi-19/"
+            data-next-title="Materi 19: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
