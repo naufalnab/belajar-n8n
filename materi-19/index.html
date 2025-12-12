@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 19: Studi Kasus Bisnis & Desain Workflow</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 19: Mengotomatiskan Proses Bisnis</h1>
+          <p class="intro">
+            Di materi ini, kita akan memulai proyek besar untuk Level 2. Kita
+            akan membedah kebutuhan bisnis yang kompleks dan merancang arsitektur
+            alur kerja yang modular, membaginya menjadi tiga bagian terpisah agar
+            lebih mudah dikelola.
+          </p>
+
+          <h2>Kembalinya Nathan</h2>
+          <p>Masih ingat teman kita, Nathan?</p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Halo, ini saya lagi. Manajer saya sangat terkesan dengan solusi
+              otomatisasi pertama saya sehingga dia mempercayakan saya dengan
+              tanggung jawab lebih besar.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Lebih banyak pekerjaan dan tanggung jawab. Selamat ya, saya rasa.
+              Apa yang perlu Kita lakukan sekarang?
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Saya mendapatkan akses ke semua data penjualan kami dan sekarang
+              saya bertanggung jawab untuk membuat dua laporan: satu untuk
+              <strong>penjualan regional</strong> dan satu untuk
+              <strong>harga pesanan</strong>. Laporan ini didasarkan pada data
+              dari sumber yang berbeda dan datang dalam format yang berbeda pula.
+            </p>
+          </blockquote>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Terdengar seperti banyak pekerjaan manual, tapi ini jenis pekerjaan
+              yang sangat cocok untuk diotomatisasi. Ayo kita lakukan!
+            </p>
+          </blockquote>
+
+          <h2>Desain Alur Kerja (Workflow Design)</h2>
+          <p>
+            Sekarang setelah kita tahu apa yang ingin Nathan otomatisasi, mari
+            kita buat daftar langkah-langkah yang perlu dilakukan:
+          </p>
+          <ol>
+            <li>
+              <strong>Mengambil dan Menggabungkan Data</strong> dari semua
+              sumber yang diperlukan (Database, API, dll).
+            </li>
+            <li>
+              <strong>Menyortir dan Memformat</strong> data (termasuk memformat
+              tanggal).
+            </li>
+            <li>
+              <strong>Menulis File Biner</strong> (Membuat laporan fisik,
+              seperti Excel/PDF).
+            </li>
+            <li>
+              <strong>Mengirim Notifikasi</strong> menggunakan Email dan
+              Discord.
+            </li>
+          </ol>
+
+          <h3>Strategi Modular (3 Workflow Terpisah)</h3>
+          <p>
+            Kasus penggunaan ini agak kompleks. Daripada membuat satu alur kerja
+            raksasa yang membingungkan, praktik terbaiknya adalah memecahnya
+            menjadi <strong>tiga alur kerja terpisah</strong>:
+          </p>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-19-workflow-architecture.png"
+              alt="Diagram arsitektur: 1. Data Merging, 2. Report Generation, 3. Error Monitoring."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Arsitektur sistem kita: Memisahkan tugas ke dalam alur kerja yang
+              berbeda.
+            </p>
+          </div>
+          <ol>
+            <li>
+              <strong>Workflow 1 (Data Merging):</strong> Menggabungkan data
+              perusahaan internal dengan informasi eksternal. Ini akan menjadi
+              "Sub-workflow".
+            </li>
+            <li>
+              <strong>Workflow 2 (Report Generator):</strong> Alur kerja utama
+              yang meminta data, membuat laporan, dan mengirimkannya.
+            </li>
+            <li>
+              <strong>Workflow 3 (Error Monitor):</strong> Alur kerja khusus
+              untuk memantau jika ada kesalahan di Workflow 2 (seperti yang kita
+              pelajari di Materi 18).
+            </li>
+          </ol>
+
+          <h2>Prasyarat Alur Kerja</h2>
+          <p>
+            Untuk membangun sistem ini, Kita akan membutuhkan akses ke layanan
+            berikut:
+          </p>
+          <ul>
+            <li>
+              <strong>Airtable:</strong> Akun dan kredensial (API Key / Personal
+              Access Token). Kita akan menggunakan ini untuk menyimpan/membaca
+              data penjualan.
+            </li>
+            <li>
+              <strong>Google (Gmail):</strong> Akun dan kredensial OAuth2 untuk
+              mengirim email laporan.
+            </li>
+            <li>
+              <strong>Discord:</strong> Akun dan Webhook URL (Kita sudah
+              mendapatkan ini dari email pendaftaran kursus Level 1).
+            </li>
+          </ul>
+
+          <div class="note">
+            <strong>Persiapan Kredensial:</strong><br />
+            Jika Kita belum menghubungkan Gmail atau Airtable ke n8n, sekarang
+            adalah saat yang tepat untuk menyiapkannya. Pastikan status koneksi
+            credential di n8n sudah "Connected".
+          </div>
+
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Kita sudah memiliki rencana yang matang. Di materi selanjutnya, kita
+            akan mulai membangun bagian pertama dari sistem ini:
+            <strong>Alur Kerja Penggabungan Data (Sub-workflow)</strong>.
+          </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-18/"
+            data-prev-title="Materi 18: Menangani Error"
+            data-next-url="../materi-20/"
+            data-next-title="Materi 20: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
