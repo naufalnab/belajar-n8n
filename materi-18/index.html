@@ -75,18 +75,20 @@
             Satu-satunya perbedaan antara workflow biasa dan Error Workflow adalah
             penggunaan node <strong>Error Trigger</strong> sebagai pemicunya.
           </p>
-          <div class="note">
-            <strong>Catatan Penting:</strong>
-            <ul>
-              <li>
-                Kita tidak perlu mengaktifkan (Activate) Error Workflow secara
-                manual.
-              </li>
-              <li>
-                Error Trigger tidak bisa diuji secara manual (Run). Ia hanya
-                berjalan saat dipanggil oleh error di workflow lain.
-              </li>
-            </ul>
+
+          <div class="note alt">
+            <strong>⚠️ PENTING: Aturan Testing Error Workflow</strong><br />
+            Banyak pemula bingung di sini: Node Error Trigger <strong>TIDAK AKAN BERJALAN</strong> jika Anda menjalankan workflow utama secara manual (mengklik tombol "Execute Workflow").
+            <br /><br />
+            Error Trigger hanya aktif untuk <strong>Production Executions</strong> (Eksekusi Otomatis).
+            <br /><br />
+            <strong>Cara Mengetesnya:</strong>
+            <ol style="margin-top: 10px; margin-bottom: 0;">
+                <li>Pastikan workflow utama memiliki Trigger otomatis (seperti Schedule Trigger).</li>
+                <li><strong>Aktifkan (Activate)</strong> workflow utama tersebut.</li>
+                <li>Tunggu sampai jadwal berjalan otomatis dan gagal.</li>
+                <li>Barulah Error Workflow akan terpanggil.</li>
+            </ol>
           </div>
 
           <h3>Latihan: Membuat Sistem Notifikasi Error</h3>
@@ -153,6 +155,18 @@ Lihat di sini: {{ $node["Error Trigger"].json.execution.url }}</code></pre>
                   utama Kita.
                 </p>
               </div>
+              <p><strong>Whatsapp mendapatkan notifikasi error:</strong></p>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-18-whatsapp.png"
+                  alt="Menu Settings di workflow utama untuk memilih Error Workflow."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Jangan lupa memilih Error Workflow di menu Settings workflow
+                  utama Kita.
+                </p>
+              </div>
             </div>
           </details>
 
@@ -173,7 +187,7 @@ Lihat di sini: {{ $node["Error Trigger"].json.execution.url }}</code></pre>
               apa yang salah.
             </li>
           </ul>
-          <div class="note alt">
+          <div class="note">
             <strong>Kapan Menggunakannya?</strong><br />
             Gunakan node ini setelah node <strong>IF</strong>. Misalnya: JIKA data
             kosong -> MAKA masuk ke cabang True -> Masuk ke node
