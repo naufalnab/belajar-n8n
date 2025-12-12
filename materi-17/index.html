@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 17: Menggabungkan dan Memecah Data</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 17: Menggabungkan dan Memecah Data</h1>
+          <p class="intro">
+            Dalam pengelolaan data tingkat lanjut, kita sering kali perlu
+            <strong>menggabungkan (Merge)</strong> data dari berbagai sumber
+            menjadi satu, atau sebaliknya, <strong>memecah (Loop/Split)</strong>
+            proses untuk menangani banyak item secara bergantian.
+          </p>
+
+          <h2>Bagian 1: Menggabungkan Data (Merge)</h2>
+          <p>Menggabungkan data berguna untuk:</p>
+          <ul>
+            <li>
+              Membuat satu set data lengkap dari berbagai sumber (misal: Nama
+              dari Database, Alamat dari Excel).
+            </li>
+            <li>
+              Sinkronisasi data antar sistem (misal: Update CRM A jika ada
+              perubahan di CRM B).
+            </li>
+          </ul>
+
+          <h3>Node "Merge"</h3>
+          <p>
+            Di n8n, kita menggunakan node <strong>Merge</strong>. Node ini
+            memiliki beberapa mode penggabungan:
+          </p>
+          <ul>
+            <li>
+              <strong>Append:</strong> Menambahkan data baru di bawah data lama
+              (seperti copy-paste baris baru di Excel).
+            </li>
+            <li>
+              <strong>Combine (Merge by Fields):</strong> Menggabungkan data
+              berdasarkan "kunci" yang cocok (seperti VLOOKUP di Excel atau JOIN
+              di SQL).
+            </li>
+            <li>
+              <strong>Merge by Position:</strong> Menggabungkan item ke-1 dari
+              Input A dengan item ke-1 dari Input B, dst.
+            </li>
+          </ul>
+
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-17-merge-node-options.png"
+              alt="Pilihan mode pada Merge Node: Append, Combine, dll."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Berbagai cara untuk menggabungkan dua aliran data.
+            </p>
+          </div>
+
+          <h3>Latihan 1: Menggabungkan Data Pelanggan</h3>
+          <p>
+            Mari kita coba menggabungkan data dari
+            <strong>Customer Datastore</strong> (Database) dengan data manual
+            yang kita buat di <strong>Code Node</strong>.
+          </p>
+          <p><strong>Tantangan:</strong></p>
+          <ol>
+            <li>
+              Gunakan <strong>Customer Datastore</strong> untuk mengambil semua
+              orang.
+            </li>
+            <li>
+              Gunakan <strong>Code Node</strong> untuk membuat data tambahan
+              (Negara & Bahasa) untuk salah satu orang (misal: Jay Gatsby).
+            </li>
+            <li>
+              Gunakan <strong>Merge Node</strong> untuk menyatukan kedua
+              informasi tersebut menjadi satu profil lengkap.
+            </li>
+          </ol>
+
+          <details class="solution-box">
+            <summary>👉 Lihat Solusi Merge</summary>
+            <div class="solution-content">
+              <p><strong>Langkah 1: Persiapan Data</strong></p>
+              <ul>
+                <li>
+                  Node 1: <strong>Customer Datastore</strong> (Operation: Get
+                  All People).
+                </li>
+                <li>
+                  Node 2: <strong>Code Node</strong>. Masukkan kode berikut:
+                </li>
+              </ul>
+              <pre><code>return [
+  {
+    json: {
+      name: 'Jay Gatsby',
+      language: 'English',
+      country: {
+        code: 'US',
+        name: 'United States'
+      }
+    }
+  }
+];</code></pre>
+
+              <p><strong>Langkah 2: Penggabungan</strong></p>
+              <ul>
+                <li>Tambahkan node <strong>Merge</strong>.</li>
+                <li>
+                  Hubungkan Customer Datastore ke <strong>Input 1</strong>.
+                </li>
+                <li>Hubungkan Code Node ke <strong>Input 2</strong>.</li>
+                <li>
+                  Mode: <strong>Combine</strong> >
+                  <strong>Merge By Fields</strong>.
+                </li>
+                <li>
+                  Fields to Match:
+                  <ul>
+                    <li>Input 1 Field: <code>name</code></li>
+                    <li>Input 2 Field: <code>name</code></li>
+                  </ul>
+                </li>
+              </ul>
+
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-17-merge-node-options-flow.png"
+                  alt="Flow merge node dengan dua input dan satu output."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Flow merge node dengan dua input dan satu output.
+                </p>
+              </div>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-17-merge-config.png"
+                  alt="Konfigurasi Merge Node menggunakan field 'name'."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Kita mencocokkan data berdasarkan Nama.
+                </p>
+              </div>
+              <p>
+                Hasilnya: Data Jay Gatsby dari database akan "diperkaya" dengan
+                info Negara dan Bahasa dari Code Node.
+              </p>
+            </div>
+          </details>
+
+          <h2>Bagian 2: Looping (Loop Over Items)</h2>
+          <p>
+            Secara umum, n8n memproses data secara otomatis untuk setiap item.
+            Namun, ada beberapa node (seperti <strong>RSS Read</strong> atau
+            beberapa API request) yang hanya bisa memproses
+            <strong>satu item pertama</strong> saja.
+          </p>
+          <p>
+            Dalam kasus ini, kita perlu memaksa n8n untuk melakukan
+            <strong>Looping</strong> (perulangan). Kita menggunakan node
+            <strong>Loop Over Items</strong> (sebelumnya bernama
+            <em>Split In Batches</em>).
+          </p>
+
+          <h3>Kapan Menggunakannya?</h3>
+          <ul>
+            <li>
+              Saat memproses data dalam jumlah sangat besar (untuk menghindari
+              memori penuh).
+            </li>
+            <li>
+              Saat berhadapan dengan API yang memiliki
+              <em>Rate Limit</em> (batas kecepatan).
+            </li>
+            <li>
+              Saat menggunakan node yang tidak mendukung banyak item sekaligus
+              (seperti RSS Read).
+            </li>
+          </ul>
+
+          <h3>Latihan 2: Membaca Banyak RSS Feed</h3>
+          <p>
+            Bayangkan Kita ingin membaca berita dari <strong>Medium</strong> DAN
+            <strong>Dev.to</strong> sekaligus.
+          </p>
+          <p><strong>Tantangan:</strong></p>
+          <ol>
+            <li>
+              Gunakan <strong>Code Node</strong> untuk membuat daftar URL RSS
+              (Medium & Dev.to).
+            </li>
+            <li>
+              Gunakan <strong>Loop Over Items</strong> untuk memproses URL satu
+              per satu.
+            </li>
+            <li>
+              Gunakan <strong>RSS Read</strong> untuk membaca konten dari setiap
+              URL tersebut.
+            </li>
+          </ol>
+
+          <details class="solution-box">
+            <summary>👉 Lihat Solusi Looping</summary>
+            <div class="solution-content">
+              <p><strong>Langkah 1: Daftar URL (Code Node)</strong></p>
+              <pre><code>return [
+  { json: { url: 'https://medium.com/feed/n8n-io' } },
+  { json: { url: 'https://dev.to/feed/n8n' } }
+];</code></pre>
+
+              <p><strong>Langkah 2: Loop (Loop Over Items)</strong></p>
+              <ul>
+                <li>
+                  Hubungkan Code Node ke <strong>Loop Over Items</strong>.
+                </li>
+                <li>
+                  Batch Size: <code>1</code> (Proses 1 URL dalam satu waktu).
+                </li>
+              </ul>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-17-loop-node.png"
+                  alt="Konfigurasi Loop Over Items dengan Batch Size 1."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Node ini akan memecah 2 URL menjadi antrian.
+                </p>
+              </div>
+
+              <p><strong>Langkah 3: Baca RSS</strong></p>
+              <ul>
+                <li>Hubungkan Loop Node ke <strong>RSS Read</strong>.</li>
+                <li>
+                  URL: Gunakan Expression
+                  <code>{{ $json.url }}</code> (mengambil URL yang sedang
+                  diproses saat ini).
+                </li>
+              </ul>
+
+              <p><strong>PENTING: Menutup Loop</strong></p>
+              <p>
+                Hubungkan output dari <strong>RSS Read</strong> KEMBALI ke input
+                <strong>Loop Over Items</strong>. Ini memberi sinyal "Saya sudah
+                selesai dengan item ini, berikan saya item berikutnya!".
+              </p>
+              <div class="image-wrapper">
+                <img
+                  src="../assets/images/materi-17-loop-connection.png"
+                  alt="Diagram alur kerja looping: Code -> Loop -> RSS -> Kembali ke Loop."
+                  loading="lazy"
+                />
+                <p class="image-caption">
+                  Perhatikan panah yang kembali ke Loop Node.
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <h2>Ringkasan</h2>
+          <blockquote class="dialogue">
+            <strong>Kita 🤵🏻:</strong>
+            <p>
+              Kemampuan untuk menggabungkan data yang terpisah dan memproses
+              data secara berurutan (looping) adalah teknik level lanjut yang
+              sangat penting untuk otomatisasi yang kompleks.
+            </p>
+          </blockquote>
+          <p>
+            Di materi selanjutnya, kita akan belajar tentang sesuatu yang tidak
+            kalah pentingnya: <strong>Menangani Error</strong> (Error Handling).
+            Apa yang terjadi jika alur kerja kita gagal di tengah jalan?
+          </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-16/"
+            data-prev-title="Materi 16: Memproses Tipe Data"
+            data-next-url="../materi-18/"
+            data-next-title="Materi 18: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
