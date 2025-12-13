@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 20: Workflow 1 - Menggabungkan Data</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 20: Workflow 1 - Menggabungkan Data (Enrichment)</h1>
+          <p class="intro">
+            Di materi ini, kita akan membangun workflow pertama dari tiga
+            workflow yang direncanakan. Tugas workflow ini adalah mengambil data
+            pelanggan dari Airtable dan melengkapinya dengan data geografis dari
+            API eksternal.
+          </p>
+
+          <h2>Skenario Masalah</h2>
+          <p>
+            Perusahaan Nathan menyimpan data pelanggan di Airtable. Data ini
+            berisi ID, negara, email, dan tanggal bergabung. Namun, data ini
+            <strong>kurang lengkap</strong>: tidak ada informasi mengenai
+            <strong>Region</strong> (Wilayah) dan <strong>Subregion</strong>.
+          </p>
+          <p>
+            Untuk membuat laporan penjualan regional, kita harus mengisi
+            kekosongan tersebut secara otomatis.
+          </p>
+
+          <h2>Langkah 1: Persiapan Airtable</h2>
+          <p>Sebelum masuk ke n8n, kita perlu menyiapkan tabel di Airtable.</p>
+          <ol>
+            <li>
+              Buat tabel baru bernama <strong><code>customers</code></strong
+              >.
+            </li>
+            <li>
+              Buat kolom-kolom berikut:
+              <ul>
+                <li><code>customerID</code> (Number)</li>
+                <li>
+                  <code>customerCountry</code> (Single line text) - Isi dengan
+                  nama negara (misal: USA, Germany).
+                </li>
+                <li><code>email</code> (Email)</li>
+                <li>
+                  <code>customerSince</code> (Date) -
+                  <strong>PENTING:</strong> Aktifkan opsi "Include time".
+                </li>
+                <li>
+                  <code>region</code> (Single line text) - Biarkan kosong.
+                </li>
+                <li>
+                  <code>subregion</code> (Single line text) - Biarkan kosong.
+                </li>
+              </ul>
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-20-persiapan-airtable.png"
+              alt="Persiapan Airtable."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Persiapan Airtable dengan kolom yang diperlukan.
+            </p>
+          </div>
+          <div class="note alt">
+            <strong>Peringatan Konfigurasi Tanggal:</strong><br />
+            Pastikan kolom <code>customerSince</code> diatur sebagai Date dengan
+            opsi <strong>Include time</strong> diaktifkan. Jika tidak, Anda
+            mungkin akan mengalami error saat n8n mencoba mengupdate tanggal
+            tersebut kembali ke Airtable.
+          </div>
+
+          <h2>Langkah 2: Mengambil Data Pelanggan (Airtable)</h2>
+          <p>Sekarang, mari mulai membangun di n8n.</p>
+          <ol>
+            <li>Buat workflow baru.</li>
+            <li>Tambahkan node <strong>Airtable</strong>.</li>
+            <li>Operation: <strong>Search</strong></li>
+            <li>Base: Pilih base latihan Anda.</li>
+            <li>
+              Table: <strong><code>customers</code></strong
+              >.
+            </li>
+            <li>
+              Klik <strong>Execute Node</strong>. Anda akan melihat daftar
+              pelanggan yang belum memiliki region.
+            </li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-20-airtable-list.png"
+              alt="Output node Airtable menampilkan daftar pelanggan."
+              loading="lazy"
+            />
+            <p class="image-caption">Data awal dari Airtable.</p>
+          </div>
+
+          <h2>Langkah 3: Mengambil Data Negara (HTTP Request)</h2>
+          <p>
+            Kita butuh "kamus" untuk menerjemahkan Negara menjadi Region. Kita
+            akan menggunakan API publik <strong>REST Countries</strong>.
+          </p>
+          <ol>
+            <li>
+              Tambahkan node <strong>HTTP Request</strong> (jangan sambungkan ke
+              Airtable dulu, biarkan terpisah atau paralel).
+            </li>
+            <li>URL: <code>https://restcountries.com/v3.1/all</code></li>
+            <li>Method: <strong>GET</strong>.</li>
+            <li>
+              Tambahkan <strong>Query Parameter</strong> agar data tidak terlalu
+              besar:
+              <ul>
+                <li>Name: <code>fields</code></li>
+                <li>Value: <code>name,region,subregion</code></li>
+              </ul>
+            </li>
+            <li>Klik <strong>Execute Node</strong>.</li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-20-http-countries.png"
+              alt="Output HTTP Request menampilkan daftar negara dan region."
+              loading="lazy"
+            />
+            <p class="image-caption">Data referensi dari REST Countries API.</p>
+          </div>
+
+          <h2>Langkah 4: Menggabungkan Data (Merge Node)</h2>
+          <p>
+            Sekarang kita punya dua aliran data: Pelanggan (Input 1) dan Negara
+            (Input 2). Kita akan menggabungkannya.
+          </p>
+          <ol>
+            <li>Tambahkan node <strong>Merge</strong>.</li>
+            <li>
+              Hubungkan <strong>Airtable</strong> ke <strong>Input 1</strong>.
+            </li>
+            <li>
+              Hubungkan <strong>HTTP Request</strong> ke
+              <strong>Input 2</strong>.
+            </li>
+            <li>
+              Mode: <strong>Combine</strong> > <strong>Merge By Fields</strong>.
+            </li>
+            <li>
+              Fields to Match:
+              <ul>
+                <li>
+                  Input 1 Field: <code>customerCountry</code> (Nama negara di
+                  Airtable).
+                </li>
+                <li>
+                  Input 2 Field: <code>name.common</code> (Nama negara di API).
+                </li>
+              </ul>
+            </li>
+          </ol>
+          <div class="note">
+            <strong>Tips Dot Notation:</strong><br />
+            Karena struktur data API bersarang (nested) di dalam objek
+            <code>name</code>, kita menulis <code>name.common</code> untuk
+            mengakses nama negaranya.
+          </div>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-20-merge-config.png"
+              alt="Konfigurasi Merge Node mencocokkan customerCountry dengan name.common."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Mengawinkan data pelanggan dengan data wilayah.
+            </p>
+          </div>
+
+          <h2>Langkah 5: Update Airtable</h2>
+          <p>
+            Terakhir, kita simpan data Region dan Subregion yang baru kita
+            dapatkan kembali ke Airtable.
+          </p>
+          <ol>
+            <li>
+              Tambahkan node <strong>Airtable</strong> baru setelah Merge Node.
+            </li>
+            <li>Operation: <strong>Update</strong>.</li>
+            <li>
+              Table: <strong><code>customers</code></strong
+              >.
+            </li>
+            <li>
+              Columns to Update (Mapping):
+              <ul>
+                <li>
+                  <strong>region</strong>: <code>{{ $json.region }}</code> (dari
+                  API)
+                </li>
+                <li>
+                  <strong>subregion</strong>:
+                  <code>{{ $json.subregion }}</code> (dari API)
+                </li>
+              </ul>
+            </li>
+            <li>
+              Penting: Pastikan ID record Airtable terpetakan dengan benar
+              (biasanya otomatis).
+            </li>
+          </ol>
+
+          <h2>Kuis Pemahaman</h2>
+          <p>
+            Coba jawab pertanyaan berikut berdasarkan hasil eksekusi workflow
+            Anda:
+          </p>
+
+          <details class="solution-box">
+            <summary>
+              ❓ Berapa item yang dikembalikan oleh node HTTP Request?
+            </summary>
+            <div class="solution-content">
+              <p>
+                Jumlahnya sekitar <strong>250</strong> item (tergantung jumlah
+                negara yang diakui saat ini di API restcountries).
+              </p>
+            </div>
+          </details>
+
+          <details class="solution-box">
+            <summary>❓ Berapa item yang dikembalikan oleh Merge Node?</summary>
+            <div class="solution-content">
+              <p>
+                Jumlahnya harus <strong>sama dengan jumlah pelanggan</strong> di
+                Airtable Anda (karena kita menggunakan mode
+                <em>Keep Matches</em> secara default, dan kita berasumsi semua
+                negara pelanggan valid).
+              </p>
+            </div>
+          </details>
+
+          <details class="solution-box">
+            <summary>❓ Berapa banyak region unik di tabel customers?</summary>
+            <div class="solution-content">
+              <p>
+                Anda bisa mengeceknya di Airtable setelah update. Biasanya ada
+                region seperti <strong>Americas, Europe, Asia</strong>, dll.
+              </p>
+            </div>
+          </details>
+
+          <details class="solution-box">
+            <summary>❓ Apa subregion untuk customerID 10?</summary>
+            <div class="solution-content">
+              <p>
+                Ini bergantung pada data dummy Anda. Cek record dengan ID 10 di
+                Airtable Anda dan lihat kolom <strong>subregion</strong>.
+              </p>
+            </div>
+          </details>
+
+          <h2>Langkah Selanjutnya</h2>
+          <p>
+            Workflow 1 (Sub-workflow) selesai! Data pelanggan kita sekarang
+            sudah kaya dan lengkap.
+          </p>
+          <p>
+            Selanjutnya, kita akan membangun
+            <strong>Workflow 2 (Utama)</strong> yang akan memanggil workflow
+            ini, membuat laporan Excel, dan mengirimkannya via email.
+          </p>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-19/"
+            data-prev-title="Materi 19: Desain Workflow"
+            data-next-url="../materi-21/"
+            data-next-title="Materi 21: (Segera Hadir)"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
