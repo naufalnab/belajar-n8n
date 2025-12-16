@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =======================================================
   setupRippleEffect();
   setupImageZoom();
+  addCopyButtons();
 
   // =======================================================
   // DEFINISI FUNGSI
@@ -429,6 +430,55 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === 'Escape' && modal.classList.contains('active')) {
         closeModal();
       }
+    });
+  }
+  /**
+   * Fitur Copy Code Button Otomatis
+   */
+  function addCopyButtons() {
+    // Cari semua elemen <pre> di halaman
+    const preTags = document.querySelectorAll('pre');
+
+    preTags.forEach(pre => {
+      // 1. Buat Wrapper Div
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('code-wrapper');
+      
+      // 2. Masukkan Wrapper sebelum <pre>, lalu pindahkan <pre> ke dalam wrapper
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      // 3. Buat Tombol Copy
+      const button = document.createElement('button');
+      button.classList.add('copy-btn');
+      button.innerHTML = '📋 Copy'; // Ikon clipboard sederhana
+      
+      // 4. Event Listener untuk Klik
+      button.addEventListener('click', () => {
+        // Ambil teks di dalam <code>
+        const code = pre.querySelector('code');
+        const textToCopy = code ? code.innerText : pre.innerText;
+
+        // Salin ke clipboard
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          // Ubah tampilan tombol sementara
+          const originalText = button.innerHTML;
+          button.innerHTML = '✅ Copied!';
+          button.classList.add('copied');
+
+          // Kembalikan setelah 2 detik
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('copied');
+          }, 2000);
+        }).catch(err => {
+          console.error('Gagal menyalin: ', err);
+          button.innerText = 'Error!';
+        });
+      });
+
+      // 5. Masukkan tombol ke dalam wrapper
+      wrapper.appendChild(button);
     });
   }
 });
