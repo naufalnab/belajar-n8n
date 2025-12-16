@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi 22: Workflow 3 - Monitoring Error</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+
+      <button id="sidebar-toggle" title="Tutup Sidebar">&laquo;</button>
+
+      <main class="content">
+        <article>
+          <h1>Materi 22: Workflow 3 - Monitoring Error</h1>
+          <p class="intro">
+            Terakhir namun tidak kalah penting, mari bantu Nathan mengetahui jika
+            ada kesalahan saat menjalankan workflow laporan. Kita akan membuat
+            <strong>Error Workflow</strong> yang memantau workflow utama.
+          </p>
+
+          <h2>Langkah 1: Membuat Error Workflow</h2>
+          <ol>
+            <li>Buat Workflow baru (beri nama "Workflow 3 - Error Handler").</li>
+            <li>Tambahkan node <strong>Error Trigger</strong>.</li>
+            <li>Klik <strong>Execute Node</strong> untuk melihat data dummy error (ini penting agar kita bisa menyusun pesan di langkah berikutnya).</li>
+          </ol>
+
+          <h2>Langkah 2: Konfigurasi Notifikasi</h2>
+          <p>
+            Kita akan mengirim pesan detail ke Discord yang berisi informasi teknis tentang error tersebut.
+          </p>
+          <ol>
+            <li>Tambahkan node <strong>Discord</strong> dan hubungkan ke Error Trigger.</li>
+            <li><strong>Webhook URL:</strong> Gunakan URL dari email kursus Anda (atau kredensial yang sudah ada).</li>
+            <li>
+              <strong>Text:</strong> Salin format berikut dan gunakan <em>Expression</em> untuk bagian dalam kurung kurawal:
+              <div class="note">
+                The workflow <code>{{ $json.workflow.name }}</code> failed, with the error message: <code>{{ $json.execution.error.message }}</code>.
+                <br><br>
+                Last node executed: <code>{{ $json.execution.lastNodeExecuted }}</code>.
+                <br><br>
+                Check this workflow execution here: <code>{{ $json.execution.url }}</code>
+                <br><br>
+                My Unique ID: [MASUKKAN_ID_ANDA_DISINI]
+              </div>
+            </li>
+          </ol>
+
+          <h3>Kode Workflow 3 (JSON)</h3>
+          <p>Agar lebih cepat, Anda bisa menyalin JSON di bawah ini. Pastikan untuk mengganti Kredensial Discord dan Unique ID Anda.</p>
+          <details class="solution-box">
+            <summary>📄 Klik untuk menyalin JSON Error Handler</summary>
+            <div class="solution-content">
+              <pre><code>
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "error-trigger",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [ 460, 460 ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "=The workflow {{ $json.workflow.name }} failed, with the error message: {{ $json.execution.error.message }}. Last node executed: {{ $json.execution.lastNodeExecuted }}. Check this workflow execution here: {{ $json.execution.url }} My Unique ID: [GANTI_DENGAN_ID_ANDA]",
+        "options": {}
+      },
+      "id": "discord-alert",
+      "name": "Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [ 680, 460 ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "YOUR_DISCORD_CREDENTIAL_ID",
+          "name": "Discord Webhook account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [ [ { "node": "Discord", "type": "main", "index": 0 } ] ]
+    }
+  }
+}
+              </code></pre>
+            </div>
+          </details>
+
+          <h2>Langkah 3: Menghubungkan ke Workflow Utama</h2>
+          <p>
+            Ini langkah krusial. Error Workflow tidak akan bekerja jika tidak "didaftarkan" ke workflow utama.
+          </p>
+          <ol>
+            <li>Simpan "Workflow 3" yang baru saja Anda buat.</li>
+            <li>Buka kembali <strong>Workflow 2 (Laporan Utama)</strong>.</li>
+            <li>Klik menu titik tiga (<strong>...</strong>) di pojok kanan atas > <strong>Settings</strong>.</li>
+            <li>Pada bagian <strong>Error Workflow</strong>, pilih "Workflow 3 - Error Handler".</li>
+            <li>Simpan Workflow 2.</li>
+          </ol>
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-18-workflow-settings.png"
+              alt="Pengaturan Error Workflow di n8n"
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Pastikan Workflow 3 terpilih di pengaturan Workflow 2.
+            </p>
+          </div>
+
+          <h2>Kuis Pemahaman</h2>
+          <p>Jawab pertanyaan berikut berdasarkan data output dari node Error Trigger:</p>
+
+          <details class="solution-box">
+            <summary>❓ Kolom (Fields) apa saja yang dikembalikan oleh Error Trigger?</summary>
+            <div class="solution-content">
+              <p>Biasanya mengembalikan objek berisi: <code>execution</code> (detail eksekusi) dan <code>workflow</code> (detail workflow).</p>
+            </div>
+          </details>
+
+          <details class="solution-box">
+            <summary>❓ Informasi apa tentang eksekusi yang dikembalikan?</summary>
+            <div class="solution-content">
+              <p>ID eksekusi (<code>id</code>), URL eksekusi (<code>url</code>), pesan error (<code>error.message</code>), dan node terakhir yang dieksekusi (<code>lastNodeExecuted</code>).</p>
+            </div>
+          </details>
+
+          <details class="solution-box">
+            <summary>❓ Informasi apa tentang workflow yang dikembalikan?</summary>
+            <div class="solution-content">
+              <p>ID Workflow (<code>id</code>) dan Nama Workflow (<code>name</code>).</p>
+            </div>
+          </details>
+
+          <details class="solution-box">
+            <summary>❓ Apa expression untuk mengambil nama workflow?</summary>
+            <div class="solution-content">
+              <p><code>{{ $json.workflow.name }}</code></p>
+            </div>
+          </details>
+
+          <h2>Penutup Level 2</h2>
+          <p>
+            Luar biasa! Anda telah menyelesaikan Kursus Level 2. Anda telah belajar cara merancang sistem modular, menggabungkan data kompleks, memanipulasi file biner, dan membangun sistem monitoring error.
+          </p>
+          <blockquote class="dialogue">
+            <strong>Nathan 🙋:</strong>
+            <p>
+              Terima kasih banyak! Dengan sistem ini, laporan penjualan saya jadi otomatis, akurat, dan saya bisa tidur nyenyak mengetahui ada sistem error handling yang menjaganya.
+            </p>
+          </blockquote>
+
+          <div
+            id="page-nav-placeholder"
+            data-prev-url="../materi-21/"
+            data-prev-title="Materi 21: Workflow 2 (Main)"
+            data-next-url="../index.html"
+            data-next-title="Kembali ke Beranda"
+          ></div>
+
+          <div id="support-block-placeholder"></div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/script.js"></script>
+  </body>
+</html>
