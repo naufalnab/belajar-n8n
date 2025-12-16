@@ -36,72 +36,122 @@
             <strong>Region</strong> (Wilayah) dan <strong>Subregion</strong>.
           </p>
           <p>
-            Untuk membuat laporan penjualan regional, kita harus mengisi
-            kekosongan tersebut secara otomatis.
+            Untuk membuat laporan penjualan regional, kita harus mengisi kekosongan
+            tersebut secara otomatis.
           </p>
 
           <h2>Langkah 1: Persiapan Airtable</h2>
-          <p>Sebelum masuk ke n8n, kita perlu menyiapkan tabel di Airtable.</p>
+          <p>
+            Sebelum masuk ke n8n, kita perlu menyiapkan tabel di Airtable.
+          </p>
           <ol>
             <li>
-              Buat tabel baru bernama <strong><code>customers</code></strong
-              >.
+              Buat tabel baru bernama <strong><code>customers</code></strong>.
             </li>
             <li>
-              Buat kolom-kolom berikut:
+              Buat kolom-kolom berikut (Pastikan penulisan huruf besar/kecil <strong>SAMA PERSIS</strong>):
               <ul>
-                <li><code>customerID</code> (Number)</li>
-                <li>
-                  <code>customerCountry</code> (Single line text) - Isi dengan
-                  nama negara (misal: USA, Germany).
-                </li>
+                <li><code>CustomerID</code> (Number)</li>
+                <li><code>CustomerCountry</code> (Single line text)</li>
                 <li><code>email</code> (Email)</li>
-                <li>
-                  <code>customerSince</code> (Date) -
-                  <strong>PENTING:</strong> Aktifkan opsi "Include time".
-                </li>
-                <li>
-                  <code>region</code> (Single line text) - Biarkan kosong.
-                </li>
-                <li>
-                  <code>subregion</code> (Single line text) - Biarkan kosong.
-                </li>
+                <li><code>customerSince</code> (Date) - <strong>PENTING:</strong> Aktifkan opsi "Include time". Hapus centang "Use same time zone..." jika ada.</li>
+                <li><code>region</code> (Single line text) - Biarkan kosong.</li>
+                <li><code>subregion</code> (Single line text) - Biarkan kosong.</li>
               </ul>
             </li>
           </ol>
-          <div class="image-wrapper">
-            <img
-              src="../assets/images/materi-20-persiapan-airtable.png"
-              alt="Persiapan Airtable."
-              loading="lazy"
-            />
-            <p class="image-caption">
-              Persiapan Airtable dengan kolom yang diperlukan.
-            </p>
-          </div>
+          
           <div class="note alt">
-            <strong>Peringatan Konfigurasi Tanggal:</strong><br />
-            Pastikan kolom <code>customerSince</code> diatur sebagai Date dengan
-            opsi <strong>Include time</strong> diaktifkan. Jika tidak, Anda
-            mungkin akan mengalami error saat n8n mencoba mengupdate tanggal
-            tersebut kembali ke Airtable.
+            <strong>Data Sampel (Wajib Copy-Paste):</strong><br />
+            Salin data di bawah ini dan tempelkan ke dalam tabel Airtable Anda (mulai dari kolom pertama, baris pertama).
+          </div>
+
+          <div style="overflow-x: auto; margin-bottom: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border-color);">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.95em; font-family: 'Inter', sans-serif;">
+              <thead>
+                <tr style="background-color: #007a66; color: white;">
+                  <th style="padding: 12px 15px; text-align: left; font-weight: 600; letter-spacing: 0.5px;">CustomerID</th>
+                  <th style="padding: 12px 15px; text-align: left; font-weight: 600; letter-spacing: 0.5px;">CustomerCountry</th>
+                  <th style="padding: 12px 15px; text-align: left; font-weight: 600; letter-spacing: 0.5px;">email</th>
+                  <th style="padding: 12px 15px; text-align: left; font-weight: 600; letter-spacing: 0.5px;">customerSince</th>
+                </tr>
+              </thead>
+              <tbody style="background-color: var(--container-bg);">
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 12px 15px;">1</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">India</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer1@mail.in</td>
+                  <td style="padding: 12px 15px;">12/10/2021</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color); background-color: rgba(0,0,0,0.02);">
+                  <td style="padding: 12px 15px;">2</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">Japan</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer2@mail.jp</td>
+                  <td style="padding: 12px 15px;">17/6/2021</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 12px 15px;">3</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">France</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer3@mail.com</td>
+                  <td style="padding: 12px 15px;">7/8/2021</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color); background-color: rgba(0,0,0,0.02);">
+                  <td style="padding: 12px 15px;">4</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">Brazil</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer4@mail.com</td>
+                  <td style="padding: 12px 15px;">29/7/2021</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 12px 15px;">5</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">Canada</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer5@mail.com</td>
+                  <td style="padding: 12px 15px;">6/9/2021</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color); background-color: rgba(0,0,0,0.02);">
+                  <td style="padding: 12px 15px;">6</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">Sweden</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer6@mail.com</td>
+                  <td style="padding: 12px 15px;">9/9/2021</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 12px 15px;">7</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">Australia</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer7@mail.com</td>
+                  <td style="padding: 12px 15px;">9/8/2021</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color); background-color: rgba(0,0,0,0.02);">
+                  <td style="padding: 12px 15px;">8</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">Germany</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer8@mail.de</td>
+                  <td style="padding: 12px 15px;">3/10/2021</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 12px 15px;">9</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">Ukraine</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer9@mail.com</td>
+                  <td style="padding: 12px 15px;">13/9/2021</td>
+                </tr>
+                <tr style="background-color: rgba(0,0,0,0.02);">
+                  <td style="padding: 12px 15px;">10</td>
+                  <td style="padding: 12px 15px; font-weight: 500;">Cuba</td>
+                  <td style="padding: 12px 15px; color: var(--text-color-light);">customer10@mail.com</td>
+                  <td style="padding: 12px 15px;">15/6/2021</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <h2>Langkah 2: Mengambil Data Pelanggan (Airtable)</h2>
-          <p>Sekarang, mari mulai membangun di n8n.</p>
+          <p>
+            Sekarang, mari mulai membangun di n8n.
+          </p>
           <ol>
             <li>Buat workflow baru.</li>
             <li>Tambahkan node <strong>Airtable</strong>.</li>
-            <li>Operation: <strong>Search</strong></li>
+            <li>Operation: <strong>List</strong> (atau Get All).</li>
             <li>Base: Pilih base latihan Anda.</li>
-            <li>
-              Table: <strong><code>customers</code></strong
-              >.
-            </li>
-            <li>
-              Klik <strong>Execute Node</strong>. Anda akan melihat daftar
-              pelanggan yang belum memiliki region.
-            </li>
+            <li>Table: <strong><code>customers</code></strong>.</li>
+            <li>Klik <strong>Execute Node</strong>. Anda akan melihat daftar pelanggan yang belum memiliki region.</li>
           </ol>
           <div class="image-wrapper">
             <img
@@ -109,24 +159,21 @@
               alt="Output node Airtable menampilkan daftar pelanggan."
               loading="lazy"
             />
-            <p class="image-caption">Data awal dari Airtable.</p>
+            <p class="image-caption">
+              Data awal dari Airtable (Region masih kosong).
+            </p>
           </div>
 
           <h2>Langkah 3: Mengambil Data Negara (HTTP Request)</h2>
           <p>
-            Kita butuh "kamus" untuk menerjemahkan Negara menjadi Region. Kita
-            akan menggunakan API publik <strong>REST Countries</strong>.
+            Kita butuh "kamus" untuk menerjemahkan Negara menjadi Region. Kita akan menggunakan API publik <strong>REST Countries</strong>.
           </p>
           <ol>
-            <li>
-              Tambahkan node <strong>HTTP Request</strong> (jangan sambungkan ke
-              Airtable dulu, biarkan terpisah atau paralel).
-            </li>
+            <li>Tambahkan node <strong>HTTP Request</strong> (jangan sambungkan ke Airtable dulu, biarkan terpisah atau paralel).</li>
             <li>URL: <code>https://restcountries.com/v3.1/all</code></li>
             <li>Method: <strong>GET</strong>.</li>
             <li>
-              Tambahkan <strong>Query Parameter</strong> agar data tidak terlalu
-              besar:
+              Tambahkan <strong>Query Parameter</strong> agar data tidak terlalu besar:
               <ul>
                 <li>Name: <code>fields</code></li>
                 <li>Value: <code>name,region,subregion</code></li>
@@ -140,44 +187,31 @@
               alt="Output HTTP Request menampilkan daftar negara dan region."
               loading="lazy"
             />
-            <p class="image-caption">Data referensi dari REST Countries API.</p>
+            <p class="image-caption">
+              Data referensi dari REST Countries API.
+            </p>
           </div>
 
           <h2>Langkah 4: Menggabungkan Data (Merge Node)</h2>
           <p>
-            Sekarang kita punya dua aliran data: Pelanggan (Input 1) dan Negara
-            (Input 2). Kita akan menggabungkannya.
+            Sekarang kita punya dua aliran data: Pelanggan (Input 1) dan Negara (Input 2). Kita akan menggabungkannya.
           </p>
           <ol>
             <li>Tambahkan node <strong>Merge</strong>.</li>
-            <li>
-              Hubungkan <strong>Airtable</strong> ke <strong>Input 1</strong>.
-            </li>
-            <li>
-              Hubungkan <strong>HTTP Request</strong> ke
-              <strong>Input 2</strong>.
-            </li>
-            <li>
-              Mode: <strong>Combine</strong> > <strong>Merge By Fields</strong>.
-            </li>
+            <li>Hubungkan <strong>Airtable</strong> ke <strong>Input 1</strong>.</li>
+            <li>Hubungkan <strong>HTTP Request</strong> ke <strong>Input 2</strong>.</li>
+            <li>Mode: <strong>Combine</strong> > <strong>Merge By Fields</strong>.</li>
             <li>
               Fields to Match:
               <ul>
-                <li>
-                  Input 1 Field: <code>customerCountry</code> (Nama negara di
-                  Airtable).
-                </li>
-                <li>
-                  Input 2 Field: <code>name.common</code> (Nama negara di API).
-                </li>
+                <li>Input 1 Field: <code>CustomerCountry</code> (Sesuaikan dengan kolom Airtable Anda).</li>
+                <li>Input 2 Field: <code>name.common</code> (Nama negara di API).</li>
               </ul>
             </li>
           </ol>
           <div class="note">
             <strong>Tips Dot Notation:</strong><br />
-            Karena struktur data API bersarang (nested) di dalam objek
-            <code>name</code>, kita menulis <code>name.common</code> untuk
-            mengakses nama negaranya.
+            Karena struktur data API bersarang (nested) di dalam objek <code>name</code>, kita menulis <code>name.common</code> untuk mengakses nama negaranya.
           </div>
           <div class="image-wrapper">
             <img
@@ -192,51 +226,380 @@
 
           <h2>Langkah 5: Update Airtable</h2>
           <p>
-            Terakhir, kita simpan data Region dan Subregion yang baru kita
-            dapatkan kembali ke Airtable.
+            Terakhir, kita simpan data Region dan Subregion yang baru kita dapatkan kembali ke Airtable.
           </p>
           <ol>
-            <li>
-              Tambahkan node <strong>Airtable</strong> baru setelah Merge Node.
-            </li>
+            <li>Tambahkan node <strong>Airtable</strong> baru setelah Merge Node.</li>
             <li>Operation: <strong>Update</strong>.</li>
-            <li>
-              Table: <strong><code>customers</code></strong
-              >.
-            </li>
+            <li>Table: <strong><code>customers</code></strong>.</li>
             <li>
               Columns to Update (Mapping):
               <ul>
-                <li>
-                  <strong>region</strong>: <code>{{ $json.region }}</code> (dari
-                  API)
-                </li>
-                <li>
-                  <strong>subregion</strong>:
-                  <code>{{ $json.subregion }}</code> (dari API)
-                </li>
+                <li><strong>region</strong>: <code>{{ $json.region }}</code> (dari API)</li>
+                <li><strong>subregion</strong>: <code>{{ $json.subregion }}</code> (dari API)</li>
+                <li><strong>customerSince</strong>: <code>{{ $json.customerSince }}</code> (Tanggal).</li>
               </ul>
             </li>
             <li>
-              Penting: Pastikan ID record Airtable terpetakan dengan benar
-              (biasanya otomatis).
+              <strong>PENTING: Aktifkan "Typecast"</strong><br>
+              Scroll ke bagian bawah node Airtable > <strong>Options</strong> > Klik <strong>Add Option</strong> > Pilih <strong>Typecast</strong> > Aktifkan (Toggle ON).
             </li>
           </ol>
 
-          <h2>Kuis Pemahaman</h2>
+          <div class="note alt">
+            <strong>Kenapa harus Typecast?</strong><br />
+            Format tanggal di n8n (ISO) dan Airtable sering berbeda. Fitur Typecast memaksa Airtable untuk "menerjemahkan" format tanggal apa pun yang kita kirim agar sesuai dengan kolom Date di databasenya. Tanpa ini, akan muncul error!
+          </div>
+
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-20-detail-node-airtable.png"
+              alt="Detail node dari Airtable Update dengan field region dan subregion."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Detail update Airtable dengan field region dan subregion.
+            </p>
+          </div>
+
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-20-workflow-end-to-end.png"
+              alt="Flow keseluruhan dari workflow 1 (Sub-workflow)."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Flow keseluruhan dari workflow 1 (Sub-workflow).
+            </p>
+          </div>
+
+
+          <div class="image-wrapper">
+            <img
+              src="../assets/images/materi-20-hasil-input-airtable.png"
+              alt="Data akhir region dan subregion telah terisi."
+              loading="lazy"
+            />
+            <p class="image-caption">
+              Data akhir dari Airtable setelah update (Region dan Subregion sudah terisi).
+            </p>
+          </div>
+
+          <h2>Kode Workflow Lengkap (JSON)</h2>
           <p>
-            Coba jawab pertanyaan berikut berdasarkan hasil eksekusi workflow
-            Anda:
+            Agar lebih mudah dan memastikan konfigurasi (seperti Typecast) benar, Anda bisa menyalin kode di bawah ini dan langsung menempelkannya (Paste/Ctrl+V) ke kanvas n8n Anda.
           </p>
+          <details class="solution-box">
+            <summary>📄 Klik untuk melihat/menyalin JSON Workflow</summary>
+            <div class="solution-content">
+              <pre><code style="font-size: 0.8em; white-space: pre-wrap; word-break: break-all;">
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "2d57f671-b9f7-41ae-9dd0-82bc8175ec6d",
+      "name": "When clicking \"Execute workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        336,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://restcountries.com/v3.1/all",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "name,region,subregion"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c40d19b4-7e06-417e-b966-fca062746983",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        544,
+        432
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "N248dgARXFPjXLRA",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appzgiK89L202rUE3",
+          "mode": "list",
+          "cachedResultName": "Beginner Course",
+          "cachedResultUrl": "https://airtable.com/appzgiK89L202rUE3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblmECBN2BZsUHNjX",
+          "mode": "list",
+          "cachedResultName": "customers",
+          "cachedResultUrl": "https://airtable.com/appzgiK89L202rUE3/tblmECBN2BZsUHNjX"
+        },
+        "options": {}
+      },
+      "id": "b9d58639-8583-4d3d-9980-adf739a3c011",
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        544,
+        256
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "xwKF32ZJ0C3iAfpA",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appzgiK89L202rUE3",
+          "mode": "list",
+          "cachedResultName": "Beginner Course",
+          "cachedResultUrl": "https://airtable.com/appzgiK89L202rUE3"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblmECBN2BZsUHNjX",
+          "mode": "list",
+          "cachedResultName": "customers",
+          "cachedResultUrl": "https://airtable.com/appzgiK89L202rUE3/tblmECBN2BZsUHNjX"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "customerID": "={{ $json.customerID }}",
+            "customerCountry": "={{ $json.customerCountry }}",
+            "email": "={{ $json.email }}",
+            "customerSince": "={{ $json.customerSince }}",
+            "region": "={{ $json.region }}",
+            "subregion": "={{ $json.subregion }}"
+          },
+          "matchingColumns": [
+            "customerID"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "customerID",
+              "displayName": "customerID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "customerCountry",
+              "displayName": "customerCountry",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "customerSince",
+              "displayName": "customerSince",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "region",
+              "displayName": "region",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "subregion",
+              "displayName": "subregion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        976,
+        336
+      ],
+      "id": "e00fdad5-8427-4b09-9d1f-9ca4864ebd9a",
+      "name": "Update record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "xwKF32ZJ0C3iAfpA",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "customerCountry",
+              "field2": "name.common"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        784,
+        336
+      ],
+      "id": "0365e4c3-258c-47a3-999d-e93ecf17584b",
+      "name": "Merge"
+    }
+  ],
+  "connections": {
+    "When clicking \"Execute workflow\"": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Update record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a612ce3732177191df67c49cdd165a9944332142dec2e0997de31bff5658a964"
+  }
+}
+              </code></pre>
+              <div class="note">
+                <strong>Catatan Penting:</strong> <br>
+                Setelah menempelkan (Paste) kode ini, node <strong>Airtable</strong> dan <strong>HTTP Request</strong> mungkin akan berwarna merah karena ID Credential berbeda.
+                <br>
+                Silakan buka node tersebut dan pilih kembali Credential milik Anda sendiri di bagian <strong>Credential</strong>.
+              </div>
+            </div>
+          </details>
+
+          <h2>Kuis Pemahaman</h2>
+          <p>Coba jawab pertanyaan berikut berdasarkan hasil eksekusi workflow Anda:</p>
 
           <details class="solution-box">
-            <summary>
-              ❓ Berapa item yang dikembalikan oleh node HTTP Request?
-            </summary>
+            <summary>❓ Berapa item yang dikembalikan oleh node HTTP Request?</summary>
             <div class="solution-content">
               <p>
-                Jumlahnya sekitar <strong>250</strong> item (tergantung jumlah
-                negara yang diakui saat ini di API restcountries).
+                Jumlahnya sekitar <strong>250</strong> item (tergantung jumlah negara yang diakui saat ini di API restcountries).
               </p>
             </div>
           </details>
@@ -245,10 +608,7 @@
             <summary>❓ Berapa item yang dikembalikan oleh Merge Node?</summary>
             <div class="solution-content">
               <p>
-                Jumlahnya harus <strong>sama dengan jumlah pelanggan</strong> di
-                Airtable Anda (karena kita menggunakan mode
-                <em>Keep Matches</em> secara default, dan kita berasumsi semua
-                negara pelanggan valid).
+                Jumlahnya harus <strong>sama dengan jumlah pelanggan</strong> di Airtable Anda (karena kita menggunakan mode <em>Keep Matches</em> secara default, dan kita berasumsi semua negara pelanggan valid).
               </p>
             </div>
           </details>
@@ -257,31 +617,26 @@
             <summary>❓ Berapa banyak region unik di tabel customers?</summary>
             <div class="solution-content">
               <p>
-                Anda bisa mengeceknya di Airtable setelah update. Biasanya ada
-                region seperti <strong>Americas, Europe, Asia</strong>, dll.
+                Anda bisa mengeceknya di Airtable setelah update. Biasanya ada region seperti <strong>Americas, Europe, Asia</strong>, dll.
               </p>
             </div>
           </details>
 
           <details class="solution-box">
-            <summary>❓ Apa subregion untuk customerID 10?</summary>
+            <summary>❓ Apa subregion untuk CustomerID 10?</summary>
             <div class="solution-content">
               <p>
-                Ini bergantung pada data dummy Anda. Cek record dengan ID 10 di
-                Airtable Anda dan lihat kolom <strong>subregion</strong>.
+                Untuk CustomerID 10 (Cuba), subregion-nya adalah <strong>Caribbean</strong>.
               </p>
             </div>
           </details>
 
           <h2>Langkah Selanjutnya</h2>
           <p>
-            Workflow 1 (Sub-workflow) selesai! Data pelanggan kita sekarang
-            sudah kaya dan lengkap.
+            Workflow 1 (Sub-workflow) selesai! Data pelanggan kita sekarang sudah kaya dan lengkap.
           </p>
           <p>
-            Selanjutnya, kita akan membangun
-            <strong>Workflow 2 (Utama)</strong> yang akan memanggil workflow
-            ini, membuat laporan Excel, dan mengirimkannya via email.
+            Selanjutnya, kita akan membangun <strong>Workflow 2 (Utama)</strong> yang akan memanggil workflow ini, membuat laporan Excel, dan mengirimkannya via email.
           </p>
 
           <div
@@ -289,7 +644,7 @@
             data-prev-url="../materi-19/"
             data-prev-title="Materi 19: Desain Workflow"
             data-next-url="../materi-21/"
-            data-next-title="Materi 21: (Segera Hadir)"
+            data-next-title="Materi 21: Workflow 2 (Laporan)"
           ></div>
 
           <div id="support-block-placeholder"></div>

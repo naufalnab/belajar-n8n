@@ -1089,3 +1089,50 @@ details.solution-box[open] summary {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ======================================================= */
+/* FITUR COPY CODE BUTTON */
+/* ======================================================= */
+
+/* Wrapper agar tombol bisa diposisikan absolute relatif terhadap ini */
+.code-wrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.code-wrapper pre {
+  margin-bottom: 0; /* Margin dipindah ke wrapper */
+  padding-top: 40px; /* Beri ruang di atas untuk tombol */
+}
+
+/* Tombol Copy */
+.copy-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ddd;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 10;
+}
+
+.copy-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* State saat berhasil dicopy */
+.copy-btn.copied {
+  background-color: var(--note-border); /* Warna Hijau n8n */
+  color: white;
+  border-color: var(--note-border);
+}
